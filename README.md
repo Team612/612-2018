@@ -4,6 +4,7 @@ Chantilly Robotics Team 612 robot code repository for 2017 game FIRST Steamworks
 |Member                                   |Username         |
 |-----------------------------------------|-----------------|
 |Calvin Godfrey (Head Programming Captain)            |ggodfrey         |
+|Kai Fergerstrom            |kaifergerstrom         |
 |Collin Johnson                           |Johnson-Collin|
 |Benito Encarnacion                       |taurenzine       |
 |Chris Rosend                             |Chris-Rosend|
