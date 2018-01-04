@@ -9,3 +9,4 @@ Chantilly Robotics Team 612 robot code repository for 2017 game FIRST Steamworks
 |Benito Encarnacion                       |taurenzine       |
 |Chris Rosend                             |Chris-Rosend|
 |Brian Scurlock                           |Bps246810        |
+|Saatvik Vadlapatla                       |SaaatvikV        |
