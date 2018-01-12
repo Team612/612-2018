@@ -33,7 +33,7 @@ public class TankDrive extends Command {
 		//		System.out.println(i);
 		//	}
 	//	}
-	   Robot.drivetrain.Move(Robot.oi.bongoC().getY(Hand.kLeft));
+	   Robot.drivetrain.Move(Robot.oi.Driver().getY(Hand.kLeft));
 		}
 	
 

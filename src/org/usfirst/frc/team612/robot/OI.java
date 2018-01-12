@@ -14,14 +14,14 @@ import org.usfirst.frc.team612.robot.commands.TankDrive;
  */
 public class OI {
 	private static XboxController driver = new XboxController(1);
-	public  PWM LEDGround = new PWM(0);
-	public  PWM LED = new PWM(1);
+	//public  PWM LEDGround = new PWM(0);
+	//public  PWM LED = new PWM(1);
 	//private static Joystick bongo = new Joystick(1);
 	/*Encoder enc = new Encoder(0,1,true,Encoder.EncodingType.k4X);
 	public Encoder eco() {
 		return enc;
 	}*/
-	public XboxController bongoC() {
+	public XboxController Driver() {
 		return driver;
 	}
 	//public XboxController driverC() {
