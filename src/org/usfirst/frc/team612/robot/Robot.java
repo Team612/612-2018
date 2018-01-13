@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team612.robot.commands.TankDrive;
-import org.usfirst.frc.team612.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team612.subsystems.Drivetrain;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -20,6 +19,7 @@ import org.usfirst.frc.team612.robot.subsystems.DriveTrain;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
+	public static Drivetrain drivetrain = new Drivetrain();
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
