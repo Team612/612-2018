@@ -1,29 +1,11 @@
 package org.usfirst.frc.team612.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWM;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
-
-import org.usfirst.frc.team612.robot.commands.TankDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	private static XboxController driver = new XboxController(1);
-	//public  PWM LEDGround = new PWM(0);
-	//public  PWM LED = new PWM(1);
-	//private static Joystick bongo = new Joystick(1);
-	/*Encoder enc = new Encoder(0,1,true,Encoder.EncodingType.k4X);
-	public Encoder eco() {
-		return enc;
-	}*/
-	public XboxController Driver() {
-		return driver;
-	}
 	//public XboxController driverC() {
 	//	return driver;
 	//}
