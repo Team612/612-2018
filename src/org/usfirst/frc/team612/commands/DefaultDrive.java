@@ -11,6 +11,8 @@ import org.usfirst.frc.team612.robot.OI;
  *
  */
 public class DefaultDrive extends Command {
+	
+	double DEADZONE = 0.01;
 
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -28,6 +30,19 @@ public class DefaultDrive extends Command {
     	double direction_x = OI.joystick.getX(Hand.kLeft);
     	double direction_y = OI.joystick.getY(Hand.kLeft);
     	double rotation    = OI.joystick.getX(Hand.kRight);
+    	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
+    		direction_x = 0;
+    	}
+    	if(direction_y<DEADZONE&&direction_y>-DEADZONE) {
+    		direction_y = 0;
+    	}
+    	if(rotation<DEADZONE&&rotation>-DEADZONE) {
+    		rotation = 0;
+    	}
+    	//double magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
+    	//double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
+    	//System.out.println(angle);
+    	//Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     	Robot.drivetrain.getDriveTrain().driveCartesian(direction_y, direction_x, rotation);
     }
 
