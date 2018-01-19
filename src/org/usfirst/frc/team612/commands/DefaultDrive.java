@@ -43,7 +43,7 @@ public class DefaultDrive extends Command {
     	//double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
     	//System.out.println(angle);
     	//Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	Robot.drivetrain.getDriveTrain().driveCartesian(direction_y, direction_x, rotation);
+    	Robot.drivetrain.getDriveTrain().driveCartesian(direction_y, direction_x, -rotation);
     }
 
     // Make this return true when this Command no longer needs to run execute()
