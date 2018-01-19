@@ -2,7 +2,7 @@ package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
+import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 
 /**
@@ -12,6 +12,11 @@ import org.usfirst.frc.team612.commands.DefaultDrive;
 public class OI {
 	
 	public static XboxController joystick = new XboxController(1);
+	
+	public OI() {
+		JoystickButton button_a = new JoystickButton(joystick, 1);
+		button_a.whenPressed(new ResetDisplacement());
+	}
 	
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A

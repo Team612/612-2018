@@ -1,5 +1,6 @@
 package org.usfirst.frc.team612.commands;
 
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,7 +13,7 @@ import org.usfirst.frc.team612.robot.OI;
  */
 public class DefaultDrive extends Command {
 	
-	double DEADZONE = 0.01;
+	double DEADZONE = 0.1;
 
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -39,10 +40,9 @@ public class DefaultDrive extends Command {
     	if(rotation<DEADZONE&&rotation>-DEADZONE) {
     		rotation = 0;
     	}
-    	//double magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
-    	//double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
-    	//System.out.println(angle);
-    	//Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	System.out.println("X: " + Robot.navx.getDisplacementX());
+    	System.out.println("Y: " + Robot.navx.getDisplacementY());
+    	System.out.println("Z: " + Robot.navx.getDisplacementZ());
     	Robot.drivetrain.getDriveTrain().driveCartesian(direction_y, direction_x, -rotation);
     }
 
