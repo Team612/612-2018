@@ -2,14 +2,16 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team612.robot.commands.TankDrive;
-import org.usfirst.frc.team612.robot.subsystems.DriveTrain;
+import com.kauailabs.navx.frc.AHRS;
+
+import org.usfirst.frc.team612.subsystems.Drivetrain;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -20,6 +22,9 @@ import org.usfirst.frc.team612.robot.subsystems.DriveTrain;
 public class Robot extends IterativeRobot {
 
 	public static OI oi;
+	public static Drivetrain drivetrain = new Drivetrain();
+	public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
+	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -91,6 +96,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		navx.resetDisplacement();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		

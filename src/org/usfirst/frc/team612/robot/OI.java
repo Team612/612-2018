@@ -1,11 +1,30 @@
 package org.usfirst.frc.team612.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team612.commands.DefaultDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	public static XboxController joystick = new XboxController(1);
+	
+	
+ /* BUTTON MAPPING (this should go in RobotMap)
+  * 1: A
+	2: B
+	3: X
+	4: Y
+	5: Left Bumper
+	6: Right Bumper
+	7: Back
+	8: Start
+	9: Left Joystick
+	10: Right Joystick */
+	
 	//public XboxController driverC() {
 	//	return driver;
 	//}
