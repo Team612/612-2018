@@ -2,7 +2,6 @@ package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 
 /**
