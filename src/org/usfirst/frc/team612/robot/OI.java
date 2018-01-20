@@ -13,10 +13,6 @@ public class OI {
 	
 	public static XboxController joystick = new XboxController(1);
 	
-	public OI() {
-		JoystickButton button_a = new JoystickButton(joystick, 1);
-		button_a.whenPressed(new ResetDisplacement());
-	}
 	
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A
