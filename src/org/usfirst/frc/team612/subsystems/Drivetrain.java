@@ -38,5 +38,20 @@ public class Drivetrain extends Subsystem {
     public MecanumDrive getDriveTrain() {
     	return drivetrain;
     }
+    
+    public WPI_TalonSRX getTalon(int num) {
+    	switch(num) {
+    	case 1:
+    		return talon_FL;
+    	case 2:
+    		return talon_FR;
+    	case 3:
+    		return talon_RR;
+    	case 4:
+    		return talon_RL;
+    	default:
+    		return null;
+    	}
+    }
 }
 
