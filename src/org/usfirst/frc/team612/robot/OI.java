@@ -13,7 +13,8 @@ import org.usfirst.frc.team612.robot.RobotMap;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	
+
+	public static boolean XBOX = true;	
 	public static XboxController joystick = new XboxController(RobotMap.joy_PCport);
 	public static JoystickButton button_A = new JoystickButton(joystick,1);
 	public static JoystickButton button_B = new JoystickButton(joystick,2);
@@ -25,6 +26,7 @@ public class OI {
 	public static JoystickButton button_STRT = new JoystickButton(joystick,8);
 	public static JoystickButton button_LJ = new JoystickButton(joystick,9);
 	public static JoystickButton button_RJ = new JoystickButton(joystick,10);
+	public static Joystick joy = new Joystick(1);
 	
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
