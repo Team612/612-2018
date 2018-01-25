@@ -3,8 +3,6 @@ package org.usfirst.frc.team612.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
 
@@ -16,7 +14,8 @@ public class DefaultDrive extends Command {
 	
 	double DEADZONE = 0.05;
 	double prev_magnitude = 0;
-	double rate = 0.01;
+	double rate = 0.05;
+	boolean DRIVER_PERSPECTIVE = true;
 
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -31,9 +30,18 @@ public class DefaultDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double direction_x = -OI.joystick.getX(Hand.kLeft);
-    	double direction_y = -OI.joystick.getY(Hand.kLeft);
-    	double rotation    = -OI.joystick.getX(Hand.kRight);
+    	double direction_x = 0;
+    	double direction_y = 0;
+    	double rotation = 0;
+    	if(OI.XBOX) {
+       	 	direction_x = OI.joystick.getX(Hand.kLeft) * -1;
+       	 	direction_y = OI.joystick.getY(Hand.kLeft) * -1;
+       	 	rotation    = OI.joystick.getX(Hand.kRight) * -1;
+       	}else {
+           	 direction_x = OI.joy.getX() * -1;
+           	 direction_y = OI.joy.getY() * -1;
+           	 rotation = OI.joy.getTwist() * -1;
+       	}
     	// Get all the joystick information
     	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
     		direction_x = 0;
@@ -52,20 +60,21 @@ public class DefaultDrive extends Command {
     	double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
     	// Convert cartesian to polar
     	double yaw = Robot.navx.getYaw();
-    	/*SmartDashboard.putNumber("Magnitude: ", magnitude);
-    	SmartDashboard.putNumber("Angle: ",  angle);
-    	SmartDashboard.putNumber("Yaw: ",  Robot.navx.getYaw());*/
-    	// Put data to smart dashboard
+    	if(DRIVER_PERSPECTIVE) {
+    		angle = angle-yaw;
+    	}
     	if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
-    			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle-yaw, rotation);
+    			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    			prev_magnitude = magnitude;
     		}
-    		Robot.drivetrain.getDriveTrain().drivePolar(prev_magnitude+rate, angle-yaw, rotation);
+    		prev_magnitude += rate;
+    		Robot.drivetrain.getDriveTrain().drivePolar(prev_magnitude+rate, angle, rotation);
     	} else {
-    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle-yaw, rotation);
+    		prev_magnitude = magnitude;
+    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     	}
     	// Save what angle should be to theoretical_angle to be used next iteration
-    	prev_magnitude = magnitude;
     }
 
     // Make this return true when this Command no longer needs to run execute()
