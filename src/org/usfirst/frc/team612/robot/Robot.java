@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 /**
@@ -23,7 +25,7 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
+	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
