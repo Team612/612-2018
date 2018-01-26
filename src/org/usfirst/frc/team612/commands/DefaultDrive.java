@@ -15,7 +15,7 @@ public class DefaultDrive extends Command {
 	double DEADZONE = 0.05;
 	double prev_magnitude = 0;
 	double rate = 0.05;
-	boolean DRIVER_PERSPECTIVE = true;
+	boolean DRIVER_PERSPECTIVE = false;
 
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
