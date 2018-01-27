@@ -4,12 +4,13 @@ import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class OmniDrive extends Command {
-private static double deadzone = .3;
+private static double ratio = .9;
     public OmniDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,14 +23,20 @@ private static double deadzone = .3;
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double right= OI.joystick.getY(Hand.kRight);
-    	double left = OI.joystick.getY(Hand.kLeft);
-    	if (right +deadzone >= left ||right  -deadzone <= left) {
+    	double right = -OI.joystick.getY(Hand.kRight);
+    	double left = -OI.joystick.getY(Hand.kLeft);
+    	if(right == 0) right=0.01;
+    	if(left == 0) left=0.01;
+    	SmartDashboard.putNumber("right",  right);
+    	SmartDashboard.putNumber("left", left);
+    	if (right/left < ratio || left/right < 1/ratio) {
+    		SmartDashboard.putBoolean("inIf", true);
     		Robot.drivetrain.getTalon(2).set(right);
     		Robot.drivetrain.getTalon(1).set(left);
-    		Robot.drivetrain.getTalon(3).set(0);
-       		Robot.drivetrain.getTalon(4).set(0);
+    		Robot.drivetrain.getTalon(3).neutralOutput();
+       		Robot.drivetrain.getTalon(4).neutralOutput();
        		} else {
+       		SmartDashboard.putBoolean("inIf", false);
     		Robot.drivetrain.getTalon(2).set(right);
     		Robot.drivetrain.getTalon(3).set(right);
     		Robot.drivetrain.getTalon(1).set(left);

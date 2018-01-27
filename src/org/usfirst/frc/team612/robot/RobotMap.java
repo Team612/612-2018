@@ -13,9 +13,9 @@ public class RobotMap {
 	// public static int rightMotor = 2;
 	
 	public static int talon_FR = 0;
-	public static int talon_FL = 1;
-	public static int talon_RR = 5;
-	public static int talon_RL = 3;
+	public static int talon_FL = 3;
+	public static int talon_RR = 1;
+	public static int talon_RL = 5;
 	public static int joy_PCport = 1;
 
 	// If you are using multiple modules, make sure to define both the port
