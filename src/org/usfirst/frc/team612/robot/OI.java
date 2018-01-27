@@ -1,11 +1,52 @@
 package org.usfirst.frc.team612.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team612.commands.ResetDisplacement;
+import org.usfirst.frc.team612.commands.ServoMove;
+import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
+	public static boolean XBOX = true;	
+	public static XboxController joystick = new XboxController(RobotMap.joy_PCport);
+	public static JoystickButton button_A = new JoystickButton(joystick,1);
+	public static JoystickButton button_B = new JoystickButton(joystick,2);
+	public static JoystickButton button_X = new JoystickButton(joystick,3);
+	public static JoystickButton button_Y = new JoystickButton(joystick,4);
+	public static JoystickButton button_LB = new JoystickButton(joystick,5);
+	public static JoystickButton button_RB = new JoystickButton(joystick,6);
+	public static JoystickButton button_BCK = new JoystickButton(joystick,7);
+	public static JoystickButton button_STRT = new JoystickButton(joystick,8);
+	public static JoystickButton button_LJ = new JoystickButton(joystick,9);
+	public static JoystickButton button_RJ = new JoystickButton(joystick,10);
+	public static Joystick joy = new Joystick(1);
+	
+	public OI() {
+		button_X.whenPressed(new ResetDisplacement());
+		button_LB.whileHeld(new ServoMove(true));
+		button_RB.whileHeld(new ServoMove(false));
+	}
+	
+ /* BUTTON MAPPING (this should go in RobotMap)
+  * 1: A
+	2: B
+	3: X
+	4: Y
+	5: Left Bumper
+	6: Right Bumper
+	7: Back
+	8: Start
+	9: Left Joystick
+	10: Right Joystick */
+	
 	//public XboxController driverC() {
 	//	return driver;
 	//}
