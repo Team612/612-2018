@@ -6,6 +6,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import org.usfirst.frc.team612.robot.RobotMap;
 import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.commands.OmniDrive;
+import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
 /**
@@ -20,10 +22,10 @@ public class Drivetrain extends Subsystem {
 	MecanumDrive drivetrain;
 	
 	public Drivetrain() {
-		talon_FR.setInverted(true);
+		//talon_FR.setInverted(true);
 		//talon_FL.setInverted(true);
 		talon_RR.setInverted(true);
-		talon_RL.setInverted(true);
+		//talon_RL.setInverted(true);
 		drivetrain = new MecanumDrive(talon_FL, talon_RL, talon_FR, talon_RR);
 	}
 
@@ -32,7 +34,11 @@ public class Drivetrain extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new DefaultDrive());
+    	if(OI.OMNI) {
+    		setDefaultCommand(new OmniDrive());
+    	} else {
+    		setDefaultCommand(new DefaultDrive());
+    	}
     }
     
     public MecanumDrive getDriveTrain() {
