@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.ResetDisplacement;
+import org.usfirst.frc.team612.commands.ServoMove;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.robot.RobotMap;
 
@@ -30,6 +31,8 @@ public class OI {
 	
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
+		button_LB.whileHeld(new ServoMove(true));
+		button_RB.whileHeld(new ServoMove(false));
 	}
 	
  /* BUTTON MAPPING (this should go in RobotMap)
