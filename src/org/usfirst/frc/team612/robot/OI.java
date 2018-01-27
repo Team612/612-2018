@@ -15,6 +15,7 @@ import org.usfirst.frc.team612.robot.RobotMap;
 public class OI {
 
 	public static boolean XBOX = true;	
+	public static boolean OMNI = false;
 	public static XboxController joystick = new XboxController(RobotMap.joy_PCport);
 	public static JoystickButton button_A = new JoystickButton(joystick,1);
 	public static JoystickButton button_B = new JoystickButton(joystick,2);
