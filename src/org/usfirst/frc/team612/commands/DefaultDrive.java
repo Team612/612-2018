@@ -34,9 +34,9 @@ public class DefaultDrive extends Command {
     	double direction_y = 0;
     	double rotation = 0;
     	if(OI.XBOX) {
-       	 	direction_x = OI.joystick.getX(Hand.kLeft) * -1;
-       	 	direction_y = OI.joystick.getY(Hand.kLeft) * -1;
-       	 	rotation    = OI.joystick.getX(Hand.kRight) * -1;
+       	 	direction_x = OI.driver.getX(Hand.kLeft) * -1;
+       	 	direction_y = OI.driver.getY(Hand.kLeft) * -1;
+       	 	rotation    = OI.driver.getX(Hand.kRight) * -1;
        	}else {
            	 direction_x = OI.joy.getX() * -1;
            	 direction_y = OI.joy.getY() * -1;
