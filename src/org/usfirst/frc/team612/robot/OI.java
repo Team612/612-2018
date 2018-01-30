@@ -1,29 +1,57 @@
 package org.usfirst.frc.team612.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team612.robot.commands.TankDrive;
+import org.usfirst.frc.team612.commands.ResetDisplacement;
+import org.usfirst.frc.team612.commands.ServoMove;
+import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.commands.DefaultGrabber;
+import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	private static XboxController driver = new XboxController(1);
-	//public  PWM LEDGround = new PWM(0);
-	//public  PWM LED = new PWM(1);
-	//private static Joystick bongo = new Joystick(1);
-	/*Encoder enc = new Encoder(0,1,true,Encoder.EncodingType.k4X);
-	public Encoder eco() {
-		return enc;
-	}*/
-	public XboxController Driver() {
-		return driver;
+
+	public static boolean XBOX = true;	
+	public static boolean OMNI = true;
+	public static XboxController driver = new XboxController(RobotMap.driver_port);
+	public static JoystickButton button_A = new JoystickButton(driver,1);
+	public static JoystickButton button_B = new JoystickButton(driver,2);
+	public static JoystickButton button_X = new JoystickButton(driver,3);
+	public static JoystickButton button_Y = new JoystickButton(driver,4);
+	public static JoystickButton button_LB = new JoystickButton(driver,5);
+	public static JoystickButton button_RB = new JoystickButton(driver,6);
+	public static JoystickButton button_BCK = new JoystickButton(driver,7);
+	public static JoystickButton button_STRT = new JoystickButton(driver,8);
+	public static JoystickButton button_LJ = new JoystickButton(driver,9);
+	public static JoystickButton button_RJ = new JoystickButton(driver,10);
+	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
+	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
+	public static Joystick joy = new Joystick(1);
+	
+	public OI() {
+		button_X.whenPressed(new ResetDisplacement());
+		gunner_button_A.whenPressed(new DefaultGrabber());
+		button_LB.whileHeld(new ServoMove(true));
+		button_RB.whileHeld(new ServoMove(false));
 	}
+	
+ /* BUTTON MAPPING (this should go in RobotMap)
+  * 1: A
+	2: B
+	3: X
+	4: Y
+	5: Left Bumper
+	6: Right Bumper
+	7: Back
+	8: Start
+	9: Left Joystick
+	10: Right Joystick */
+	
 	//public XboxController driverC() {
 	//	return driver;
 	//}
