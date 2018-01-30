@@ -14,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
 import org.usfirst.frc.team612.subsystems.Drivetrain;
+import org.usfirst.frc.team612.subsystems.Grabber;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -26,6 +27,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
+	public static Grabber grabber = new Grabber(); 
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
