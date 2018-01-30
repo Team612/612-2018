@@ -1,6 +1,5 @@
 package org.usfirst.frc.team612.robot;
 
-import com.ctre.CANTalon;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -8,14 +7,20 @@ import com.ctre.CANTalon;
  * floating around.
  */
 public class RobotMap {
-	public static CANTalon left = new CANTalon(1);
-	public static CANTalon backleft = new CANTalon(2);
-	public static CANTalon right = new CANTalon(6);
-	public static CANTalon rightback = new CANTalon(4);
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
+	
+	public static int talon_FR = 0;
+	public static int talon_FL = 1;
+	public static int talon_RR = 5;
+	public static int talon_RL = 3;
+	public static int talon_lift = 6;
+	public static int gunner_port = 1;
+	public static int driver_port = 2;
+	public static int solenoid_R = 0;
+	public static int solenoid_L = 1;
 
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
