@@ -25,8 +25,8 @@ public class OmniDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double right = -OI.joystick.getY(Hand.kRight);
-    	double left = -OI.joystick.getY(Hand.kLeft);
+    	double right = -OI.driver.getY(Hand.kRight);
+    	double left = -OI.driver.getY(Hand.kLeft);
     	if(right == 0) right=0.01;
     	if(left == 0) left=0.01;
     	SmartDashboard.putNumber("right",  right);

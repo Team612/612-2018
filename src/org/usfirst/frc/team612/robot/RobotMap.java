@@ -16,7 +16,9 @@ public class RobotMap {
 	public static int talon_FL = 1;
 	public static int talon_RR = 5;
 	public static int talon_RL = 3;
-	public static int joy_PCport = 1;
+	public static int talon_lift = 6;
+	public static int gunner_port = 1;
+	public static int driver_port = 2;
 	public static int solenoid_R = 0;
 	public static int solenoid_L = 1;
 

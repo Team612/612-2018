@@ -18,22 +18,24 @@ public class OI {
 
 	public static boolean XBOX = true;	
 	public static boolean OMNI = true;
-	public static XboxController joystick = new XboxController(RobotMap.joy_PCport);
-	public static JoystickButton button_A = new JoystickButton(joystick,1);
-	public static JoystickButton button_B = new JoystickButton(joystick,2);
-	public static JoystickButton button_X = new JoystickButton(joystick,3);
-	public static JoystickButton button_Y = new JoystickButton(joystick,4);
-	public static JoystickButton button_LB = new JoystickButton(joystick,5);
-	public static JoystickButton button_RB = new JoystickButton(joystick,6);
-	public static JoystickButton button_BCK = new JoystickButton(joystick,7);
-	public static JoystickButton button_STRT = new JoystickButton(joystick,8);
-	public static JoystickButton button_LJ = new JoystickButton(joystick,9);
-	public static JoystickButton button_RJ = new JoystickButton(joystick,10);
+	public static XboxController driver = new XboxController(RobotMap.driver_port);
+	public static JoystickButton button_A = new JoystickButton(driver,1);
+	public static JoystickButton button_B = new JoystickButton(driver,2);
+	public static JoystickButton button_X = new JoystickButton(driver,3);
+	public static JoystickButton button_Y = new JoystickButton(driver,4);
+	public static JoystickButton button_LB = new JoystickButton(driver,5);
+	public static JoystickButton button_RB = new JoystickButton(driver,6);
+	public static JoystickButton button_BCK = new JoystickButton(driver,7);
+	public static JoystickButton button_STRT = new JoystickButton(driver,8);
+	public static JoystickButton button_LJ = new JoystickButton(driver,9);
+	public static JoystickButton button_RJ = new JoystickButton(driver,10);
+	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
+	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
-		button_A.whenPressed(new DefaultGrabber());
+		gunner_button_A.whenPressed(new DefaultGrabber());
 		button_LB.whileHeld(new ServoMove(true));
 		button_RB.whileHeld(new ServoMove(false));
 	}
