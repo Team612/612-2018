@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
+import java.io.FileWriter;
+import java.io.File;
 
 
 /**
@@ -37,7 +39,8 @@ public class DefaultDrive extends Command {
        	 	direction_x = OI.driver.getX(Hand.kLeft) * -1;
        	 	direction_y = OI.driver.getY(Hand.kLeft) * -1;
        	 	rotation    = OI.driver.getX(Hand.kRight) * -1;
-       	}else {
+       	 	
+       	} else {
            	 direction_x = OI.joy.getX() * -1;
            	 direction_y = OI.joy.getY() * -1;
            	 rotation = OI.joy.getTwist() * -1;
@@ -52,6 +55,8 @@ public class DefaultDrive extends Command {
     	if(rotation<DEADZONE&&rotation>-DEADZONE) {
     		rotation = 0;
     	}
+    	
+    	
     	// Do all the deadzone math
     	double magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
     	if(magnitude > 1.0) {
@@ -75,6 +80,16 @@ public class DefaultDrive extends Command {
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     	}
     	// Save what angle should be to theoretical_angle to be used next iteration
+    	
+    	//save magnitude angle and rotation to a file
+    	String driver_magnitude = String.valueOf(magnitude);
+   	 	String driver_angle = String.valueOf(angle);	
+   	 	String driver_rotation = String.valueOf(rotation);
+        OI.writer.write(driver_magnitude + " ");
+        OI.writer.write(driver_angle + " ");
+        OI.writer.write(driver_rotation);
+        OI.writer.write("");
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()

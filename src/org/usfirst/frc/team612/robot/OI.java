@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
+
+import java.io.File;
+import java.io.FileWriter;
+
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
@@ -33,13 +37,28 @@ public class OI {
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	
+	
+	//Create File object (create new file)
+	public static File file = new File("blank");
+	
+	
+	public static FileWriter writer; 
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
 		gunner_button_A.whenPressed(new DefaultGrabber());
 		button_LB.whileHeld(new ServoMove(true));
 		button_RB.whileHeld(new ServoMove(false));
+		
+		//Check if File has been created
+		if (file.createNewFile()) {
+			System.out.println(file + " has been created");
+		} else {	
+			System.out.println("File already exists.");
+		}
+		//Create File Writer object with file path
+		FileWriter writer = new FileWriter(file);
 	}
-	
+}
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A
 	2: B
