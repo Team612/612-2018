@@ -5,8 +5,12 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
-import java.io.FileWriter;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import edu.wpi.first.wpilibj.Timer;
 
 
 /**
@@ -85,11 +89,23 @@ public class DefaultDrive extends Command {
     	String driver_magnitude = String.valueOf(magnitude);
    	 	String driver_angle = String.valueOf(angle);	
    	 	String driver_rotation = String.valueOf(rotation);
-        OI.writer.write(driver_magnitude + " ");
-        OI.writer.write(driver_angle + " ");
-        OI.writer.write(driver_rotation);
-        OI.writer.write("");
-        
+   	 	String seconds = String.valueOf(OI.data_timer.get());
+   	 	
+   	 	//create array of data to store
+   	 	String input_data[] = {driver_magnitude, driver_angle, driver_rotation, seconds};
+   	 	String writable_data = "";
+   	 	
+   	 	//format the data
+   	 	for (String item: input_data) {
+   	 		writable_data += item + ",";
+   	 	}
+   	 	
+   	 	//print and write data to file
+   	 	System.out.println(writable_data);
+   	 	//remove last comma
+   	 	writable_data = writable_data.substring(0, writable_data.length() - 1);
+   	 	OI.bw.write(writable_data);
+   	 	OI.bw.newLine();
     }
 
     // Make this return true when this Command no longer needs to run execute()

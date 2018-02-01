@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
@@ -38,25 +41,28 @@ public class OI {
 	public static Joystick joy = new Joystick(1);
 	
 	
-	//Create File object (create new file)
-	public static File file = new File("blank");
+	//Variables to file creation
+	public static String file_directory = "Desktop";
+	public static String file_name = "data.txt";
+	public static Timer data_timer = new Timer();
+	public static FileWriter fw; 
+	public static BufferedWriter bw;
+	public static File file = new File(file_directory + "/" + file_name);
 	
-	
-	public static FileWriter writer; 
-	public OI() {
+	public OI() throws IOException {
 		button_X.whenPressed(new ResetDisplacement());
 		gunner_button_A.whenPressed(new DefaultGrabber());
 		button_LB.whileHeld(new ServoMove(true));
 		button_RB.whileHeld(new ServoMove(false));
 		
 		//Check if File has been created
-		if (file.createNewFile()) {
-			System.out.println(file + " has been created");
-		} else {	
-			System.out.println("File already exists.");
+		if (!file.exists()) {
+			file.createNewFile();
 		}
 		//Create File Writer object with file path
-		FileWriter writer = new FileWriter(file);
+		FileWriter fw = new FileWriter(file);
+		BufferedWriter bw = new BufferedWriter(fw);
+		data_timer.start();
 	}
 }
  /* BUTTON MAPPING (this should go in RobotMap)
@@ -102,4 +108,3 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-}
