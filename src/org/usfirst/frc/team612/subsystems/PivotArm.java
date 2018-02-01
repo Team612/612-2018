@@ -2,6 +2,8 @@ package org.usfirst.frc.team612.subsystems;
 
 import org.usfirst.frc.team612.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -10,11 +12,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class PivotArm extends Subsystem {
 	
-	Talon pivot = new Talon(RobotMap.talon_pivot);
+	WPI_TalonSRX pivot = new WPI_TalonSRX(RobotMap.talon_pivot);
 
-    // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public Talon getPivot() {
+	public WPI_TalonSRX getTalon() {
 	return pivot;
 	
 }

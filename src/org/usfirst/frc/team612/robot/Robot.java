@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
-	public static Subsystem pivotarm = new PivotArm();
+	public static PivotArm pivotarm = new PivotArm();
 	
 	
 	Command autonomousCommand;
