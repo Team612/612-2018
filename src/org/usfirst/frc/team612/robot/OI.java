@@ -11,6 +11,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team612.commands.DefaultDrive;
@@ -43,7 +46,8 @@ public class OI {
 	
 	//Variables to file creation
 	public static String file_directory = "Desktop";
-	public static String file_name = "data.txt";
+	public static String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+	public static String file_name = timeStamp + ".txt";
 	public static Timer data_timer = new Timer();
 	public static FileWriter fw; 
 	public static BufferedWriter bw;
