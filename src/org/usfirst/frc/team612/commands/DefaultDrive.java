@@ -15,7 +15,6 @@ public class DefaultDrive extends Command {
 	double DEADZONE = 0.05;
 	double prev_magnitude = 0;
 	double rate = 0.05;
-	boolean DRIVER_PERSPECTIVE = false;
 
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -34,9 +33,9 @@ public class DefaultDrive extends Command {
     	double direction_y = 0;
     	double rotation = 0;
     	if(OI.XBOX) {
-       	 	direction_x = OI.driver.getX(Hand.kLeft) * -1;
-       	 	direction_y = OI.driver.getY(Hand.kLeft) * -1;
-       	 	rotation    = OI.driver.getX(Hand.kRight) * -1;
+       	 	direction_x = OI.driver.getX(Hand.kLeft);
+       	 	direction_y = OI.driver.getY(Hand.kLeft);
+       	 	rotation    = OI.driver.getX(Hand.kRight);
        	}else {
            	 direction_x = OI.joy.getX() * -1;
            	 direction_y = OI.joy.getY() * -1;
@@ -60,7 +59,7 @@ public class DefaultDrive extends Command {
     	double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
     	// Convert cartesian to polar
     	double yaw = Robot.navx.getYaw();
-    	if(DRIVER_PERSPECTIVE) {
+    	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
     	}
     	if(magnitude > prev_magnitude) {
