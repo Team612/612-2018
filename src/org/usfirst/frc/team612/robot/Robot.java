@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
+import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Grabber;
 import org.usfirst.frc.team612.subsystems.Lift;
@@ -34,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
 	public static PivotArm pivotarm = new PivotArm();
+	public static Climber climber = new Climber();
 	
 	
 	Command autonomousCommand;

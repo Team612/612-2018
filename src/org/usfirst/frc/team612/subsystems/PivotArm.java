@@ -1,5 +1,6 @@
 package org.usfirst.frc.team612.subsystems;
 
+import org.usfirst.frc.team612.commands.DefaultPivotArm;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -20,6 +21,7 @@ public class PivotArm extends Subsystem {
 	
 }
     public void initDefaultCommand() {
+    	setDefaultCommand(new DefaultPivotArm());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
