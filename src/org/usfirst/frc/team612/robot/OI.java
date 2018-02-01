@@ -64,7 +64,7 @@ public class OI {
 			file.createNewFile();
 		}
 		//Create File Writer object with file path
-		FileWriter fw = new FileWriter(file);
+		FileWriter fw = new FileWriter(file, true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		data_timer.start();
 	}
