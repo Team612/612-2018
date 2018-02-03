@@ -22,6 +22,8 @@ public class RobotMap {
 	public static int solenoid_R = 0;
 	public static int solenoid_L = 1;
 	public static int solenoid_C = 3;
+	public static int talon_pivot = 10;
+
 
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
