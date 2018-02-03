@@ -14,11 +14,10 @@ import edu.wpi.first.wpilibj.CameraServer;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
-import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Grabber;
 import org.usfirst.frc.team612.subsystems.Lift;
-import org.usfirst.frc.team612.subsystems.PivotArm;
+import org.usfirst.frc.team612.subsystems.Pusher;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,9 +32,8 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
 	public static Grabber grabber = new Grabber();
+	public static Pusher pusher = new Pusher();
 	public static Lift lift = new Lift();
-	public static PivotArm pivotarm = new PivotArm();
-	public static Climber climber = new Climber();
 	
 	
 	Command autonomousCommand;
@@ -131,6 +129,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		//LiveWindow.run();
 	}
 }

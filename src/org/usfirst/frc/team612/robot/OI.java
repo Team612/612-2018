@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
-import org.usfirst.frc.team612.commands.DefaultClimber;
+import org.usfirst.frc.team612.commands.AutoDrive;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
@@ -17,9 +17,12 @@ import org.usfirst.frc.team612.robot.RobotMap;
  */
 public class OI {
 
-	public static boolean XBOX = true;	
-	public static boolean OMNI = true;
+	public static final boolean XBOX = true;	
+	public static final boolean OMNI = true;
+	public static final boolean DRIVER_PERSPECTIVE = false;
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
+	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
+
 	public static JoystickButton button_A = new JoystickButton(driver,1);
 	public static JoystickButton button_B = new JoystickButton(driver,2);
 	public static JoystickButton button_X = new JoystickButton(driver,3);
@@ -30,17 +33,16 @@ public class OI {
 	public static JoystickButton button_STRT = new JoystickButton(driver,8);
 	public static JoystickButton button_LJ = new JoystickButton(driver,9);
 	public static JoystickButton button_RJ = new JoystickButton(driver,10);
-	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
 	
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
+		//button_Y.whenPressed(new AutoDrive());
 		gunner_button_A.whenPressed(new DefaultGrabber());
 		button_LB.whileHeld(new ServoMove(true));
 		button_RB.whileHeld(new ServoMove(false));
-		gunner_button_B.whenPressed(new DefaultClimber());
 	}
 	
  /* BUTTON MAPPING (this should go in RobotMap)

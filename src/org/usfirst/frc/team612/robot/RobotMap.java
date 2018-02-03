@@ -11,18 +11,16 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
-	
+	public static int gunner_port = 1;
+	public static int driver_port = 0;
 	public static int talon_FR = 2;
 	public static int talon_FL = 1;
 	public static int talon_RR = 3;
 	public static int talon_RL = 4;
 	public static int talon_lift = 5;
-	public static int gunner_port = 1;
-	public static int driver_port = 2;
-	public static int solenoid_R = 1;
-	public static int solenoid_L = 2;
-	public static int solenoid_C = 3;
-	public static int talon_pivot = 10;
+	public static int solenoid_R = 1;//placeholder
+	public static int solenoid_L = 2;//placeholder
+	public static int solenoid_P = 3;//placeholder
 
 
 	// If you are using multiple modules, make sure to define both the port
