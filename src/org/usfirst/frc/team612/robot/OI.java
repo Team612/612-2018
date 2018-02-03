@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
+import org.usfirst.frc.team612.commands.DefaultClimber;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
@@ -32,12 +33,14 @@ public class OI {
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
+	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
 	
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
 		gunner_button_A.whenPressed(new DefaultGrabber());
 		button_LB.whileHeld(new ServoMove(true));
 		button_RB.whileHeld(new ServoMove(false));
+		gunner_button_B.whenPressed(new DefaultClimber());
 	}
 	
  /* BUTTON MAPPING (this should go in RobotMap)

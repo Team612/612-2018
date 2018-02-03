@@ -8,8 +8,6 @@ import org.usfirst.frc.team612.robot.RobotMap;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.OmniDrive;
 import org.usfirst.frc.team612.robot.OI;
-import org.usfirst.frc.team612.robot.Robot;
-
 /**
  *
  */

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team612.subsystems;
 
+import org.usfirst.frc.team612.commands.DefaultLift;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -15,6 +16,7 @@ public class Lift extends Subsystem {
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
+    	setDefaultCommand(new DefaultLift());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
