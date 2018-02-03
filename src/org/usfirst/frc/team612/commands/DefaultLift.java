@@ -1,5 +1,6 @@
 package org.usfirst.frc.team612.commands;
 
+import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -22,7 +23,7 @@ public class DefaultLift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    Robot.lift.getTalon().set(Robot.oi.gunner.getY(Hand.kLeft));
+    Robot.lift.getTalon().set(OI.gunner.getY(Hand.kLeft));
     }
     
 

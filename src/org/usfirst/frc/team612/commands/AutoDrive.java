@@ -1,8 +1,5 @@
 package org.usfirst.frc.team612.commands;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.Timer;
-
 import org.usfirst.frc.team612.robot.Robot;
 
 /**
