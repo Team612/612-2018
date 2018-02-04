@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.CameraServer;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Grabber;
 import org.usfirst.frc.team612.subsystems.Lift;
@@ -48,6 +51,16 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 		CameraServer.getInstance().startAutomaticCapture(0);
 		CameraServer.getInstance().startAutomaticCapture(1);
+		
+		//Check if File has been created
+		System.out.println(OI.file_name);
+		System.out.println(OI.timeStamp);
+		OI.file.createNewFile();
+		System.out.println("File is created!");
+		//Create File Writer object with file path
+		FileWriter fw = new FileWriter(OI.file, true);
+		BufferedWriter bw = new BufferedWriter(fw);
+		OI.data_timer.start();
 	}
 
 	/**
