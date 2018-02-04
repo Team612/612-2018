@@ -7,16 +7,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
+import java.io.PrintWriter;
 import edu.wpi.first.wpilibj.Timer;
 
-import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
@@ -45,13 +42,16 @@ public class OI {
 	
 	
 	//Variables to file creation
-	public static String file_directory = "Desktop";
-	public static String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-	public static String file_name = timeStamp + ".txt";
+	public static String file_name_create = "data.txt";
+	public static PrintWriter writer;
 	public static Timer data_timer = new Timer();
-	public static FileWriter fw; 
-	public static BufferedWriter bw;
-	public static File file = new File(file_directory + "/" + file_name);
+	
+	//Variables to open .txt file
+	static String directory = null;
+	static String file_name_open = null;
+	public static File file_to_open;
+	public static FileReader fr;
+	public static BufferedReader bf;
 	
 	public OI() throws IOException {
 		button_X.whenPressed(new ResetDisplacement());
@@ -59,14 +59,15 @@ public class OI {
 		button_LB.whileHeld(new ServoMove(true));
 		button_RB.whileHeld(new ServoMove(false));
 		
-		//Check if File has been created
-		if (!file.exists()) {
-			file.createNewFile();
-		}
-		//Create File Writer object with file path
-		FileWriter fw = new FileWriter(file, true);
-		BufferedWriter bw = new BufferedWriter(fw);
+		//create new file
+		//file stored on robo-rio
+		writer = new PrintWriter(file_name_create);
+		//start second timer
 		data_timer.start();
+		//store values of opening file to objects
+		file_to_open = new File(directory + "/" + file_name_open);
+		fr = new FileReader(file_to_open);
+		bf = new BufferedReader(fr);
 	}
 }
  /* BUTTON MAPPING (this should go in RobotMap)

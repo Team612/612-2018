@@ -96,16 +96,11 @@ public class DefaultDrive extends Command {
    	 	String writable_data = "";
    	 	
    	 	//format the data
-   	 	for (String item: input_data) {
-   	 		writable_data += item + ",";
-   	 	}
+   	 	writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3];
    	 	
    	 	//print and write data to file
    	 	System.out.println(writable_data);
-   	 	//remove last comma
-   	 	writable_data = writable_data.substring(0, writable_data.length() - 1);
-   	 	OI.bw.write(writable_data);
-   	 	OI.bw.newLine();
+   	 	OI.writer.println(writable_data);
     }
 
     // Make this return true when this Command no longer needs to run execute()
