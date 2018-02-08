@@ -37,7 +37,13 @@ public class OI {
 
 	
 	
-	
+	/**
+	 * Does some stuff when certain buttons on an Xbox controller are pressed
+	 * Executes <code>ResetDisplacement()</code> when the X button is pressed.
+	 * Executes <code>DefaultGrabber()</code> when Gunner Button A is pressed.
+	 * Sets <code>ServoMove()</code> to <code>true</code> as long as the left bumper on the Xbox controller is held down.
+	 * Sets <code>ServoMove()</code> to <code>false</code> as long as the right bumper on the Xbox controller is held down.
+	 */
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());
 		//button_Y.whenPressed(new AutoDrive());
