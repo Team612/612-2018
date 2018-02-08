@@ -25,7 +25,7 @@ public class DefaultLift extends Command {
     /**
      * Requires <code>lift</code>
      */
-    public DefaultLift() {
+    public DefaultLift(int h) {
       height = h;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
