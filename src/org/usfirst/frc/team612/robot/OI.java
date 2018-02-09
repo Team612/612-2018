@@ -40,15 +40,10 @@ public class OI {
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	
-	
 	//Variables to file creation
-	public static String file_name_create = "data.txt";
-	public static PrintWriter writer;
 	public static Timer data_timer = new Timer();
 	
 	//Variables to open .txt file
-	static String directory = null;
-	static String file_name_open = null;
 	public static File file_to_open;
 	public static FileReader fr;
 	public static BufferedReader bf;
@@ -61,11 +56,9 @@ public class OI {
 		
 		//create new file
 		//file stored on robo-rio
-		writer = new PrintWriter(file_name_create);
 		//start second timer
 		data_timer.start();
 		//store values of opening file to objects
-		file_to_open = new File(directory + "/" + file_name_open);
 		fr = new FileReader(file_to_open);
 		bf = new BufferedReader(fr);
 	}

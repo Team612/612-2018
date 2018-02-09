@@ -8,8 +8,11 @@ import org.usfirst.frc.team612.robot.OI;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -22,7 +25,12 @@ public class DefaultDrive extends Command {
 	double prev_magnitude = 0;
 	double rate = 0.05;
 	boolean DRIVER_PERSPECTIVE = false;
-
+	
+	static String directory = "/home/lvuser/";
+	public static String file_name_create = "data.txt";
+	public static PrintWriter writer;
+	public static File file_to_create = new File(directory + file_name_create);
+	
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -32,6 +40,23 @@ public class DefaultDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	try {
+			if (file_to_create.createNewFile()) {
+				System.out.println("File created...");
+			} else {
+				System.out.println("File not created...");
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	try {
+			writer = new PrintWriter(file_to_create);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -100,7 +125,11 @@ public class DefaultDrive extends Command {
    	 	
    	 	//print and write data to file
    	 	System.out.println(writable_data);
-   	 	OI.writer.println(writable_data);
+   	 	if (writer == null) {
+   	 		System.out.println("Writer Object = Null");
+   	 	} else {
+   	 		writer.println(writable_data);
+   	 	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
