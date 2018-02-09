@@ -28,6 +28,7 @@ public class DefaultDrive extends Command {
 	
 	static String directory = "/home/lvuser/";
 	public static String file_name_create = "data.txt";
+	public static String file_dir = directory + file_name_create;
 	public static PrintWriter writer;
 	public static File file_to_create = new File(directory + file_name_create);
 	
@@ -52,7 +53,7 @@ public class DefaultDrive extends Command {
 		}
     	
     	try {
-			writer = new PrintWriter(file_to_create);
+			writer = new PrintWriter(file_dir); //Try both file object and string...
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
