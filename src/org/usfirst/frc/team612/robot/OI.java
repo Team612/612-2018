@@ -16,7 +16,7 @@ import org.usfirst.frc.team612.robot.RobotMap;
 public class OI {
 
 	public static final boolean XBOX = true;	
-	public static final boolean OMNI = true;
+	public static final boolean OMNI = false;
 	public static final boolean DRIVER_PERSPECTIVE = false;
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);

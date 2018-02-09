@@ -12,7 +12,7 @@ import org.usfirst.frc.team612.robot.OI;
  */
 public class DefaultDrive extends Command {
 	
-	double DEADZONE = 0.05;
+	double DEADZONE = 0.07;
 	double prev_magnitude = 0;
 	double rate = 0.05;
 
@@ -35,7 +35,7 @@ public class DefaultDrive extends Command {
     	if(OI.XBOX) {
        	 	direction_x = OI.driver.getX(Hand.kLeft);
        	 	direction_y = OI.driver.getY(Hand.kLeft);
-       	 	rotation    = OI.driver.getX(Hand.kRight);
+       	 	rotation    = -OI.driver.getX(Hand.kRight); // This has to be inverted
        	}else {
            	 direction_x = OI.joy.getX() * -1;
            	 direction_y = OI.joy.getY() * -1;
