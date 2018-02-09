@@ -30,7 +30,7 @@ public class DefaultDrive extends Command {
 	public static String file_name_create = "data.txt";
 	public static String file_dir = directory + file_name_create;
 	public static PrintWriter writer;
-	public static File file_to_create = new File(directory + file_name_create);
+	public static File file_to_create = new File(file_dir);
 	
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
