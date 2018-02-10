@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RecordMovement extends Command {
 	public static File file = new File("/home/lvuser/Output.txt");
 	static String directory = "/home/lvuser/";
-	public static String file_name_create = "data30.txt";
+	public static String file_name_create = "data41.txt";
 	public static String file_dir = directory + file_name_create;
 	public static PrintWriter writer;
 	public static File file_to_create = new File(file_dir);
@@ -77,7 +77,7 @@ public class RecordMovement extends Command {
    	 	
    	 	//format the data
    	 	writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3] + "," + input_data[4];
-   	 	
+   	 	System.out.println(writable_data);
    	 	//print and write data to file
    	 	if (writer == null) {
    	 		System.out.println("Writer Object = Null");
@@ -88,7 +88,7 @@ public class RecordMovement extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return OI.button_Y.get();
     }
 
     // Called once after isFinished returns true

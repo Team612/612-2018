@@ -18,10 +18,12 @@ public class ReplayRobot extends Command {
 	public static int lineNumber = 0;
 	private static boolean end = false;
 	public static Timer data_timer = new Timer();
-	public static String file_name = "data30.txt";
+	public static String file_name = "data41.txt";
 	public static FileReader fr;
 	public static BufferedReader br;
 	public static double playback_speed = 1;
+	double talon_1, talon_2, talon_3, talon_4;
+	float seconds;
 	public String line = "NOTHING";
 	Timer replay_timer = new Timer();
     public ReplayRobot() {
@@ -44,6 +46,7 @@ public class ReplayRobot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("Replay Called");
     	try {
 			fr = new FileReader("/home/lvuser/" + file_name);
 			br = new BufferedReader(fr);
@@ -83,11 +86,16 @@ public class ReplayRobot extends Command {
 			}
     	} else {
     	String[] parts = line.split(",");
-		double talon_1 = Double.parseDouble(parts[0]);
-		double talon_2 = Double.parseDouble(parts[1]);
-		double talon_3 = Double.parseDouble(parts[2]);
-		double talon_4 = Double.parseDouble(parts[3]);
-		float seconds = Float.parseFloat(parts[4]);
+    	
+    	try {
+    		talon_1 = Double.parseDouble(parts[0]);
+    		talon_2 = Double.parseDouble(parts[1]);
+			talon_3 = Double.parseDouble(parts[2]);
+			talon_4 = Double.parseDouble(parts[3]);
+			seconds = Float.parseFloat(parts[4]);
+    	} catch (ArrayIndexOutOfBoundsException e) {
+    		end = true;
+    	}
 		System.out.println(talon_1 + "/" + talon_2 + "/" + talon_3 + "/" + talon_4 + "/" + seconds);
 		double seconds_replay = replay_timer.get();
 		//if (seconds_replay >= seconds*playback_speed) {
