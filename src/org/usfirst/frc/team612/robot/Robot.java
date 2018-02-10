@@ -61,6 +61,9 @@ public class Robot extends IterativeRobot {
 
 	}
 
+	/**
+	 * Gets an instance from <code>Scheduler</code> and running it.
+	 */
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -100,7 +103,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+	
+	/**
+	 * Makes sure that the autonomous stops running when teleop starts running.
+	 */
 	@Override
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
