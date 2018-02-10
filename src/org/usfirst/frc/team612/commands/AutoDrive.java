@@ -11,11 +11,11 @@ public class AutoDrive extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	setTimeout(5);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	setTimeout(5); // Timeout should go in initialize
     }
 
     // Called repeatedly when this Command is scheduled to run

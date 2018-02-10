@@ -17,7 +17,10 @@ public class Lift extends Subsystem {
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+	
+	/**
+	 * Sets the default command for a subsystem to <code>DefaultLift()</code>.
+	 */
     public void initDefaultCommand() {
     	
         // Set the default command for a subsystem here.
@@ -29,6 +32,10 @@ public class Lift extends Subsystem {
     	lift_talon.config_kD(0, 0,5000);
     	
     }
+    /**
+     * Returns a WPI_TalonSRX <code>lift_talon</code>
+     * @return WPI_TalonSRX <code>lift_talon</code>
+     */
     public WPI_TalonSRX getTalon() {
     	return lift_talon;
     }
