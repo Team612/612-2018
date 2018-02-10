@@ -1,22 +1,36 @@
 package org.usfirst.frc.team612.commands;
 
 import org.usfirst.frc.team612.robot.OI;
+import org.usfirst.frc.team612.subsystems.Lift;
 import org.usfirst.frc.team612.robot.Robot;
+import org.usfirst.frc.team612.robot.RobotMap;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class DefaultLift extends Command {
+	WPI_TalonSRX lift_talon = new WPI_TalonSRX(RobotMap.talon_lift);
+    int prev_pos = 0;
+    int height = 0;
+    int RATE = 50;
+    int DEADZONE = 60;
+    	
     /**
      * Requires <code>lift</code>
      */
     public DefaultLift() {
+      height = h;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.lift);
+    	
     }
     
     /**
@@ -32,16 +46,15 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    Robot.lift.getTalon().set(OI.gunner.getY(Hand.kLeft));
+        	lift_talon.set(ControlMode.Position,height); 	
     }
-    
 
     /**
      * Won't stop <code>execute()</code>
      */
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
     
     /**
