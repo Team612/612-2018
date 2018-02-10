@@ -30,8 +30,12 @@ public class DefaultDrive extends Command {
 	double rate = 0.05;
 	boolean DRIVER_PERSPECTIVE = false;
 	public static File file = new File("/home/lvuser/Output.txt");
+	static String directory = "/home/lvuser/";
+	public static String file_name_create = "data.txt";
+	public static String file_dir = directory + file_name_create;
 	public static PrintWriter writer;
-
+	public static File file_to_create = new File(file_dir);
+	
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -42,12 +46,17 @@ public class DefaultDrive extends Command {
     protected void initialize() {
     	try {
 			file.createNewFile();
+			if (file_to_create.createNewFile()) {
+				System.out.println("File created...");
+			} else {
+				System.out.println("File not created...");
+			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
     	try {
-			writer = new PrintWriter(file);
+			writer = new PrintWriter(file_dir); //Try both file object and string...
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +132,7 @@ public class DefaultDrive extends Command {
    	 	//print and write data to file
    	 	System.out.println(writable_data);
    	 	if (writer == null) {
-   	 		System.out.println("Yo this is null");
+   	 		System.out.println("Writer Object = Null");
    	 	} else {
    	 		writer.println(writable_data);
    	 	}

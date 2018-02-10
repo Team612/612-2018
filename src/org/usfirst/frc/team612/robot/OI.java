@@ -41,14 +41,16 @@ public class OI {
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	
-	
 	//Variables to file creation
 	public static String file_name_create = "data.txt";
-	public static Timer data_timer = new Timer();
 	
 	//Variables to open .txt file
 	static String directory;
 	static String file_name_open;
+	public static Timer data_timer = new Timer();
+	public static BufferedReader bf;
+	
+	//Variables to open .txt file
 	public static File file_to_open;
 	public static FileReader fr;
 	
@@ -59,6 +61,8 @@ public class OI {
 		data_timer.start();
 		//store values of opening file to objects
 		file_to_open = new File(directory + "/" + file_name_open);
+		fr = new FileReader(file_to_open);
+		bf = new BufferedReader(fr);
 	}
 }
  /* BUTTON MAPPING (this should go in RobotMap)
