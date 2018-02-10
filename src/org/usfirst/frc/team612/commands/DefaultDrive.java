@@ -3,8 +3,18 @@ package org.usfirst.frc.team612.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+import edu.wpi.first.wpilibj.Timer;
 
 
 /**
@@ -15,16 +25,15 @@ public class DefaultDrive extends Command {
 	double DEADZONE = 0.07;
 	double prev_magnitude = 0;
 	double rate = 0.05;
-
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -51,6 +60,8 @@ public class DefaultDrive extends Command {
     	if(rotation<DEADZONE&&rotation>-DEADZONE) {
     		rotation = 0;
     	}
+    	
+    	
     	// Do all the deadzone math
     	double magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
     	if(magnitude > 1.0) {

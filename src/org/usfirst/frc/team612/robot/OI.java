@@ -1,12 +1,25 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.ResetDisplacement;
-import org.usfirst.frc.team612.commands.ServoMove;
-import org.usfirst.frc.team612.commands.DefaultGrabber;
+//import org.usfirst.frc.team612.commands.ServoMove;
+//import org.usfirst.frc.team612.commands.DefaultGrabber;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.commands.RecordMovement;
+import org.usfirst.frc.team612.commands.ReplayRobot;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
@@ -37,15 +50,20 @@ public class OI {
 
 	
 	
-	
-	public OI() {
-		button_X.whenPressed(new ResetDisplacement());
-		//button_Y.whenPressed(new AutoDrive());
-		gunner_button_A.whenPressed(new DefaultGrabber());
-		button_LB.whileHeld(new ServoMove(true));
-		button_RB.whileHeld(new ServoMove(false));
+	public OI() throws IOException {
+		button_A.whenPressed(new ReplayRobot());
+		button_B.whenPressed(new RecordMovement());
+	/*	//create new file
+		//file stored on robo-rio
+		//start second timer
+		data_timer.start();
+		//store values of opening file to objects
+		file_to_open = new File(directory + "/" + file_name_open);
+		fr = new FileReader(file_to_open);
+		bf = new BufferedReader(fr);*/
+		//start second timer
 	}
-	
+}
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A
 	2: B
@@ -89,4 +107,3 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-}
