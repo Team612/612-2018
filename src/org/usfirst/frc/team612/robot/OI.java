@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
-import org.usfirst.frc.team612.commands.AutoDrive;
-import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
@@ -36,6 +34,9 @@ public class OI {
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
+
+	
+	
 	
 	public OI() {
 		button_X.whenPressed(new ResetDisplacement());

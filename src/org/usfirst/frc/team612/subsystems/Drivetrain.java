@@ -1,7 +1,6 @@
 package org.usfirst.frc.team612.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-//import edu.wpi.first.wpilibj.Talon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import org.usfirst.frc.team612.robot.RobotMap;
