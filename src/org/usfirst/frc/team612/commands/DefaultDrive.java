@@ -4,10 +4,8 @@ package org.usfirst.frc.team612.commands;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,7 +14,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
-
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -29,12 +26,6 @@ public class DefaultDrive extends Command {
 	double prev_magnitude = 0;
 	double rate = 0.05;
 	boolean DRIVER_PERSPECTIVE = false;
-	public static File file = new File("/home/lvuser/Output.txt");
-	static String directory = "/home/lvuser/";
-	public static String file_name_create = "data.txt";
-	public static String file_dir = directory + file_name_create;
-	public static PrintWriter writer;
-	public static File file_to_create = new File(file_dir);
 	
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -44,23 +35,7 @@ public class DefaultDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	try {
-			file.createNewFile();
-			if (file_to_create.createNewFile()) {
-				System.out.println("File created...");
-			} else {
-				System.out.println("File not created...");
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-    	try {
-			writer = new PrintWriter(file_dir); //Try both file object and string...
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -113,29 +88,6 @@ public class DefaultDrive extends Command {
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     	}
     	// Save what angle should be to theoretical_angle to be used next iteration
-    	
-    	//save magnitude angle and rotation to a file
-    	String driver_magnitude = String.valueOf(magnitude);
-   	 	String driver_angle = String.valueOf(angle);	
-   	 	String driver_rotation = String.valueOf(rotation);
-   	 	String seconds = String.valueOf(OI.data_timer.get());
-   	 	
-
-   	 	
-   	 	//create array of data to store
-   	 	String input_data[] = {driver_magnitude, driver_angle, driver_rotation, seconds};
-   	 	String writable_data = "";
-   	 	
-   	 	//format the data
-   	 	writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3];
-   	 	
-   	 	//print and write data to file
-   	 	System.out.println(writable_data);
-   	 	if (writer == null) {
-   	 		System.out.println("Writer Object = Null");
-   	 	} else {
-   	 		writer.println(writable_data);
-   	 	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

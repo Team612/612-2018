@@ -53,10 +53,7 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture(1);
 		
 		//Check if File has been created
-		System.out.println(OI.file_name_create);
-		System.out.println(OI.data_timer);
 		//Create File Writer object with file path
-		OI.data_timer.start();
 	}
 
 	/**
