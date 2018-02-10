@@ -1,20 +1,21 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team612.commands.ResetDisplacement;
-import org.usfirst.frc.team612.commands.ServoMove;
-
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc.team612.commands.DefaultDrive;
 
-import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
@@ -24,7 +25,7 @@ import org.usfirst.frc.team612.robot.RobotMap;
 public class OI {
 
 	public static boolean XBOX = true;	
-	public static boolean OMNI = true;
+	public static boolean OMNI = false;
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static JoystickButton button_A = new JoystickButton(driver,1);
 	public static JoystickButton button_B = new JoystickButton(driver,2);
@@ -43,31 +44,21 @@ public class OI {
 	
 	//Variables to file creation
 	public static String file_name_create = "data.txt";
-	public static PrintWriter writer;
 	public static Timer data_timer = new Timer();
 	
 	//Variables to open .txt file
-	static String directory = null;
-	static String file_name_open = null;
+	static String directory;
+	static String file_name_open;
 	public static File file_to_open;
 	public static FileReader fr;
-	public static BufferedReader bf;
 	
 	public OI() throws IOException {
-		button_X.whenPressed(new ResetDisplacement());
-		gunner_button_A.whenPressed(new DefaultGrabber());
-		button_LB.whileHeld(new ServoMove(true));
-		button_RB.whileHeld(new ServoMove(false));
-		
 		//create new file
 		//file stored on robo-rio
-		writer = new PrintWriter(file_name_create);
 		//start second timer
 		data_timer.start();
 		//store values of opening file to objects
 		file_to_open = new File(directory + "/" + file_name_open);
-		fr = new FileReader(file_to_open);
-		bf = new BufferedReader(fr);
 	}
 }
  /* BUTTON MAPPING (this should go in RobotMap)

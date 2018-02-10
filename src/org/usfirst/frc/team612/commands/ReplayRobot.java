@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ReplayRobot extends Command {
-	
+	/*
     public ReplayRobot() throws NumberFormatException, IOException {
     	for(String line; (line = OI.bf.readLine()) != null; ) {
     		String[] parts = line.split(",");
@@ -25,6 +25,7 @@ public class ReplayRobot extends Command {
     		}
     	}
     }
+    */
 
     // Called just before this Command runs the first time
     protected void initialize() {
