@@ -20,10 +20,10 @@ public class Drivetrain extends Subsystem {
 	
 	
 	public Drivetrain() {
-		talon_FR.setInverted(true);
-		talon_FL.setInverted(true);
-		talon_RR.setInverted(true);
-		talon_RL.setInverted(true);
+		//talon_FR.setInverted(true);
+		//talon_FL.setInverted(true);
+		//talon_RR.setInverted(true);
+		//talon_RL.setInverted(true);
 		drivetrain = new MecanumDrive(talon_FL, talon_RL, talon_FR, talon_RR);
 	}
 

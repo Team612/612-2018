@@ -35,11 +35,11 @@ public class DefaultDrive extends Command {
     	if(OI.XBOX) {
        	 	direction_x = OI.driver.getX(Hand.kLeft);
        	 	direction_y = OI.driver.getY(Hand.kLeft);
-       	 	rotation    = -OI.driver.getX(Hand.kRight); // This has to be inverted
+       	 	rotation    = OI.driver.getX(Hand.kRight); // This has to be inverted
        	}else {
-           	 direction_x = OI.joy.getX() * -1;
-           	 direction_y = OI.joy.getY() * -1;
-           	 rotation = OI.joy.getTwist() * -1;
+           	 direction_x = OI.joy.getX();
+           	 direction_y = OI.joy.getY();
+           	 rotation = OI.joy.getTwist();
        	}
     	// Get all the joystick information
     	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
@@ -62,7 +62,8 @@ public class DefaultDrive extends Command {
     	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
     	}
-    	if(magnitude > prev_magnitude) {
+    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     			prev_magnitude = magnitude;
@@ -72,8 +73,7 @@ public class DefaultDrive extends Command {
     	} else {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}
-    	// Save what angle should be to theoretical_angle to be used next iteration
+    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

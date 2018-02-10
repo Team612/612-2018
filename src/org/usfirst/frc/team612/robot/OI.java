@@ -32,7 +32,7 @@ public class OI {
 	public static JoystickButton button_LJ = new JoystickButton(driver,9);
 	public static JoystickButton button_RJ = new JoystickButton(driver,10);
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
-	public static Joystick joy = new Joystick(1);
+	public static Joystick joy = new Joystick(1); // Flight controller
 	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
 
 	
