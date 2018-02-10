@@ -5,15 +5,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import edu.wpi.first.wpilibj.Timer;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.RecordMovement;
 import org.usfirst.frc.team612.commands.ReplayRobot;
@@ -42,18 +33,9 @@ public class OI {
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static Joystick joy = new Joystick(1);
 	
-	public OI() throws IOException {
+	public OI() {
 		button_A.whenPressed(new ReplayRobot());
 		button_B.whenPressed(new RecordMovement());
-	/*	//create new file
-		//file stored on robo-rio
-		//start second timer
-		data_timer.start();
-		//store values of opening file to objects
-		file_to_open = new File(directory + "/" + file_name_open);
-		fr = new FileReader(file_to_open);
-		bf = new BufferedReader(fr);*/
-		//start second timer
 	}
 }
  /* BUTTON MAPPING (this should go in RobotMap)
