@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RecordMovement extends Command {
-	public static File file = new File("/home/lvuser/Output.txt");
 	static String directory = "/home/lvuser/";
 	public static String file_name_create = "data10.txt";
 	public static String file_dir = directory + file_name_create;
@@ -31,7 +30,6 @@ public class RecordMovement extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	try {
-			file.createNewFile();
 			if (file_to_create.createNewFile()) {
 				System.out.println("File created...");
 			} else {
