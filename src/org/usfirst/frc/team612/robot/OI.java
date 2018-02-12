@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team612.commands.DefaultLift;
 import org.usfirst.frc.team612.commands.ResetDisplacement;
 import org.usfirst.frc.team612.commands.ServoMove;
+import org.usfirst.frc.team612.commands.DefaultDropper;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
@@ -56,10 +57,11 @@ public class OI {
 	public OI() {
 		//button_X.whenPressed(new ResetDisplacement());
 		//button_Y.whenPressed(new AutoDrive());
-		gunner_button_A.whenPressed(new DefaultGrabber());
+		gunner_button_RB.whenPressed(new DefaultGrabber());
 		//driver_LB.whileHeld(new ServoMove(true));
 		//driver_RB.whileHeld(new ServoMove(false));
 		gunner_button_B.whenPressed(new DefaultLift(0));
+		gunner_button_LB.whenPressed(new DefaultDropper());
 	}
 	
  /* BUTTON MAPPING (this should go in RobotMap)
