@@ -24,6 +24,7 @@ import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.RecordMovement;
 import org.usfirst.frc.team612.commands.ReplayRobot;
 import org.usfirst.frc.team612.commands.DefaultDropper;
+import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
@@ -52,9 +53,9 @@ public class OI {
 	public static JoystickButton driver_button_LJ = new JoystickButton(driver,9);
 	public static JoystickButton driver_button_RJ = new JoystickButton(driver,10);
   //end of driver
-  public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
+    public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
-  public static JoystickButton gunner_button_X = new JoystickButton(gunner,3);
+    public static JoystickButton gunner_button_X = new JoystickButton(gunner,3);
 	public static JoystickButton gunner_button_Y = new JoystickButton(gunner,4);
 	public static JoystickButton gunner_button_LB = new JoystickButton(gunner,5);
 	public static JoystickButton gunner_button_RB = new JoystickButton(gunner,6);
@@ -62,14 +63,17 @@ public class OI {
 	public static JoystickButton gunner_button_STRT = new JoystickButton(gunner,8);
 	public static JoystickButton gunner_button_LJ = new JoystickButton(gunner,9);
 	public static JoystickButton gunner_button_RJ = new JoystickButton(gunner,10);
+	
 	public OI() throws IOException {
 		gunner_button_A.whenPressed(new Climber_Two_Down());
 		gunner_button_Y.whenPressed(new Climber_Two_Up());
 		driver_button_A.whenPressed(new ReplayRobot());
 		driver_button_B.whenPressed(new RecordMovement());
-    gunner_button_RB.whenPressed(new DefaultGrabber());
-    gunner_button_B.whenPressed(new DefaultLift(0));
+		gunner_button_RB.whenPressed(new DefaultGrabber());
+		gunner_button_B.whenPressed(new DefaultLift(0));
 		gunner_button_LB.whenPressed(new DefaultDropper());
+	}
+}
 	/*	//create new file
 		//file stored on robo-rio
 		//start second timer

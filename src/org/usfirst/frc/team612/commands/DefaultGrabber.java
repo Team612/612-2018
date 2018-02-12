@@ -1,5 +1,4 @@
-<<<<<<< working-code
-=======
+
 package org.usfirst.frc.team612.commands;
 
 import org.usfirst.frc.team612.robot.Robot;
@@ -58,4 +57,3 @@ public class DefaultGrabber extends Command {
     protected void interrupted() {
     }
 }
->>>>>>> master
