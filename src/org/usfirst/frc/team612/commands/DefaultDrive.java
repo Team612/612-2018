@@ -16,7 +16,7 @@ public class DefaultDrive extends Command {
 	
 	double DEADZONE = 0.05;
 	double prev_magnitude = 0;
-	double rate = 0.005;
+	double rate = 0.05;
 	boolean DRIVER_PERSPECTIVE = false;
 	public static double magnitude;
 	public static double angle;

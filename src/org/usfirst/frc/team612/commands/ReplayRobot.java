@@ -49,14 +49,19 @@ public class ReplayRobot extends Command {
             e.printStackTrace();
             System.out.println("Object creation failed");
         }
-        RecordMovement.writer.close();
-        RecordMovement.end = true;
-        System.out.println("Recording Ended");
+        if (RecordMovement.writer == null) {
+    		System.out.println("Please Record Data Before Replay");
+    	}else {
+    		RecordMovement.writer.close();
+            RecordMovement.end = true;
+            System.out.println("Recording Ended");
+    	}
         replay_timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+          
         try {
             line = br.readLine();
         } catch (IOException e) {
@@ -66,13 +71,13 @@ public class ReplayRobot extends Command {
         if (line != null) {
 
             String[] parts = line.split(",");
-
+            System.out.println(line);
             double magnitude = Double.parseDouble(parts[0]);
             double angle = Double.parseDouble(parts[1]);
             double rotation = Double.parseDouble(parts[2]);
 
             //double seconds_replay = replay_timer.get();
-            //System.out.println(magnitude + "-" + angle + "-" + rotation + "," + seconds);
+            System.out.println(magnitude + "-" + angle + "-" + rotation);
 
             //if (seconds_replay >= seconds*playback_speed) {
             Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
@@ -80,9 +85,9 @@ public class ReplayRobot extends Command {
             //}
 
         } else {
-            System.out.println("Replay Finished");
+            //System.out.println("Replay Finished");
         }
-    }
+    	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

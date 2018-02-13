@@ -69,22 +69,13 @@ public class RecordMovement extends Command {
 	   	double talon_RL = Robot.drivetrain.getTalon(4).get();
 	   	*/
 
-        double magnitude = DefaultDrive.magnitude;
-        double angle = DefaultDrive.angle;
-        double rotation = DefaultDrive.rotation;
-
         String magnitude_string = Double.toString(magnitude);
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
         //String talon_4 = Double.toString(talon_RL);
 
         //create array of data to store
-        String input_data[] = {
-            magnitude_string,
-            angle_string,
-            rotation_string,
-            seconds
-        };
+        String input_data[] = {magnitude_string, angle_string, rotation_string, seconds};
         String writable_data = "";
 
         //format the data
@@ -94,6 +85,7 @@ public class RecordMovement extends Command {
         if (writer == null) {
             System.out.println("Writer Object = Null");
         } else {
+        	System.out.println(writable_data);
             writer.println(writable_data);
         }
     }
