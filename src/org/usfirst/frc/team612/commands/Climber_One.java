@@ -20,9 +20,9 @@ public class Climber_One extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.oi.gunner.getPOV() ==0) {
-    		Robot.climber.getClimber1().set(0.5);
+    		Robot.climber.getClimber(1).set(0.5);
     	}else if(Robot.oi.gunner.getPOV()==180) {
-    		Robot.climber.getClimber1().set(-0.5);
+    		Robot.climber.getClimber(1).set(-0.5);
     	}
     }
 

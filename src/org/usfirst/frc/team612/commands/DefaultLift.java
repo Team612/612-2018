@@ -1,12 +1,7 @@
 package org.usfirst.frc.team612.commands;
 
-import org.usfirst.frc.team612.robot.OI;
-import org.usfirst.frc.team612.subsystems.Lift;
 import org.usfirst.frc.team612.robot.Robot;
-import org.usfirst.frc.team612.robot.RobotMap;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -18,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DefaultLift extends Command {
     	
 	
-	
+
     /**
      * Requires <code>lift</code>
      */
@@ -32,7 +27,7 @@ public class DefaultLift extends Command {
     
     /**
      * Called just before DefaultLift runs for the first time.
-     * @deprecated <code>initialize()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
+     *  <code>initialize()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
      */
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -57,7 +52,7 @@ public class DefaultLift extends Command {
     
     /**
      * Called once after <code>isFinished()</code> returns <code>true</code>.
-     * @deprecated <code>end()</code> does <b>absolutely nothing</b> in DefaultLift.java.
+     *  <code>end()</code> does <b>absolutely nothing</b> in DefaultLift.java.
      */
     // Called once after isFinished returns true
     protected void end() {

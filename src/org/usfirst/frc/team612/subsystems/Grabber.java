@@ -10,9 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Grabber extends Subsystem {
-
 	Solenoid solenoid_G = new Solenoid(RobotMap.solenoid_G);
-	
 	/**
 	 * Sets the default command for a subsystem.
 	 * @deprecated <code>initDefaultCommand()</code> does <b>absolutely nothing</b> in Grabber.java.
