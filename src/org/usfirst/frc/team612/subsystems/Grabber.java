@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Grabber extends Subsystem {
 
-	Solenoid solenoid_R = new Solenoid(RobotMap.solenoid_R);
-	Solenoid solenoid_L = new Solenoid(RobotMap.solenoid_L);
+	Solenoid solenoid_G = new Solenoid(RobotMap.solenoid_G);
 	
 	/**
 	 * Sets the default command for a subsystem.
@@ -27,16 +26,9 @@ public class Grabber extends Subsystem {
      * @return solenoid_R
      * @return solenoid_L
      */
-    public Solenoid getSolenoid(int num) {
-    	switch(num) {
-    	case 1:
-    		return solenoid_R;
-    	case 2:
-    		return solenoid_L;
-    	default:
-    		return null;
-    	}
-    
+    public Solenoid getSolenoid() {
+    	return solenoid_G;
     }
+
 }
 

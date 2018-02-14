@@ -15,7 +15,7 @@ import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Grabber;
 import org.usfirst.frc.team612.subsystems.Lift;
-import org.usfirst.frc.team612.subsystems.Pusher;
+import org.usfirst.frc.team612.subsystems.Dropper;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,8 +30,8 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
 	public static Grabber grabber = new Grabber();
-	public static Pusher pusher = new Pusher();
 	public static Lift lift = new Lift();
+	public static Dropper dropper = new Dropper();
 	
 	
 	Command autonomousCommand;

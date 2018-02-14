@@ -27,8 +27,7 @@ public class DefaultGrabber extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.grabber.getSolenoid(1).set((!Robot.grabber.getSolenoid(1).get()));
-    	Robot.grabber.getSolenoid(2).set((!Robot.grabber.getSolenoid(2).get()));
+    	Robot.grabber.getSolenoid().set((!Robot.grabber.getSolenoid().get()));
     	
     }
 
