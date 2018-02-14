@@ -2,6 +2,7 @@ package org.usfirst.frc.team612.commands;
 
 import java.io.BufferedReader;
 
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,8 +10,11 @@ import java.io.IOException;
 import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -48,7 +52,9 @@ public class ReplayRobot extends Command {
 			e.printStackTrace();
 			System.out.println("Object creation failed");
 		}
+    	RecordMovement.writer.close();
     	RecordMovement.end = true;
+    	System.out.println("Recording Ended");
     	replay_timer.start();
     }
 
@@ -62,19 +68,25 @@ public class ReplayRobot extends Command {
 		}
     	if(line != null) {
     		String[] parts = line.split(",");
+    		
 			double talon_1 = Double.parseDouble(parts[0]);
 			double talon_2 = Double.parseDouble(parts[1]);
 			double talon_3 = Double.parseDouble(parts[2]);
+			System.out.println(talon_1 + "-" + talon_2 + "-" + talon_3);
+			/*
 			double talon_4 = Double.parseDouble(parts[3]);
 			float seconds = Float.parseFloat(parts[4]);
+			*/
 			//System.out.println(talon_1 + "/" + talon_2 + "/" + talon_3 + "/" + talon_4 + "/" + seconds);
 			double seconds_replay = replay_timer.get();
-			if (seconds_replay >= seconds*playback_speed) {
-	    		Robot.drivetrain.getTalon(1).set(talon_1);
-	    		Robot.drivetrain.getTalon(2).set(talon_2);
-	    		Robot.drivetrain.getTalon(3).set(talon_3);
-	    		Robot.drivetrain.getTalon(4).set(talon_4);
-			}
+			Robot.drivetrain.getDriveTrain().drivePolar(talon_1, talon_2, talon_3);
+			SmartDashboard.putNumber("magnitude", talon_1); // actually magnitude
+			//if (seconds_replay >= seconds*playback_speed) {
+	    		//Robot.drivetrain.getTalon(1).set(talon_1);
+	    		//Robot.drivetrain.getTalon(2).set(talon_2);
+	    		//Robot.drivetrain.getTalon(3).set(talon_3);
+	    		//Robot.drivetrain.getTalon(4).set(talon_4);
+			//}
     	}
     }
 

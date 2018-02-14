@@ -3,6 +3,8 @@ package org.usfirst.frc.team612.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
 
@@ -14,8 +16,11 @@ public class DefaultDrive extends Command {
 	
 	double DEADZONE = 0.05;
 	double prev_magnitude = 0;
-	double rate = 0.05;
+	double rate = 0.005;
 	boolean DRIVER_PERSPECTIVE = false;
+	public static double magnitude;
+	public static double angle;
+	public static double rotation;
 	
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -60,6 +65,7 @@ public class DefaultDrive extends Command {
     	if(magnitude > 1.0) {
     		magnitude = 1.0;
     	}
+    	magnitude = magnitude/4;
     	double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
     	// Convert cartesian to polar
     	double yaw = Robot.navx.getYaw();
@@ -77,6 +83,10 @@ public class DefaultDrive extends Command {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     	}
+    	RecordMovement.magnitude = magnitude;
+    	RecordMovement.angle = angle;
+    	RecordMovement.rotation = rotation;
+    	SmartDashboard.putNumber("magnitude", magnitude);
     	// Save what angle should be to theoretical_angle to be used next iteration
     }
 

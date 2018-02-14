@@ -1,6 +1,7 @@
 package org.usfirst.frc.team612.commands;
 
 import java.io.File;
+import org.usfirst.frc.team612.commands.DefaultDrive;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +23,9 @@ public class RecordMovement extends Command {
 	public static File file_to_create = new File(file_dir);
 	public static Timer data_timer = new Timer();
 	public static boolean end = false;
+	public static double magnitude;
+	public static double angle;
+	public static double rotation;
 	
     public RecordMovement() {
         // Use requires() here to declare subsystem dependencies
@@ -52,7 +56,6 @@ public class RecordMovement extends Command {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	ReplayRobot.end = true;
     	data_timer.start();
     }
 
@@ -61,27 +64,33 @@ public class RecordMovement extends Command {
     	//save magnitude angle and rotation to a file
    	 	String seconds = String.valueOf(data_timer.get());
    	 	
+   	 	/*
    	 	double talon_FL = Robot.drivetrain.getTalon(1).get();
    	 	double talon_FR = Robot.drivetrain.getTalon(2).get();
 	   	double talon_RR = Robot.drivetrain.getTalon(3).get();
 	   	double talon_RL = Robot.drivetrain.getTalon(4).get();
+	   	*/
+   	 	double talon_FL = magnitude;
+	 	double talon_FR = angle;
+	   	double talon_RR = rotation;
    	 	
 	   	String talon_1 = Double.toString(talon_FL);
 	   	String talon_2 = Double.toString(talon_FR);
 	   	String talon_3 = Double.toString(talon_RR);
-	   	String talon_4 = Double.toString(talon_RL);
+	   	//String talon_4 = Double.toString(talon_RL);
 	   	
    	 	//create array of data to store
-   	 	String input_data[] = {talon_1, talon_2, talon_3, talon_4, seconds};
+   	 	String input_data[] = {talon_1, talon_2, talon_3, seconds};
    	 	String writable_data = "";
    	 	
    	 	//format the data
-   	 	writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3] + "," + input_data[4];
+   	 	writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3];
    	 	
    	 	//print and write data to file
    	 	if (writer == null) {
    	 		System.out.println("Writer Object = Null");
    	 	} else {
+   	 		System.out.println(writable_data);
    	 		writer.println(writable_data);
    	 	}
     }
