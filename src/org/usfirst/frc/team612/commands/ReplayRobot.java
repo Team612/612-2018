@@ -25,6 +25,7 @@ public class ReplayRobot extends Command {
 	public static FileReader fr;
 	public static BufferedReader br;
 	Timer replay_timer = new Timer();
+	public static boolean end = false;
 	
 	public static double playback_speed = 1;
 	
@@ -47,6 +48,7 @@ public class ReplayRobot extends Command {
 			e.printStackTrace();
 			System.out.println("Object creation failed");
 		}
+    	RecordMovement.end = true;
     	replay_timer.start();
     }
 
@@ -78,7 +80,7 @@ public class ReplayRobot extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return end;
     }
 
     // Called once after isFinished returns true

@@ -21,6 +21,7 @@ public class RecordMovement extends Command {
 	public static PrintWriter writer;
 	public static File file_to_create = new File(file_dir);
 	public static Timer data_timer = new Timer();
+	public static boolean end = false;
 	
     public RecordMovement() {
         // Use requires() here to declare subsystem dependencies
@@ -51,6 +52,7 @@ public class RecordMovement extends Command {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	ReplayRobot.end = true;
     	data_timer.start();
     }
 
@@ -86,7 +88,7 @@ public class RecordMovement extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return end;
     }
 
     // Called once after isFinished returns true
