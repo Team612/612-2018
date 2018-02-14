@@ -12,8 +12,12 @@ import edu.wpi.first.wpilibj.CameraServer;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
+import java.io.IOException;
+
+import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
-import org.usfirst.frc.team612.subsystems.Grabber;
+
+//import org.usfirst.frc.team612.subsystems.Grabber;
 import org.usfirst.frc.team612.subsystems.Lift;
 import org.usfirst.frc.team612.subsystems.Dropper;
 
@@ -28,12 +32,12 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
+	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);	
+	public static Climber climber=new Climber();
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
-	
-	
+
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -43,12 +47,20 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
+		try {
+			oi = new OI();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
-		CameraServer.getInstance().startAutomaticCapture(0);
-		CameraServer.getInstance().startAutomaticCapture(1);
+		//CameraServer.getInstance().startAutomaticCapture(0);
+		//CameraServer.getInstance().startAutomaticCapture(1);
+		
+		//Check if File has been created
+		//Create File Writer object with file path
 	}
 
 	/**

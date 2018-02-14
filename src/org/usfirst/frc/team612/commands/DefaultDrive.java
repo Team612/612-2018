@@ -3,8 +3,18 @@ package org.usfirst.frc.team612.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team612.robot.Robot;
 import org.usfirst.frc.team612.robot.OI;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+import edu.wpi.first.wpilibj.Timer;
 
 
 /**
@@ -12,7 +22,7 @@ import org.usfirst.frc.team612.robot.OI;
  */
 public class DefaultDrive extends Command {
 	
-	double DEADZONE = 0.05;
+	double DEADZONE = 0.07;
 	double prev_magnitude = 0;
 	double rate = 0.05;
 	
@@ -23,7 +33,6 @@ public class DefaultDrive extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
-    	
     }
     
     /**
@@ -32,6 +41,7 @@ public class DefaultDrive extends Command {
      */
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
     
     /**
@@ -46,11 +56,11 @@ public class DefaultDrive extends Command {
     	if(OI.XBOX) {
        	 	direction_x = OI.driver.getX(Hand.kLeft);
        	 	direction_y = OI.driver.getY(Hand.kLeft);
-       	 	rotation    = OI.driver.getX(Hand.kRight);
+       	 	rotation    = OI.driver.getX(Hand.kRight); // This has to be inverted
        	}else {
-           	 direction_x = OI.joy.getX() * -1;
-           	 direction_y = OI.joy.getY() * -1;
-           	 rotation = OI.joy.getTwist() * -1;
+           	 direction_x = OI.joy.getX();
+           	 direction_y = OI.joy.getY();
+           	 rotation = OI.joy.getTwist();
        	}
     	// Get all the joystick information
     	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
@@ -62,6 +72,8 @@ public class DefaultDrive extends Command {
     	if(rotation<DEADZONE&&rotation>-DEADZONE) {
     		rotation = 0;
     	}
+    	
+    	
     	// Do all the deadzone math
     	double magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
     	if(magnitude > 1.0) {
@@ -73,7 +85,8 @@ public class DefaultDrive extends Command {
     	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
     	}
-    	if(magnitude > prev_magnitude) {
+    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     			prev_magnitude = magnitude;
@@ -83,8 +96,7 @@ public class DefaultDrive extends Command {
     	} else {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}
-    	// Save what angle should be to theoretical_angle to be used next iteration
+    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

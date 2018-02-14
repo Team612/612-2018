@@ -1,14 +1,29 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team612.commands.DefaultLift;
 import org.usfirst.frc.team612.commands.ResetDisplacement;
-import org.usfirst.frc.team612.commands.ServoMove;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.GenericHID;
+
+import org.usfirst.frc.team612.commands.Climber_Two_Down;
+import org.usfirst.frc.team612.commands.Climber_Two_Up;
+import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.commands.RecordMovement;
+import org.usfirst.frc.team612.commands.ReplayRobot;
 import org.usfirst.frc.team612.commands.DefaultDropper;
-import org.usfirst.frc.team612.commands.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
@@ -18,11 +33,13 @@ import org.usfirst.frc.team612.robot.RobotMap;
 public class OI {
 
 	public static final boolean XBOX = true;	
-	public static final boolean OMNI = true;
+	public static final boolean OMNI = false;
 	public static final boolean DRIVER_PERSPECTIVE = false;
 	public static final boolean LIFT_PID = false;
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
+	public static Joystick joy = new Joystick(1); // Flight controller
+
 
 	public static JoystickButton driver_button_A = new JoystickButton(driver,1);
 	public static JoystickButton driver_button_B = new JoystickButton(driver,2);
@@ -34,11 +51,10 @@ public class OI {
 	public static JoystickButton driver_button_STRT = new JoystickButton(driver,8);
 	public static JoystickButton driver_button_LJ = new JoystickButton(driver,9);
 	public static JoystickButton driver_button_RJ = new JoystickButton(driver,10);
-	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
-	public static Joystick joy = new Joystick(1);
+  //end of driver
+  public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
 	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
-	
-	public static JoystickButton gunner_button_X = new JoystickButton(gunner,3);
+  public static JoystickButton gunner_button_X = new JoystickButton(gunner,3);
 	public static JoystickButton gunner_button_Y = new JoystickButton(gunner,4);
 	public static JoystickButton gunner_button_LB = new JoystickButton(gunner,5);
 	public static JoystickButton gunner_button_RB = new JoystickButton(gunner,6);
@@ -46,25 +62,23 @@ public class OI {
 	public static JoystickButton gunner_button_STRT = new JoystickButton(gunner,8);
 	public static JoystickButton gunner_button_LJ = new JoystickButton(gunner,9);
 	public static JoystickButton gunner_button_RJ = new JoystickButton(gunner,10);
-	
-	
-	/**
-	 * Does some stuff when certain buttons on an Xbox controller are pressed
-	 * Executes <code>ResetDisplacement()</code> when the X button is pressed.
-	 * Executes <code>DefaultGrabber()</code> when Gunner Button A is pressed.
-	 * Sets <code>ServoMove()</code> to <code>true</code> as long as the left bumper on the Xbox controller is held down.
-	 * Sets <code>ServoMove()</code> to <code>false</code> as long as the right bumper on the Xbox controller is held down.
-	 */
-	public OI() {
-		//button_X.whenPressed(new ResetDisplacement());
-		//button_Y.whenPressed(new AutoDrive());
-		gunner_button_RB.whenPressed(new DefaultGrabber());
-		//driver_LB.whileHeld(new ServoMove(true));
-		//driver_RB.whileHeld(new ServoMove(false));
-		gunner_button_B.whenPressed(new DefaultLift(0));
+	public OI() throws IOException {
+		gunner_button_A.whenPressed(new Climber_Two_Down());
+		gunner_button_Y.whenPressed(new Climber_Two_Up());
+		driver_button_A.whenPressed(new ReplayRobot());
+		driver_button_B.whenPressed(new RecordMovement());
+    gunner_button_RB.whenPressed(new DefaultGrabber());
+    gunner_button_B.whenPressed(new DefaultLift(0));
 		gunner_button_LB.whenPressed(new DefaultDropper());
-	}
-	
+	/*	//create new file
+		//file stored on robo-rio
+		//start second timer
+		data_timer.start();
+		//store values of opening file to objects
+		file_to_open = new File(directory + "/" + file_name_open);
+		fr = new FileReader(file_to_open);
+		bf = new BufferedReader(fr);*/
+		//start second timer
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A
 	2: B
@@ -76,12 +90,7 @@ public class OI {
 	8: Start
 	9: Left Joystick
 	10: Right Joystick */
-	
-	//public XboxController driverC() {
-	//	return driver;
-	//}
-	
-	//// CREATING BUTTONS
+  //// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
@@ -108,4 +117,3 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-}

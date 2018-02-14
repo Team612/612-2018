@@ -42,4 +42,3 @@ public class Lift extends Subsystem {
     	return lift_talon;
     }
 }
-

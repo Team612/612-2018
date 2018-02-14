@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team612.subsystems;
 
 import org.usfirst.frc.team612.robot.RobotMap;
@@ -31,4 +32,3 @@ public class Grabber extends Subsystem {
     }
 
 }
-

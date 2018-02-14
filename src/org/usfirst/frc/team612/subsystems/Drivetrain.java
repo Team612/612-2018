@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import org.usfirst.frc.team612.robot.RobotMap;
 import org.usfirst.frc.team612.commands.DefaultDrive;
-import org.usfirst.frc.team612.commands.OmniDrive;
 import org.usfirst.frc.team612.robot.OI;
 /**
  *
@@ -37,11 +36,7 @@ public class Drivetrain extends Subsystem {
 	 */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-    	if(OI.OMNI) {
-    		setDefaultCommand(new OmniDrive());
-    	} else {
     		setDefaultCommand(new DefaultDrive());
-    	}
     }
     
     /**
