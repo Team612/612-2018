@@ -19,7 +19,7 @@ import org.usfirst.frc.team612.subsystems.Drivetrain;
 
 //import org.usfirst.frc.team612.subsystems.Grabber;
 import org.usfirst.frc.team612.subsystems.Lift;
-import org.usfirst.frc.team612.subsystems.Pusher;
+import org.usfirst.frc.team612.subsystems.Dropper;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,12 +32,12 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
-	
-	//public static Grabber grabber = new Grabber();
-	public static Pusher pusher = new Pusher();
-	public static Lift lift = new Lift();
+	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);	
 	public static Climber climber=new Climber();
+	public static Grabber grabber = new Grabber();
+	public static Lift lift = new Lift();
+	public static Dropper dropper = new Dropper();
+
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -73,6 +73,9 @@ public class Robot extends IterativeRobot {
 
 	}
 
+	/**
+	 * Gets an instance from <code>Scheduler</code> and running it.
+	 */
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -112,7 +115,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+	
+	/**
+	 * Makes sure that the autonomous stops running when teleop starts running.
+	 */
 	@Override
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when

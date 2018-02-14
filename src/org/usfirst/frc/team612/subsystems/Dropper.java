@@ -1,24 +1,26 @@
 package org.usfirst.frc.team612.subsystems;
 
-import org.usfirst.frc.team612.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.Solenoid;
+
+import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
  *
  */
-public class Pusher extends Subsystem {
-	Solenoid solenoid_P = new Solenoid(RobotMap.solenoid_P);
+public class Dropper extends Subsystem {
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+	
+	Solenoid solenoid_drop = new Solenoid(RobotMap.solenoid_D);
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
     public Solenoid getSolenoid() {
-    	return solenoid_P;
-    	}
+    	return solenoid_drop;
+    }
 }
 

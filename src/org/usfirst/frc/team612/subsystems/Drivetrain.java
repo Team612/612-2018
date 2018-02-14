@@ -17,7 +17,9 @@ public class Drivetrain extends Subsystem {
 	WPI_TalonSRX talon_RL = new WPI_TalonSRX(RobotMap.talon_RL);
 	MecanumDrive drivetrain;
 	
-	
+	/**
+	 * Initializes MecanumDrive <code>drivetrain</code>.
+	 */
 	public Drivetrain() {
 		//talon_FR.setInverted(true);
 		//talon_FL.setInverted(true);
@@ -28,16 +30,31 @@ public class Drivetrain extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+	
+	/**
+	 * Sets default command for a subsystem.
+	 */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
     		setDefaultCommand(new DefaultDrive());
     }
     
+    /**
+     * Gets MecanumDrive <code>drivetrain</code>.
+     * @return MecanumDrive <code>drivetrain</code>.
+     */
     public MecanumDrive getDriveTrain() {
     	return drivetrain;
     }
     
+    /**
+     * Gets a Talon.
+     * @param num A number used to determine what Talon to use.
+     * @return talon_FL
+     * @return talon_FR
+     * @return talon_RR
+     * @return talon_RL
+     */
     public WPI_TalonSRX getTalon(int num) {
     	switch(num) {
     	case 1:
