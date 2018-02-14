@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.RecordMovement;
 import org.usfirst.frc.team612.commands.ReplayRobot;
 import org.usfirst.frc.team612.robot.RobotMap;
