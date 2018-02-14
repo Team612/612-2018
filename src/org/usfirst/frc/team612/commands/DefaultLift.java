@@ -16,17 +16,16 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DefaultLift extends Command {
-	WPI_TalonSRX lift_talon = new WPI_TalonSRX(RobotMap.talon_lift);
-    int prev_pos = 0;
-    int height = 0;
-    int RATE = 50;
-    int DEADZONE = 60;
     	
+	int height;
+	final int DEADZONE = 500;
+	boolean done;
+	
     /**
      * Requires <code>lift</code>
      */
     public DefaultLift(int h) {
-      height = h;
+    	height = h;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.lift);
@@ -46,7 +45,20 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        	lift_talon.set(ControlMode.Position,height); 	
+    	if(OI.LIFT_PID) {
+    		Robot.lift.getTalon().set(ControlMode.Position,height);
+    		done = true;
+    	} else {
+    		if(Math.abs(Robot.lift.getTalon().getSensorCollection().getQuadraturePosition()-height) > DEADZONE){
+    			if(Robot.lift.getTalon().getSensorCollection().getQuadraturePosition() > height) {
+    				Robot.lift.getTalon().set(-0.5);
+    			} else {
+    				Robot.lift.getTalon().set(0.5);
+    			}
+    		} else {
+    			done = true;
+    		}
+    	}
     }
 
     /**
@@ -54,7 +66,7 @@ public class DefaultLift extends Command {
      */
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return done;
     }
     
     /**
