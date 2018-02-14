@@ -17,6 +17,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.GenericHID;
+
+import org.usfirst.frc.team612.commands.Climber_Two_Down;
+import org.usfirst.frc.team612.commands.Climber_Two_Up;
 import org.usfirst.frc.team612.commands.DefaultDrive;
 import org.usfirst.frc.team612.commands.RecordMovement;
 import org.usfirst.frc.team612.commands.ReplayRobot;
@@ -33,6 +37,7 @@ public class OI {
 	public static final boolean DRIVER_PERSPECTIVE = false;
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
+	public static Joystick joy = new Joystick(1); // Flight controller
 
 	public static JoystickButton button_A = new JoystickButton(driver,1);
 	public static JoystickButton button_B = new JoystickButton(driver,2);
@@ -44,13 +49,15 @@ public class OI {
 	public static JoystickButton button_STRT = new JoystickButton(driver,8);
 	public static JoystickButton button_LJ = new JoystickButton(driver,9);
 	public static JoystickButton button_RJ = new JoystickButton(driver,10);
+	
 	public static JoystickButton gunner_button_A = new JoystickButton(gunner, 1);
-	public static Joystick joy = new Joystick(1); // Flight controller
 	public static JoystickButton gunner_button_B = new JoystickButton(gunner, 2);
+	public static JoystickButton gunner_button_Y = new JoystickButton(gunner, 4);
 
 	
-	
 	public OI() throws IOException {
+		gunner_button_A.whenPressed(new Climber_Two_Down());
+		gunner_button_Y.whenPressed(new Climber_Two_Up());
 		button_A.whenPressed(new ReplayRobot());
 		button_B.whenPressed(new RecordMovement());
 	/*	//create new file

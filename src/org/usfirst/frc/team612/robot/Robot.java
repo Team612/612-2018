@@ -14,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
 import java.io.IOException;
 
+import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 
 //import org.usfirst.frc.team612.subsystems.Grabber;
@@ -36,7 +37,7 @@ public class Robot extends IterativeRobot {
 	//public static Grabber grabber = new Grabber();
 	public static Pusher pusher = new Pusher();
 	public static Lift lift = new Lift();
-	
+	public static Climber climber=new Climber();
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 

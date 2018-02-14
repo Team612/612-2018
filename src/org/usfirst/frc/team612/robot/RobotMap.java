@@ -22,8 +22,8 @@ public class RobotMap {
 	public static int solenoid_R = 1;//placeholder
 	public static int solenoid_L = 2;//placeholder
 	public static int solenoid_P = 3;//placeholder
-
-
+    public static int climber_1=7;
+    public static int climber_2=8;
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
