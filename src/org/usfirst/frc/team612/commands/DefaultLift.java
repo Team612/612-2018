@@ -17,15 +17,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DefaultLift extends Command {
     	
-	int height;
-	final int DEADZONE = 500;
-	boolean done;
+	
 	
     /**
      * Requires <code>lift</code>
      */
-    public DefaultLift(int h) {
-    	height = h;
+    public DefaultLift() {
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.lift);
@@ -45,28 +43,16 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.LIFT_PID) {
-    		Robot.lift.getTalon().set(ControlMode.Position,height);
-    		done = true;
-    	} else {
-    		if(Math.abs(Robot.lift.getTalon().getSensorCollection().getQuadraturePosition()-height) > DEADZONE){
-    			if(Robot.lift.getTalon().getSensorCollection().getQuadraturePosition() > height) {
-    				Robot.lift.getTalon().set(-0.5);
-    			} else {
-    				Robot.lift.getTalon().set(0.5);
-    			}
-    		} else {
-    			done = true;
-    		}
-    	}
+    	Robot.lift.getTalon().set(Robot.oi.gunner.getY(Hand.kLeft));
     }
+    	
 
     /**
      * Won't stop <code>execute()</code>
      */
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return done;
+        return false;
     }
     
     /**
