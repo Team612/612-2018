@@ -20,6 +20,9 @@ public class DefaultDrive extends Command {
 	public static double rotation;
 	double direction_x;
 	double direction_y;
+	double yaw;
+	double ROTATION_SCALE = 40;
+	double PROPORTION_VALUE = 3;
 	
 	/**
 	 * Makes sure that that subsystem <code>drivetrain</code> is required.
@@ -69,8 +72,8 @@ public class DefaultDrive extends Command {
     	if(magnitude > 1.0) {
     		magnitude = 1.0;
     	}
-    	double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
-    	double yaw = Robot.navx.getYaw();
+    	angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
+    	yaw = Robot.navx.getYaw();
     	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
     	}
@@ -88,8 +91,13 @@ public class DefaultDrive extends Command {
     	toPolar();
     	
     	// Do all the deadzone math
-    	
-    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	if(OI.FIX_DRIFT) {
+    		double yaw_velocity = Robot.navx.getRate();
+    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation*ROTATION_SCALE-yaw_velocity)*PROPORTION_VALUE);
+    	}
+    	else{
+    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	}
     	RecordMovement.magnitude = magnitude;
     	RecordMovement.angle = angle;
     	RecordMovement.rotation = rotation;

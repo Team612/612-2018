@@ -24,6 +24,7 @@ public class OI {
 	public static final boolean OMNI = false;
 	public static final boolean DRIVER_PERSPECTIVE = false;
 	public static final boolean LIFT_PID = false;
+	public static final boolean FIX_DRIFT = false;
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
 	public static Joystick joy = new Joystick(1); // Flight controller
