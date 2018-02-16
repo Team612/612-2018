@@ -3,8 +3,7 @@ package org.usfirst.frc.team612.commands;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team612.robot.Robot;
-import org.usfirst.frc.team612.robot.OI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
@@ -13,6 +12,9 @@ public class DefaultDrive extends Command {
 	double DEADZONE = 0.07;
 	double prev_magnitude = 0;
 	double rate = 0.05;
+	public static double magnitude;
+	public static double angle;
+	public static double rotation;
 	
 	/**
 	 * Makes sure that that subsystem <code>drivetrain</code> is required.
@@ -84,7 +86,6 @@ public class DefaultDrive extends Command {
     	} else {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

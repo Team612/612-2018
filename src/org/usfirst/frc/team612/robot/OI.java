@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 import java.io.IOException;
 import org.usfirst.frc.team612.commands.Climber_Two_Down;
 import org.usfirst.frc.team612.commands.Climber_Two_Up;
@@ -67,6 +68,7 @@ public class OI {
 		fr = new FileReader(file_to_open);
 		bf = new BufferedReader(fr);*/
 		//start second timer
+
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A
 	2: B
