@@ -30,7 +30,6 @@ public class ReplayRobot extends Command {
     public static double playback_speed = 1;
     public static boolean end = false;
 
-
     public ReplayRobot() {
 
     }

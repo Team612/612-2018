@@ -4,49 +4,53 @@ package org.usfirst.frc.team612.commands;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.usfirst.frc.team612.robot.Robot;
-import org.usfirst.frc.team612.robot.OI;
-
-
 /**
  *
  */
 public class DefaultDrive extends Command {
 	
-	double DEADZONE = 0.05;
+	double DEADZONE = 0.07;
 	double prev_magnitude = 0;
 	double rate = 0.05;
-	boolean DRIVER_PERSPECTIVE = false;
 	public static double magnitude;
 	public static double angle;
 	public static double rotation;
 	
+	/**
+	 * Makes sure that that subsystem <code>drivetrain</code> is required.
+	 */
     public DefaultDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
     }
-
+    
+    /**
+     * Called just before this Command runs the first time.
+     * @deprecated This Command does <b>absolutely nothing</b>.
+     */
     // Called just before this Command runs the first time
     protected void initialize() {
     	
     }
-
+    
+    /**
+     * Called 60 times per second when this Command is scheduled to run.
+     * Gets information from Xbox controller.
+     */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double direction_x = 0;
     	double direction_y = 0;
     	double rotation = 0;
     	if(OI.XBOX) {
-       	 	direction_x = OI.driver.getX(Hand.kLeft) * -1;
-       	 	direction_y = OI.driver.getY(Hand.kLeft) * -1;
-       	 	rotation    = OI.driver.getX(Hand.kRight) * -1;
-       	 	
-       	} else {
-           	 direction_x = OI.joy.getX() * -1;
-           	 direction_y = OI.joy.getY() * -1;
-           	 rotation = OI.joy.getTwist() * -1;
+       	 	direction_x = OI.driver.getX(Hand.kLeft);
+       	 	direction_y = OI.driver.getY(Hand.kLeft);
+       	 	rotation    = OI.driver.getX(Hand.kRight); // This has to be inverted
+       	}else {
+           	 direction_x = OI.joy.getX();
+           	 direction_y = OI.joy.getY();
+           	 rotation = OI.joy.getTwist();
        	}
     	// Get all the joystick information
     	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
@@ -65,14 +69,14 @@ public class DefaultDrive extends Command {
     	if(magnitude > 1.0) {
     		magnitude = 1.0;
     	}
-    	magnitude = magnitude/4;
     	double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
     	// Convert cartesian to polar
     	double yaw = Robot.navx.getYaw();
-    	if(DRIVER_PERSPECTIVE) {
+    	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
     	}
-    	if(magnitude > prev_magnitude) {
+    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     			prev_magnitude = magnitude;
@@ -82,24 +86,28 @@ public class DefaultDrive extends Command {
     	} else {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}
-    	RecordMovement.magnitude = magnitude;
-    	RecordMovement.angle = angle;
-    	RecordMovement.rotation = rotation;
-    	SmartDashboard.putNumber("magnitude", magnitude);
-    	// Save what angle should be to theoretical_angle to be used next iteration
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Makes sure <code>execute()</code> runs as long as this command returns <code>false</code>.
+     * @return A <code>false</code> value, indicating that this command is running <code>execute()</code>.
+     */
     protected boolean isFinished() {
         return false;
     }
-
+    
+    /**
+     * Does Cartesian Drive when <code>isFinished()</code> returns <code>true</code>.
+     */
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drivetrain.getDriveTrain().driveCartesian(0,  0,  0);
     }
-
+    /**
+     * Called when another command which requires one or more of the same subsystems is scheduled to run.
+     * Does Cartesian Drive.
+     */
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {

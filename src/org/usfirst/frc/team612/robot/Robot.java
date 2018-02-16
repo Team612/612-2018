@@ -5,18 +5,16 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.CameraServer;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
-
 import java.io.IOException;
-
+import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
-
+import org.usfirst.frc.team612.subsystems.Lift;
+import org.usfirst.frc.team612.subsystems.Dropper;
+import org.usfirst.frc.team612.subsystems.Grabber;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -25,11 +23,13 @@ import org.usfirst.frc.team612.subsystems.Drivetrain;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);
-	
+	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);	
+	public static Climber climber=new Climber();
+	public static Grabber grabber = new Grabber();
+	public static Lift lift = new Lift();
+	public static Dropper dropper = new Dropper();
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -61,6 +61,9 @@ public class Robot extends IterativeRobot {
 
 	}
 
+	/**
+	 * Gets an instance from <code>Scheduler</code> and running it.
+	 */
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -100,7 +103,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+	
+	/**
+	 * Makes sure that the autonomous stops running when teleop starts running.
+	 */
 	@Override
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
@@ -127,6 +133,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		//LiveWindow.run();
 	}
 }
