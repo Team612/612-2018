@@ -23,7 +23,7 @@ public class Lift extends Subsystem {
 	 * Sets the default command for a subsystem to <code>DefaultLift()</code>.
 	 */
     public void initDefaultCommand() {
-    	
+    	setDefaultCommand(new DefaultLift());
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	lift_talon.selectProfileSlot(0, 0);
