@@ -12,6 +12,7 @@ public class Climber_Two_Up extends Command {
     public Climber_Two_Up() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(Robot.dropper);
     }
 
     // Called just before this Command runs the first time
