@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.usfirst.frc.team612.robot.Robot;
 
@@ -29,7 +30,11 @@ public class ReplayRobot extends Command {
 
     public static double playback_speed = 1;
     public static boolean end = false;
-
+    
+    public static Integer index_counter = 0;
+    
+    ArrayList<Double> drive_data = new ArrayList<Double>(4);
+    
     public ReplayRobot() {
 
     }
@@ -74,13 +79,21 @@ public class ReplayRobot extends Command {
             double magnitude = Double.parseDouble(parts[0]);
             double angle = Double.parseDouble(parts[1]);
             double rotation = Double.parseDouble(parts[2]);
-
-            //double seconds_replay = replay_timer.get();
+            
+            double seconds_replay = replay_timer.get();
+            
+            drive_data.add(magnitude);
+            drive_data.add(angle);
+            drive_data.add(rotation);
+            drive_data.add(seconds_replay);
+            
             System.out.println(magnitude + "-" + angle + "-" + rotation);
+            
 
             //if (seconds_replay >= seconds*playback_speed) {
-            Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+            Robot.drivetrain.getDriveTrain().drivePolar(drive_data.get(index_counter), drive_data.get(index_counter + 1), drive_data.get(index_counter + 2));
             SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
+            index_counter = index_counter + 4;
             //}
 
         } else {

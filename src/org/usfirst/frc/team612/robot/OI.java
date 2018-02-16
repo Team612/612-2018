@@ -51,8 +51,8 @@ public class OI {
 	public static JoystickButton gunner_button_RJ   = new JoystickButton(gunner,10);
 	
 	public OI() throws IOException {
-		gunner_button_A.whenPressed(new Climber_Two_Down());
-		gunner_button_Y.whenPressed(new Climber_Two_Up());
+		gunner_button_A.whileHeld(new Climber_Two_Down());
+		gunner_button_Y.whileHeld(new Climber_Two_Up());
 		driver_button_A.whenPressed(new ReplayRobot());
 		driver_button_B.whenPressed(new RecordMovement());
 		gunner_button_RB.whenPressed(new DefaultGrabber());
