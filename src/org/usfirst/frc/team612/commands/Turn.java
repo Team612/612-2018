@@ -39,17 +39,17 @@ public class Turn extends Command {
     	if(clockWise == true && Robot.navx.getAngle() < initAngle+changeAngle) {
     		Robot.drivetrain.getDriveTrain().driveCartesian(0,0,0.5);
     	}
-    	else if(Robot.navx.getAngle > initAngle+changeAngle) {
+    	else if(Robot.navx.getAngle() > initAngle+changeAngle) {
     		Robot.drivetrain.getDriveTrain().driveCartesian(0,0,-0.5);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(clockWise == true && Robot.navx.getAngle() >= angle+setAngle) {
+    	if(clockWise == true && Robot.navx.getAngle() >= initAngle+changeAngle) {
     		isDone = true;
     	}
-    	if(clockWise == false && Robot.navx.getAngle() <= angle+setAngle) {
+    	if(clockWise == false && Robot.navx.getAngle() <= initAngle+changeAngle) {
     		isDone = true;
     	}
         return isDone;
