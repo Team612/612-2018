@@ -1,9 +1,12 @@
 package org.usfirst.frc.team612.commands;
 
 
+import org.usfirst.frc.team612.robot.Robot;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team612.robot.OI;
 /**
  *
  */
@@ -76,6 +79,11 @@ public class DefaultDrive extends Command {
     		angle = angle-yaw;
     	}
     	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	RecordMovement.magnitude = magnitude;
+    	RecordMovement.angle = angle;
+    	RecordMovement.rotation = rotation;
+    	
+    }
     	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
