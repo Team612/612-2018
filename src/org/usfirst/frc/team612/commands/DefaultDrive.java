@@ -18,6 +18,11 @@ public class DefaultDrive extends Command {
 	public static double magnitude;
 	public static double angle;
 	public static double rotation;
+	double direction_x;
+	double direction_y;
+	double yaw;
+	double ROTATION_SCALE = 40;
+	double PROPORTION_VALUE = 3;
 	
 	/**
 	 * Makes sure that that subsystem <code>drivetrain</code> is required.
@@ -37,15 +42,7 @@ public class DefaultDrive extends Command {
     	
     }
     
-    /**
-     * Called 60 times per second when this Command is scheduled to run.
-     * Gets information from Xbox controller.
-     */
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	double direction_x = 0;
-    	double direction_y = 0;
-    	double rotation = 0;
+    protected void getInput() {
     	if(OI.XBOX) {
        	 	direction_x = OI.driver.getX(Hand.kLeft);
        	 	direction_y = OI.driver.getY(Hand.kLeft);
@@ -55,7 +52,9 @@ public class DefaultDrive extends Command {
            	 direction_y = OI.joy.getY();
            	 rotation = OI.joy.getTwist();
        	}
-    	// Get all the joystick information
+    }
+    
+    protected void doDeadzone() {
     	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
     		direction_x = 0;
     	}
@@ -66,19 +65,39 @@ public class DefaultDrive extends Command {
     		rotation = 0;
     	}
     	
-    	
-    	// Do all the deadzone math
-    	double magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
+    }
+    
+    protected void toPolar() {
+    	magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
     	if(magnitude > 1.0) {
     		magnitude = 1.0;
     	}
-    	double angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
-    	// Convert cartesian to polar
-    	double yaw = Robot.navx.getYaw();
+    	angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
+    	yaw = Robot.navx.getYaw();
     	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
     	}
-    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    }
+    /**
+     * Called 60 times per second when this Command is scheduled to run.
+     * Gets information from Xbox controller.
+     */
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	getInput();
+    	
+    	doDeadzone();
+    	
+    	toPolar();
+    	
+    	// Do all the deadzone math
+    	if(OI.FIX_DRIFT) {
+    		double yaw_velocity = Robot.navx.getRate();
+    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation*ROTATION_SCALE-yaw_velocity)*PROPORTION_VALUE);
+    	}
+    	else{
+    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	}
     	RecordMovement.magnitude = magnitude;
     	RecordMovement.angle = angle;
     	RecordMovement.rotation = rotation;
