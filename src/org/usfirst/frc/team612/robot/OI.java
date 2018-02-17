@@ -4,11 +4,15 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.usfirst.frc.team612.commands.Climber_Two_Down;
 import org.usfirst.frc.team612.commands.Climber_Two_Up;
 import org.usfirst.frc.team612.commands.RecordMovement;
+import org.usfirst.frc.team612.commands.ReplayGroup;
 import org.usfirst.frc.team612.commands.ReplayRobot;
 import org.usfirst.frc.team612.commands.DefaultDropper;
 import org.usfirst.frc.team612.commands.DefaultGrabber;
@@ -51,13 +55,16 @@ public class OI {
 	public static JoystickButton gunner_button_LJ   = new JoystickButton(gunner,9);
 	public static JoystickButton gunner_button_RJ   = new JoystickButton(gunner,10);
 	
+	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
+	
 	public OI() throws IOException {
 		gunner_button_A.whileHeld(new Climber_Two_Down());
 		gunner_button_Y.whileHeld(new Climber_Two_Up());
-		driver_button_A.whenPressed(new ReplayRobot());
+		driver_button_A.whenPressed(new ReplayGroup());
 		driver_button_B.whenPressed(new RecordMovement());
 		gunner_button_RB.whenPressed(new DefaultGrabber());
 		gunner_button_LB.whenPressed(new DefaultDropper());
+		
 	}
 }
 	/*	//create new file

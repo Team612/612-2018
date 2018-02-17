@@ -85,7 +85,6 @@ public class RecordMovement extends Command {
         if (writer == null) {
             System.out.println("Writer Object = Null");
         } else {
-        	System.out.println(writable_data);
             writer.println(writable_data);
         }
     }

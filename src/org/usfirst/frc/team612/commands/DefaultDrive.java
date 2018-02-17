@@ -21,8 +21,8 @@ public class DefaultDrive extends Command {
 	double direction_x;
 	double direction_y;
 	double yaw;
-	double ROTATION_SCALE = 40;
-	double PROPORTION_VALUE = 3;
+	//double ROTATION_SCALE = 40;
+	//double PROPORTION_VALUE = 3;
 	
 	/**
 	 * Makes sure that that subsystem <code>drivetrain</code> is required.
@@ -93,7 +93,7 @@ public class DefaultDrive extends Command {
     	// Do all the deadzone math
     	if(OI.FIX_DRIFT) {
     		double yaw_velocity = Robot.navx.getRate();
-    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation*ROTATION_SCALE-yaw_velocity)*PROPORTION_VALUE);
+    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation-yaw_velocity));
     	}
     	else{
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
@@ -102,8 +102,8 @@ public class DefaultDrive extends Command {
     	RecordMovement.angle = angle;
     	RecordMovement.rotation = rotation;
     	
-    }
-    	/*if(magnitude > prev_magnitude) {
+    
+    	if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     			prev_magnitude = magnitude;
@@ -113,6 +113,7 @@ public class DefaultDrive extends Command {
     	} else {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
