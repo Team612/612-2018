@@ -9,7 +9,7 @@ import org.usfirst.frc.team612.robot.RobotMap;
  *
  */
 public class Dropper extends Subsystem {
-	Solenoid solenoid_drop = new Solenoid(RobotMap.solenoid_D);
+	Solenoid solenoid_drop = new Solenoid(RobotMap.solenoid_D_one,RobotMap.solenoid_D_two);
     public void initDefaultCommand() {
     	
     }
