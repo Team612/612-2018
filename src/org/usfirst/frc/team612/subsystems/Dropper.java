@@ -15,10 +15,19 @@ public class Dropper extends Subsystem {
 	
 	Solenoid solenoid_drop = new Solenoid(RobotMap.solenoid_D);
 
+	/**
+	 * Sets the default command for Dropper.java.
+	 * @deprecated <code>initDefaultCommand()</code> does nothing in Dropper.java
+	 */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    /**
+     * Gets the dropper solenoid.
+     * @return Dropper solenoid.
+     */
     public Solenoid getSolenoid() {
     	return solenoid_drop;
     }

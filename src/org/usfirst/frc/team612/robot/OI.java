@@ -64,6 +64,21 @@ public class OI {
 	public static JoystickButton gunner_button_LJ = new JoystickButton(gunner,9);
 	public static JoystickButton gunner_button_RJ = new JoystickButton(gunner,10);
 	
+	/**
+	 * Does stuff when buttons on the Xbox controller are pressed.
+	 * <br>
+	 * <b>Button Descriptions:</b>
+	 * <ul>
+	 * <li><code>gunner_button_A</code> - Creates a new <code>Climber_Two_Down</code> when pressed.</li>
+	 * <li><code>gunner_button_Y</code> - Creates a new <code>Climber_Two_Up</code> when pressed.</li>
+	 * <li><code>driver_button_A</code> - Creates a new <code>ReplayRobot</code> when pressed.</li>
+	 * <li><code>driver_button_B</code> - Creates a new <code>RecordMovement</code> when pressed.</li>
+	 * <li><code>gunner_button_RB</code> - Creates a new <code>DefaultGrabber</code> when pressed.</li>
+	 * <li><code>gunner_button_B</code> - Creates a new <code>DefaultLift</code> with parameter <code>0</code> when pressed.</li>
+	 * <li><code>gunner_button_LB</code> - Creates a new <code>DefaultDropper</code> when pressed.</li>
+	 * </ul>
+	 * @throws IOException
+	 */
 	public OI() throws IOException {
 		gunner_button_A.whenPressed(new Climber_Two_Down());
 		gunner_button_Y.whenPressed(new Climber_Two_Up());

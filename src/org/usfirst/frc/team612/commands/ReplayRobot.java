@@ -26,6 +26,9 @@ public class ReplayRobot extends Command {
 	float seconds;
 	public String line = "NOTHING";
 	Timer replay_timer = new Timer();
+	/**
+	 * @deprecated Everything in <code>ReplayRobot()</code>'s body is just commented out.
+	 */
     public ReplayRobot() {
     	//requires(Robot.drivetrain);
 
@@ -45,6 +48,10 @@ public class ReplayRobot extends Command {
     }
 
     // Called just before this Command runs the first time
+    /**
+     * Called just before <code>ReplayRobot</code> runs the first time.
+     * Attempts to access a file, but if the file can't be accessed, it will print some stuff.
+     */
     protected void initialize() {
     	System.out.println("Replay Called");
     	try {
@@ -66,6 +73,10 @@ public class ReplayRobot extends Command {
     	replay_timer.start();
     }
 
+    /**
+     * Accesses some lines from files, and if it doesn't match certain values, split it wherever there's a comma.
+     * Also does some stuff with Talons.
+     */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {	
 		try {
@@ -75,7 +86,7 @@ public class ReplayRobot extends Command {
 			e.printStackTrace();
 		}
 		if(line == "NOTHING" ) {
-			System.out.println("NTOHING");
+			System.out.println("NOTHING");
 		}
     	if(line == null) {
     		try {
@@ -108,17 +119,28 @@ public class ReplayRobot extends Command {
     	}
     }
 
+    /**
+     * Returns <code>boolean</code> variable <code>end</code>, which is set to false.
+     */
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return end;
     }
 
     // Called once after isFinished returns true
+    /**
+     * Called once after <code>isFinished()</code> returns <code>true</code>.
+     * @deprecated <code>end()</code> does nothing in ReplayRobot.java.
+     */
     protected void end() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    /**
+     * Called when another command which requires one or more of the same subsystems is scheduled to run.
+     * @deprecated <code>interrupted()</code> does nothing in ReplayRobot.java.
+     */
     protected void interrupted() {
     }
 }

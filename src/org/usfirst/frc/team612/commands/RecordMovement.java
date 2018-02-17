@@ -23,11 +23,18 @@ public class RecordMovement extends Command {
 	public static File file_to_create = new File(file_dir);
 	public static Timer data_timer = new Timer();
 	
+	/**
+	 * Requires something.
+	 * @deprecated <code>RecordMovement</code> has no code whatsoever in its body.
+	 */
     public RecordMovement() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
+    /**
+     * Tries to create a new file, and starts a data timer when <code>RecordMovement</code> runs the first time.
+     */
     // Called just before this Command runs the first time
     protected void initialize() {
     	try {
@@ -56,6 +63,9 @@ public class RecordMovement extends Command {
     	data_timer.start();
     }
 
+    /**
+     * Does some Talon stuff, as well as some Writable stuff, 60 times every second.
+     */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//save magnitude angle and rotation to a file
@@ -86,17 +96,28 @@ public class RecordMovement extends Command {
    	 	}
     }
 
+    /**
+     * Returns the value of <code>driver_button_Y</code>, and if the value is <code>true</code>, then <code>execute()</code> will stop.
+     */
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return OI.driver_button_Y.get();
     }
 
     // Called once after isFinished returns true
+    /**
+     * Called once after <code>isFinished()</code> returns <code>true</code>.
+     * @deprecated <code>end()</code> does nothing in RecordMovement.java.
+     */
     protected void end() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    /**
+     * Called when another command which requires one or more of the same subsystems is scheduled to run.
+     * @deprecated <code>interrupted()</code> does nothing in RecordMovement.java.
+     */
     protected void interrupted() {
     }
 }
