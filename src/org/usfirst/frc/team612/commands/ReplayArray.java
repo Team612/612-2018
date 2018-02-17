@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.usfirst.frc.team612.robot.OI;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,7 +28,7 @@ public class ReplayArray extends Command {
     public static double playback_speed = 1;
     public static boolean end = false;
 
-    public static ArrayList < Double > drive_data = new ArrayList < Double > (4);
+    //public static ArrayList < Double > drive_data = new ArrayList < Double > (4);
 
     public static double magnitude;
     public static double angle;
@@ -72,21 +74,19 @@ public class ReplayArray extends Command {
         if (line != null) {
 
             String[] parts = line.split(",");
-            System.out.println(line);
             double magnitude = Double.parseDouble(parts[0]);
             double angle = Double.parseDouble(parts[1]);
             double rotation = Double.parseDouble(parts[2]);
             double seconds_replay = Double.parseDouble(parts[3]);
 
-            drive_data.add(magnitude);
-            drive_data.add(angle);
-            drive_data.add(rotation);
-            drive_data.add(seconds_replay);
-            
-            if (line == null) {
-            	//end = true;
-            }
+            OI.drive_data.add(magnitude);
+            OI.drive_data.add(angle);
+            OI.drive_data.add(rotation);
+            OI.drive_data.add(seconds_replay);
         }
+            else  {
+            	end = true;
+            }
     }
 
     // Make this return true when this Command no longer needs to run execute()

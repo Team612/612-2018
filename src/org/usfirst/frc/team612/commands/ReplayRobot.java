@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -40,12 +41,10 @@ public class ReplayRobot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	System.out.println(ReplayArray.drive_data);
         double seconds_replay = replay_timer.get();
 
         //if (seconds_replay >= seconds*playback_speed) {
-        Robot.drivetrain.getDriveTrain().drivePolar(ReplayArray.drive_data.get(index_counter), ReplayArray.drive_data.get(index_counter + 1), ReplayArray.drive_data.get(index_counter + 2));
+        Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
         SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
         index_counter = index_counter + 4;
         //}
@@ -55,7 +54,7 @@ public class ReplayRobot extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return end;
+        return false;
     }
 
     // Called once after isFinished returns true

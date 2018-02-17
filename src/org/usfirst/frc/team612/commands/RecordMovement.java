@@ -85,14 +85,13 @@ public class RecordMovement extends Command {
         if (writer == null) {
             System.out.println("Writer Object = Null");
         } else {
-        	System.out.println(writable_data);
             writer.println(writable_data);
         }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return end;
     }
 
     // Called once after isFinished returns true

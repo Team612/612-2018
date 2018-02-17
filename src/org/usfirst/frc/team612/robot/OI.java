@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.usfirst.frc.team612.commands.Climber_Two_Down;
 import org.usfirst.frc.team612.commands.Climber_Two_Up;
 import org.usfirst.frc.team612.commands.RecordMovement;
@@ -52,6 +54,8 @@ public class OI {
 	public static JoystickButton gunner_button_STRT = new JoystickButton(gunner,8);
 	public static JoystickButton gunner_button_LJ   = new JoystickButton(gunner,9);
 	public static JoystickButton gunner_button_RJ   = new JoystickButton(gunner,10);
+	
+	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
 	
 	public OI() throws IOException {
 		gunner_button_A.whileHeld(new Climber_Two_Down());
