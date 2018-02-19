@@ -1,10 +1,11 @@
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.autonomous;
 
 import java.io.File;
-import org.usfirst.frc.team612.commands.DefaultDrive;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import org.usfirst.frc.team612.commands.drive.DefaultDrive;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

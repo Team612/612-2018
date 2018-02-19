@@ -1,4 +1,4 @@
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.drive;
 
 
 import org.usfirst.frc.team612.robot.Robot;
@@ -6,6 +6,8 @@ import org.usfirst.frc.team612.robot.Robot;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.robot.OI;
 /**
  *

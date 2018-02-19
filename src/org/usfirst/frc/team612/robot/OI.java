@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.usfirst.frc.team612.commands.Climber_Two_Down;
-import org.usfirst.frc.team612.commands.Climber_Two_Up;
-import org.usfirst.frc.team612.commands.RecordMovement;
-import org.usfirst.frc.team612.commands.ReplayGroup;
-import org.usfirst.frc.team612.commands.ReplayRobot;
-import org.usfirst.frc.team612.commands.DefaultDropper;
-import org.usfirst.frc.team612.commands.DefaultGrabber;
+import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
+import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
+import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
+import org.usfirst.frc.team612.commands.climber.Climber_Two_Down;
+import org.usfirst.frc.team612.commands.climber.Climber_Two_Up;
+import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
+import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**

@@ -1,34 +1,32 @@
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.pneumatic;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.usfirst.frc.team612.robot.Robot;
 /**
  *
  */
-public class Climber_One extends Command {
+public class DefaultDropper extends Command {
 
-    public Climber_One() {
-    	requires(Robot.climber);
+    public DefaultDropper() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.dropper);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.gunner.getPOV() ==0) {
-    		Robot.climber.getClimber(1).set(0.5);
-    	}else if(Robot.oi.gunner.getPOV()==180) {
-    		Robot.climber.getClimber(1).set(-0.5);
-    	}
-    }
+    	Robot.dropper.getSolenoid().set(!Robot.dropper.getSolenoid().get());
+        }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

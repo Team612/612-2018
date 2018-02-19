@@ -1,4 +1,4 @@
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.lift;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team612.robot.OI;

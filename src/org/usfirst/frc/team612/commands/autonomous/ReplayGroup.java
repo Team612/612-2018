@@ -1,4 +1,4 @@
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
