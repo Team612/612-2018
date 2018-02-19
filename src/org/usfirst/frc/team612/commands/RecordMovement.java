@@ -2,10 +2,13 @@ package org.usfirst.frc.team612.commands;
 
 import java.io.File;
 import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.robot.Robot;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -72,14 +75,41 @@ public class RecordMovement extends Command {
         String magnitude_string = Double.toString(magnitude);
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
+        String lift_voltage = Double.toString(Robot.lift.getTalon().get());
+        check_grabber_voltage = !Robot.grabber.getSolenoid().get();
+        String grabber_voltage = "";
+        if (check_grabber_voltage == Value.kOff) {
+        	grabber_voltage = "0";
+        }
+        else if (check_grabber_voltage == Value.kForward) {
+        	grabber_voltage = "1";
+        }
+        
+        else if (check_grabber_voltage == Value.kReverse) {
+        	grabber_voltage = "2";
+        }
+        
+        check_dropper_voltage = !Robot.dropper.getSolenoid().get());
+        String dropper_voltage = "";
+        if (check_dropper_voltage == Value.kOff) {
+        	dropper_voltage = "0";
+        }
+        else if (check_dropper_voltage == Value.kForward) {
+        	dropper_voltage = "1";
+        }
+        
+        else if (check_dropper_voltage == Value.kReverse) {
+        	dropper_voltage = "2";
+        }
+        
         //String talon_4 = Double.toString(talon_RL);
 
         //create array of data to store
-        String input_data[] = {magnitude_string, angle_string, rotation_string, seconds};
+        String input_data[] = {magnitude_string, angle_string, rotation_string, lift_voltage, grabber_voltage, dropper_voltage, seconds};
         String writable_data = "";
 
         //format the data
-        writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3];
+        writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3] + "," + input_data[4] + "," + input_data[5] + "," + input_data[6] + "," + input_data[7];
 
         //print and write data to file
         if (writer == null) {

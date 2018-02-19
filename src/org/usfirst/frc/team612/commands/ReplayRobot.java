@@ -10,6 +10,7 @@ import java.io.IOException;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -74,12 +75,29 @@ public class ReplayRobot extends Command {
             double magnitude = Double.parseDouble(parts[0]);
             double angle = Double.parseDouble(parts[1]);
             double rotation = Double.parseDouble(parts[2]);
+            double lift_voltage = Double.parseDouble(parts[3]);
+            String grabber_voltage = parts[4];
+            String dropper_voltage = parts[5];
 
             //double seconds_replay = replay_timer.get();
             System.out.println(magnitude + "-" + angle + "-" + rotation);
 
             //if (seconds_replay >= seconds*playback_speed) {
             Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+            Robot.lift.getTalon().set(lift_voltage);
+            if (grabber_voltage == "0") {
+            	grabber_voltage_set = Value.kOff;
+            }
+            else if (grabber_voltage == "1") {
+            	grabber_voltage_set = Value.kForward;
+            }
+            else if (grabber_voltage == "2") {
+            	grabber_voltage_set = Value.kReverse;
+            }
+            //add for dropper
+            Robot.grabber.getSolenoid().set(grabber_voltage_set);
+            Robot.dropper.getSolenoid().set(dropper_voltage_set);
+            
             SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
             //}
 
