@@ -1,6 +1,8 @@
 package org.usfirst.frc.team612.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import org.usfirst.frc.team612.robot.RobotMap;
@@ -22,6 +24,10 @@ public class Drivetrain extends Subsystem {
 		//talon_FL.setInverted(true);
 		//talon_RR.setInverted(true);
 		//talon_RL.setInverted(true);
+		talon_FR.setNeutralMode(NeutralMode.Brake);
+		talon_FL.setNeutralMode(NeutralMode.Brake);
+		talon_RR.setNeutralMode(NeutralMode.Brake);
+		talon_RL.setNeutralMode(NeutralMode.Brake);
 		drivetrain = new MecanumDrive(talon_FL, talon_RL, talon_FR, talon_RR);
 	}
 	/**

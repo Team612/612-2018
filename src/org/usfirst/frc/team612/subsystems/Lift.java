@@ -3,6 +3,9 @@ package org.usfirst.frc.team612.subsystems;
 import org.usfirst.frc.team612.commands.DefaultLift;
 import org.usfirst.frc.team612.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,6 +18,8 @@ public class Lift extends Subsystem {
 	 */
     public void initDefaultCommand() {
     	setDefaultCommand(new DefaultLift());
+    	lift_talon.setNeutralMode(NeutralMode.Brake);
+    	lift_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	lift_talon.selectProfileSlot(0, 0);
     	lift_talon.config_kF(0, 0.2, 5000); //The 5000 is the time out 
     	lift_talon.config_kP(0, 0.2, 5000);//for setting  the configuration.(in milliseconds).

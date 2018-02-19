@@ -21,6 +21,8 @@ public class DefaultDrive extends Command {
 	double direction_x;
 	double direction_y;
 	double yaw;
+	boolean single_wheel = false;
+	int id = 1;
 	//double ROTATION_SCALE = 40;
 	//double PROPORTION_VALUE = 3;
 	
@@ -82,15 +84,29 @@ public class DefaultDrive extends Command {
      * Called 60 times per second when this Command is scheduled to run.
      * Gets information from Xbox controller.
      */
+    
+    protected void singleWheel() {
+    	Robot.drivetrain.getTalon(id%4).set(OI.driver.getX(Hand.kLeft));
+    	if(OI.driver_button_X.get()) {
+    		id++;
+    	}
+    }
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(OI.driver_button_BCK.get()) { // Toggle control mode
+    		single_wheel = !single_wheel;
+    	}
+    	if(single_wheel) {
+    		singleWheel();
+    		return; // Don't execute the rest of this function
+    	}
     	getInput();
     	
     	doDeadzone();
     	
     	toPolar();
     	
-    	// Do all the deadzone math
     	if(OI.FIX_DRIFT) {
     		double yaw_velocity = Robot.navx.getRate();
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation-yaw_velocity));
