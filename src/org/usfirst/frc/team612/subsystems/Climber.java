@@ -1,5 +1,6 @@
 package org.usfirst.frc.team612.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -16,6 +17,8 @@ public class Climber extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	climber1.setNeutralMode(NeutralMode.Brake);
+    	climber2.setNeutralMode(NeutralMode.Brake);
     }
     public WPI_TalonSRX getClimber(int num) {
     	if(num == 1) {

@@ -143,6 +143,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
 		SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
+		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSensorCollection().getQuadraturePosition());
 	}
 
 	/**
