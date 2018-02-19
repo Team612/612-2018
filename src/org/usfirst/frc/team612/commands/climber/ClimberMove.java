@@ -1,18 +1,18 @@
 package org.usfirst.frc.team612.commands.climber;
 
-import org.usfirst.frc.team612.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team612.robot.OI;
+import org.usfirst.frc.team612.robot.Robot;
 /**
  *
  */
-public class Climber_Two_Up extends Command {
+public class ClimberMove extends Command {
 
-    public Climber_Two_Up() {
+    public ClimberMove() {
+    	requires(Robot.climber);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(Robot.dropper);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +21,11 @@ public class Climber_Two_Up extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climber.getClimber(2).set(.5);
+    	if(OI.gunner.getPOV() ==0) {
+    		Robot.climber.getClimber(1).set(0.5);
+    	}else if(OI.gunner.getPOV()==180) {
+    		Robot.climber.getClimber(1).set(-0.5);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
