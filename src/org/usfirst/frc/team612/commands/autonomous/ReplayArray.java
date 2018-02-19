@@ -1,4 +1,4 @@
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.autonomous;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

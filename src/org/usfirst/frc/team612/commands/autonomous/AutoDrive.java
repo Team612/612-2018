@@ -1,33 +1,32 @@
-package org.usfirst.frc.team612.commands;
-
-import org.usfirst.frc.team612.robot.Robot;
-
+package org.usfirst.frc.team612.commands.autonomous;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team612.robot.Robot;
 
 /**
  *
  */
-public class Climber_Two_Down extends Command {
+public class AutoDrive extends Command {
 
-    public Climber_Two_Down() {
+    public AutoDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.climber);
-
+    	requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	setTimeout(5); // Timeout should go in initialize
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climber.getClimber(2).set(-.5);
-    }
+    	Robot.drivetrain.getDriveTrain().driveCartesian(0.5,0,0);
+    	}
+    
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

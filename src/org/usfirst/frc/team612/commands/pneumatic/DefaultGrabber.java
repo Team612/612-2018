@@ -1,5 +1,5 @@
 
-package org.usfirst.frc.team612.commands;
+package org.usfirst.frc.team612.commands.pneumatic;
 
 import org.usfirst.frc.team612.robot.Robot;
 
