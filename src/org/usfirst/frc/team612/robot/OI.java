@@ -16,6 +16,8 @@ import org.usfirst.frc.team612.commands.climber.ClimberMoveDown;
 import org.usfirst.frc.team612.commands.climber.ClimberMoveUp;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
+import org.usfirst.frc.team612.commands.pneumatic.DisableDropper;
+import org.usfirst.frc.team612.commands.pneumatic.DisableGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
@@ -23,12 +25,13 @@ import org.usfirst.frc.team612.robot.RobotMap;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
 	public static final boolean XBOX = true;	
 	public static final boolean OMNI = false;
 	public static final boolean DRIVER_PERSPECTIVE = false;
 	public static final boolean LIFT_PID = false;
 	public static final boolean FIX_DRIFT = false;
+	public static boolean GRABBER_POS = true;//true means closed
+	public static boolean DROPPER_POS = true;//true means off
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
 	public static Joystick joy = new Joystick(1); // Flight controller
@@ -62,10 +65,14 @@ public class OI {
 		gunner_button_Y.whileHeld(new ClimberMoveUp());
 		driver_button_A.whenPressed(new ReplayGroup());
 		driver_button_B.whenPressed(new RecordMovement());
-		gunner_button_RB.whenPressed(new DefaultGrabber());
 		gunner_button_LB.whenPressed(new DefaultDropper());
+		gunner_button_LB.whenReleased(new DisableDropper());
+		gunner_button_RB.whenPressed(new DefaultGrabber());
+		gunner_button_RB.whenReleased(new DisableGrabber());
+
 		
 	}
+	
 }
 	/*	//create new file
 		//file stored on robo-rio
