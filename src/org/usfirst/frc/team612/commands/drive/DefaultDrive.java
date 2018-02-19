@@ -4,6 +4,7 @@ package org.usfirst.frc.team612.commands.drive;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,17 +15,20 @@ import org.usfirst.frc.team612.robot.OI;
  */
 public class DefaultDrive extends Command {
 	
-	double DEADZONE = 0.07;
+	final double DEADZONE = 0.07;
 	double prev_magnitude = 0;
 	double rate = 0.05;
 	public static double magnitude;
 	public static double angle;
 	public static double rotation;
+	final double RUMBLE_DEAD = 0.2;
 	double direction_x;
 	double direction_y;
 	double yaw;
 	boolean single_wheel = false;
 	int id = 1;
+	double prev_x = 0;
+	double prev_y = 0;
 	//double ROTATION_SCALE = 40;
 	//double PROPORTION_VALUE = 3;
 	
@@ -121,6 +125,16 @@ public class DefaultDrive extends Command {
     	RecordMovement.rotation = rotation;
     	
     	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	prev_x = direction_x;
+    	prev_y = direction_y;
+    	double delta_x = (prev_x-direction_x)/(1/60.0);
+    	double delta_y = (prev_y-direction_y)/(1/60.0);
+    	double diff_x = Robot.navx.getWorldLinearAccelX()-delta_x;
+    	double diff_y = Robot.navx.getWorldLinearAccelY()-delta_y;
+    	if(Math.abs(diff_x) > RUMBLE_DEAD || Math.abs(diff_y) > RUMBLE_DEAD) {
+    		OI.driver.setRumble(RumbleType.kLeftRumble, 0.5);
+    		OI.driver.setRumble(RumbleType.kRightRumble, 0.5);
+    	}
     	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
