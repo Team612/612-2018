@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
 import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
-import org.usfirst.frc.team612.commands.climber.Climber_Two_Down;
-import org.usfirst.frc.team612.commands.climber.Climber_Two_Up;
+import org.usfirst.frc.team612.commands.climber.ClimberMoveDown;
+import org.usfirst.frc.team612.commands.climber.ClimberMoveUp;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
@@ -58,8 +58,8 @@ public class OI {
 	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
 	
 	public OI() throws IOException {
-		gunner_button_A.whileHeld(new Climber_Two_Down());
-		gunner_button_Y.whileHeld(new Climber_Two_Up());
+		gunner_button_A.whileHeld(new ClimberMoveDown());
+		gunner_button_Y.whileHeld(new ClimberMoveUp());
 		driver_button_A.whenPressed(new ReplayGroup());
 		driver_button_B.whenPressed(new RecordMovement());
 		gunner_button_RB.whenPressed(new DefaultGrabber());
