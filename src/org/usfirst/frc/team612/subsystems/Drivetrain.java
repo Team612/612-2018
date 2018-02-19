@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import org.usfirst.frc.team612.robot.RobotMap;
 import org.usfirst.frc.team612.commands.DefaultDrive;
+import org.usfirst.frc.team612.commands.MoveWheel;
 /**
  *
  */
@@ -29,7 +30,7 @@ public class Drivetrain extends Subsystem {
 	 */
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-    		setDefaultCommand(new DefaultDrive());
+    		setDefaultCommand(new MoveWheel());
     }
     
     /**

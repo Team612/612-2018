@@ -131,6 +131,18 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
+		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
+		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
+		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
+		SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
+		SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
+		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
+		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
+		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
+		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
+		SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
+		SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
 	}
 
 	/**
