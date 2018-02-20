@@ -3,16 +3,19 @@ package org.usfirst.frc.team612.commands.pneumatic;
 
 import org.usfirst.frc.team612.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class DefaultGrabber extends Command {
+	private static int count =0;
 	/**
 	 * Requires a <code>grabber</code>
 	 */
     public DefaultGrabber() {
+    	
     	requires(Robot.grabber);
     }
     /**
@@ -28,7 +31,24 @@ public class DefaultGrabber extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.grabber.getSolenoid().set((!Robot.grabber.getSolenoid().get()));
+    	if (count == 1) {
+    		Robot.grabber.getSolenoid().set(Value.kOff);
+    	}
+    	count =0;
+
+    	if(Robot.grabber.getSolenoid().get() == Value.kForward) {
+    		Robot.grabber.getSolenoid().set(Value.kReverse);
+    		count =1;
+    	} else if (Robot.grabber.getSolenoid().get() == Value.kReverse) {
+    		Robot.grabber.getSolenoid().set(Value.kForward);	
+    		count =1;
+    	}
+    	else {
+    		Robot.grabber.getSolenoid().set(Value.kForward);
+    		count =1;
+    	}
+    	
+    	
     	
     }
 

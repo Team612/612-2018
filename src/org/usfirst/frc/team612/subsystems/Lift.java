@@ -21,10 +21,10 @@ public class Lift extends Subsystem {
     	lift_talon.setNeutralMode(NeutralMode.Brake);
     	lift_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     	lift_talon.selectProfileSlot(0, 0);
-    	lift_talon.config_kF(0, 0.2, 5000); //The 5000 is the time out 
-    	lift_talon.config_kP(0, 0.2, 5000);//for setting  the configuration.(in milliseconds).
-    	lift_talon.config_kI(0, 0, 5000);
-    	lift_talon.config_kD(0, 0,5000);
+    	lift_talon.config_kF(0, 0.2, 100); //The 5000 is the time out 
+    	lift_talon.config_kP(0, 0.2, 100);//for setting  the configuration.(in milliseconds).
+    	lift_talon.config_kI(0, 0, 100);
+    	lift_talon.config_kD(0, 0,100);
     }
     /**
      * Returns a WPI_TalonSRX <code>lift_talon</code>

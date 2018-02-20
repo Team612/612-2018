@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DefaultLift extends Command {
-    	
+    private static double deadzone = .1;
+    private static double move = .1;
+
 	
 
     /**
@@ -38,7 +40,13 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lift.getTalon().set(Robot.oi.gunner.getY(Hand.kLeft));
+    	if(deadzone < Robot.oi.gunner.getY(Hand.kLeft) && -deadzone  > Robot.oi.gunner.getY(Hand.kLeft)) {
+    		move = 0;
+    	}
+    	else {
+    		move = Robot.oi.gunner.getY(Hand.kLeft) * .8;
+    	}
+    	Robot.lift.getTalon().set(move);
     }
     	
 

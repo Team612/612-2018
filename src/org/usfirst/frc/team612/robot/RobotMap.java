@@ -16,12 +16,16 @@ public class RobotMap {
 	public static int talon_RR 		= 4;
 	public static int talon_RL 		= 2;
 	public static int talon_lift 	= 5;
-	public static int solenoid_G_one= 1;//placeholder
-	public static int solenoid_G_two= 2;
-	public static int solenoid_D_one= 6;
-	public static int solenoid_D_two= 6;
+
     public static int climber_1 	= 6;
     public static int climber_2 	= 7;
+    public static int PCM_solenoid_G= 1;
+    public static int PCM_solenoid_D= 1;
+	public static int solenoid_G_one= 0;//placeholder
+	public static int solenoid_G_two= 1;
+	public static int solenoid_D_one= 2;
+	public static int solenoid_D_two= 3;
+
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:

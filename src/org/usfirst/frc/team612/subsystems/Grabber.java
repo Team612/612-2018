@@ -3,6 +3,7 @@ package org.usfirst.frc.team612.subsystems;
 
 import org.usfirst.frc.team612.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Grabber extends Subsystem {
-	Solenoid solenoid_G = new Solenoid(RobotMap.solenoid_G_one,RobotMap.solenoid_G_two);
+	DoubleSolenoid solenoid_G = new DoubleSolenoid(RobotMap.PCM_solenoid_G,RobotMap.solenoid_G_one,RobotMap.solenoid_G_two);
 	/**
 	 * Sets the default command for a subsystem.
 	 * @deprecated <code>initDefaultCommand()</code> does <b>absolutely nothing</b> in Grabber.java.
@@ -25,7 +26,7 @@ public class Grabber extends Subsystem {
      * @return solenoid_R
      * @return solenoid_L
      */
-    public Solenoid getSolenoid() {
+    public DoubleSolenoid getSolenoid() {
     	return solenoid_G;
     }
 

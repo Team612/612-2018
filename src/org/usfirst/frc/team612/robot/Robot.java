@@ -1,12 +1,15 @@
 
 package org.usfirst.frc.team612.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import java.io.IOException;
@@ -30,6 +33,7 @@ public class Robot extends IterativeRobot {
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
+	public static Compressor compressor = new Compressor(0);
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -40,15 +44,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		compressor.setClosedLoopControl(true);
 		try {
 			oi = new OI();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		//SmartDashboard.putData("Auto mode", chooser);
 		//CameraServer.getInstance().startAutomaticCapture(0);
 		//CameraServer.getInstance().startAutomaticCapture(1);
 		
@@ -66,10 +71,6 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	/**
-	 * Gets an instance from <code>Scheduler</code> and running it.
-	 */
-	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
@@ -97,8 +98,8 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		//if (autonomousCommand != null)
+			//autonomousCommand.start();
 	}
 
 	/**
@@ -106,7 +107,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
 	}
 	
 	/**
@@ -118,10 +118,10 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		navx.reset();
-		navx.zeroYaw();
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		//navx.reset();
+		//navx.zeroYaw();
+		//if (autonomousCommand != null)
+		//	autonomousCommand.cancel();
 		
 	}
 
@@ -135,14 +135,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
 		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
 		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
-		SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
+		//SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
 		SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
 		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
 		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
 		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
 		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
-		SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
-		SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
+		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
+		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
 		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSensorCollection().getQuadraturePosition());
 	}
 

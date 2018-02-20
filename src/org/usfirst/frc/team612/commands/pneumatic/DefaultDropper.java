@@ -1,5 +1,6 @@
 package org.usfirst.frc.team612.commands.pneumatic;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team612.robot.Robot;
@@ -21,8 +22,16 @@ public class DefaultDropper extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dropper.getSolenoid().set(!Robot.dropper.getSolenoid().get());
-        }
+    	if(Robot.dropper.getSolenoid().get() == Value.kForward) {
+    		Robot.dropper.getSolenoid().set(Value.kReverse);
+    	} else if (Robot.dropper.getSolenoid().get() == Value.kReverse) {
+    		Robot.dropper.getSolenoid().set(Value.kForward);	
+    	}
+    	else {
+    		Robot.dropper.getSolenoid().set(Value.kForward);	
+    	}
+    	
+     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

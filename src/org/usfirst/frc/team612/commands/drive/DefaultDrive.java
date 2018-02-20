@@ -88,7 +88,7 @@ public class DefaultDrive extends Command {
      */
     
     protected void singleWheel() {
-    	Robot.drivetrain.getTalon(id%4).set(OI.driver.getX(Hand.kLeft));
+    	Robot.drivetrain.getTalon((id%4)+1).set(OI.driver.getX(Hand.kLeft));
     	if(OI.driver_button_X.get()) {
     		id++;
     	}
