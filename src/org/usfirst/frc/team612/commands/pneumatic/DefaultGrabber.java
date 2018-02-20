@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team612.commands.pneumatic;
 
+import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DefaultGrabber extends Command {
-	private static int count =0;
+	private static boolean toggle = false;
 	/**
 	 * Requires a <code>grabber</code>
 	 */
@@ -24,6 +25,7 @@ public class DefaultGrabber extends Command {
      */
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     /**
@@ -31,25 +33,12 @@ public class DefaultGrabber extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (count == 1) {
-    		Robot.grabber.getSolenoid().set(Value.kOff);
-    	}
-    	count =0;
-
-    	if(Robot.grabber.getSolenoid().get() == Value.kForward) {
+    	if(OI.GRABBER_POS) {
     		Robot.grabber.getSolenoid().set(Value.kReverse);
-    		count =1;
-    	} else if (Robot.grabber.getSolenoid().get() == Value.kReverse) {
+    	} else  {
     		Robot.grabber.getSolenoid().set(Value.kForward);	
-    		count =1;
     	}
-    	else {
-    		Robot.grabber.getSolenoid().set(Value.kForward);
-    		count =1;
-    	}
-    	
-    	
-    	
+    	OI.GRABBER_POS = !OI.GRABBER_POS;
     }
 
     /**
