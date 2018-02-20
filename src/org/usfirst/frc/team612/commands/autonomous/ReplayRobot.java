@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -45,8 +46,16 @@ public class ReplayRobot extends Command {
 
         //if (seconds_replay >= seconds*playback_speed) {
         Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
+        if(OI.drive_data.get(index_counter+3) == 0) {
+        	Robot.grabber.getSolenoid().set(Value.kOff);
+        } else if (OI.drive_data.get(index_counter+3) == 1) {
+        	Robot.grabber.getSolenoid().set(Value.kForward);
+        } else if (OI.drive_data.get(index_counter+3) == -1) {
+        	Robot.grabber.getSolenoid().set(Value.kReverse);
+        }
+        Robot.lift.getTalon().set(OI.drive_data.get(index_counter+4));
         SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
-        index_counter = index_counter + 4;
+        index_counter = index_counter + 6;
         //}
 
     }

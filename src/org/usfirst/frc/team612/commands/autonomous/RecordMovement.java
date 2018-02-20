@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.usfirst.frc.team612.commands.drive.DefaultDrive;
+import org.usfirst.frc.team612.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -73,14 +75,24 @@ public class RecordMovement extends Command {
         String magnitude_string = Double.toString(magnitude);
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
+        String lift_string = Double.toString(Robot.lift.getTalon().get());
+        String grabber_string = "";
+        Value grabber_val = Robot.grabber.getSolenoid().get();
+        if(grabber_val == Value.kForward) {
+        	grabber_string = "1";
+        } else if (grabber_val == Value.kReverse) {
+        	grabber_string = "-1";
+        } else if (grabber_val == Value.kOff) {
+        	grabber_string = "0";
+        }
         //String talon_4 = Double.toString(talon_RL);
 
         //create array of data to store
-        String input_data[] = {magnitude_string, angle_string, rotation_string, seconds};
+        String input_data[] = {magnitude_string, angle_string, rotation_string, grabber_string, lift_string, seconds};
         String writable_data = "";
 
         //format the data
-        writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3];
+        writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3] + "," + input_data[4] + "," + input_data[5];
 
         //print and write data to file
         if (writer == null) {
