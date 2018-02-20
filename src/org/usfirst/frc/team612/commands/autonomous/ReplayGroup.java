@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ReplayGroup extends CommandGroup {
 
     public ReplayGroup() {
-    	addSequential(new ReplayArray());
-    	addSequential(new ReplayRobot());
+    	addParallel(new ReplayArray());
+    	addParallel(new ReplayRobot());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
