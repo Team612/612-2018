@@ -120,8 +120,8 @@ public class DefaultDrive extends Command {
     	RecordMovement.angle = angle;
     	RecordMovement.rotation = rotation;
     	
-    
-    	if(magnitude > prev_magnitude) {
+    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+    	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
     			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     			prev_magnitude = magnitude;
@@ -131,7 +131,7 @@ public class DefaultDrive extends Command {
     	} else {
     		prev_magnitude = magnitude;
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}
+    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

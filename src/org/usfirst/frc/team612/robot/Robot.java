@@ -2,6 +2,7 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,7 +29,7 @@ import org.usfirst.frc.team612.subsystems.Grabber;
 public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
-	public static AHRS navx = new AHRS(SerialPort.Port.kMXP, SerialDataType.kRawData, (byte)200);	
+	public static AHRS navx = new AHRS(I2C.Port.kMXP);	
 	public static Climber climber=new Climber();
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
@@ -143,7 +144,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
 		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
-		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSensorCollection().getQuadraturePosition());
+		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
+		SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
 	}
 
 	/**
