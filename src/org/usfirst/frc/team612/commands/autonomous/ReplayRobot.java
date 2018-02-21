@@ -53,8 +53,9 @@ public class ReplayRobot extends Command {
         } else if (OI.drive_data.get(index_counter+3) == -1) {
         	Robot.grabber.getSolenoid().set(Value.kReverse);
         }
+        Robot.lift.getTalon().set(OI.drive_data.get(index_counter+4));
         SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
-        index_counter = index_counter + 5;
+        index_counter = index_counter + 6;
         //}
 
     }

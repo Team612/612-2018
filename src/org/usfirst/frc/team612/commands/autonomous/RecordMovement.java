@@ -75,6 +75,7 @@ public class RecordMovement extends Command {
         String magnitude_string = Double.toString(magnitude);
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
+        String lift_string = Double.toString(Robot.lift.getTalon().get());
         String grabber_string = "";
         Value grabber_val = Robot.grabber.getSolenoid().get();
         if(grabber_val == Value.kForward) {
@@ -87,11 +88,11 @@ public class RecordMovement extends Command {
         //String talon_4 = Double.toString(talon_RL);
 
         //create array of data to store
-        String input_data[] = {magnitude_string, angle_string, rotation_string, grabber_string, seconds};
+        String input_data[] = {magnitude_string, angle_string, rotation_string, grabber_string, lift_string, seconds};
         String writable_data = "";
 
         //format the data
-        writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3] + "," + input_data[4];
+        writable_data = input_data[0] + "," + input_data[1] + "," + input_data[2] + "," + input_data[3] + "," + input_data[4] + "," + input_data[5];
 
         //print and write data to file
         if (writer == null) {

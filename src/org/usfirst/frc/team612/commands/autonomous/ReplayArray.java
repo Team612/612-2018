@@ -78,12 +78,14 @@ public class ReplayArray extends Command {
             double angle = Double.parseDouble(parts[1]);
             double rotation = Double.parseDouble(parts[2]);
             double grabber = Double.parseDouble(parts[3]);
-            double seconds_replay = Double.parseDouble(parts[4]);
+            double lift = Double.parseDouble(parts[4]);
+            double seconds_replay = Double.parseDouble(parts[5]);
 
             OI.drive_data.add(magnitude);
             OI.drive_data.add(angle);
             OI.drive_data.add(rotation);
             OI.drive_data.add(grabber);
+            OI.drive_data.add(lift);
             OI.drive_data.add(seconds_replay);
         }
             else  {
