@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Lift extends Subsystem {
 	WPI_TalonSRX lift_talon = new WPI_TalonSRX(RobotMap.talon_lift);
+	public static int target = 0;
 	/**
 	 * Sets the default command for a subsystem to <code>DefaultLift()</code>.
 	 */
@@ -22,7 +23,7 @@ public class Lift extends Subsystem {
     	lift_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 300);
     	lift_talon.selectProfileSlot(0, 0);
     	lift_talon.config_kF(0, 0.2, 100); //The 100 is the time out 
-    	lift_talon.config_kP(0, 0.2, 100);//for setting  the configuration.(in milliseconds).
+    	lift_talon.config_kP(0, 0.7, 100);//for setting  the configuration.(in milliseconds).
     	lift_talon.config_kI(0, 0, 100);
     	lift_talon.config_kD(0, 0,100);
     }

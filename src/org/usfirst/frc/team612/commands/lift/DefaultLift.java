@@ -2,6 +2,7 @@ package org.usfirst.frc.team612.commands.lift;
 
 import org.usfirst.frc.team612.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -11,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DefaultLift extends Command {
-    private static double deadzone = .1;
-    private static double move = .1;
+    private int DEADZONE = 100;
+    //private int target = -10000;
 
 	
 
@@ -40,13 +41,24 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(deadzone < Robot.oi.gunner.getY(Hand.kLeft) && -deadzone  > Robot.oi.gunner.getY(Hand.kLeft)) {
+    	/*if(deadzone < Robot.oi.gunner.getY(Hand.kLeft) && -deadzone  > Robot.oi.gunner.getY(Hand.kLeft)) {
     		move = 0;
     	}
     	else {
     		move = Robot.oi.gunner.getY(Hand.kLeft) * .8;
     	}
-    	Robot.lift.getTalon().set(move);
+    	Robot.lift.getTalon().set(move);*/
+    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1) {
+    		Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+    	} else {
+    		Robot.lift.target = Robot.lift.target;
+    	}
+    	
+    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorPosition(0)-Robot.lift.target) > DEADZONE) {
+    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.target);
+    	} else {
+    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.getTalon().getSelectedSensorPosition(0));
+    	}
     }
     	
 
