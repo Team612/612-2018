@@ -27,7 +27,6 @@ public class RecordMovement extends Command {
     public static double rotation;
     public static Timer data_timer = new Timer();
     public static boolean end = false;
-    public static Value grabber_pos;
 
     public RecordMovement() {
         // Use requires() here to declare subsystem dependencies
@@ -77,11 +76,12 @@ public class RecordMovement extends Command {
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
         String grabber_string = "";
-        if(Robot.grabber.getSolenoid().get() == Value.kForward) {
+        Value grabber_val = Robot.grabber.getSolenoid().get();
+        if(grabber_val == Value.kForward) {
         	grabber_string = "1";
-        } else if (Robot.grabber.getSolenoid().get() == Value.kReverse) {
+        } else if (grabber_val == Value.kReverse) {
         	grabber_string = "-1";
-        } else if (Robot.grabber.getSolenoid().get() == Value.kOff) {
+        } else if (grabber_val == Value.kOff) {
         	grabber_string = "0";
         }
         //String talon_4 = Double.toString(talon_RL);
