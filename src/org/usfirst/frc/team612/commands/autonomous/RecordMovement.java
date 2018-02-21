@@ -63,7 +63,6 @@ public class RecordMovement extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         //save magnitude angle and rotation to a file
-    	System.out.println("WRITTER");
         String seconds = String.valueOf(data_timer.get());
 
         /*
