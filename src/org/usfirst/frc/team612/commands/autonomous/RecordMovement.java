@@ -20,7 +20,7 @@ public class RecordMovement extends Command {
     static String directory = "/home/lvuser/";
     public static String file_name_create = "data10.txt";
     public static String file_dir = directory + file_name_create;
-    public static File file_to_create = new File(file_dir);
+    public File file_to_create = new File(file_dir);
     public static PrintWriter writer;
     public static double magnitude;
     public static double angle;
@@ -63,6 +63,7 @@ public class RecordMovement extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         //save magnitude angle and rotation to a file
+    	System.out.println("WRITTER");
         String seconds = String.valueOf(data_timer.get());
 
         /*
@@ -108,7 +109,9 @@ public class RecordMovement extends Command {
     }
 
     // Called once after isFinished returns true
-    protected void end() {}
+    protected void end() {
+    	end = false;
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

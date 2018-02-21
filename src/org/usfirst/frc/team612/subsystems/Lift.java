@@ -19,7 +19,7 @@ public class Lift extends Subsystem {
     public void initDefaultCommand() {
     	setDefaultCommand(new DefaultLift());
     	lift_talon.setNeutralMode(NeutralMode.Brake);
-    	lift_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30000);
+    	lift_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 300);
     	lift_talon.selectProfileSlot(0, 0);
     	lift_talon.config_kF(0, 0.2, 100); //The 100 is the time out 
     	lift_talon.config_kP(0, 0.2, 100);//for setting  the configuration.(in milliseconds).

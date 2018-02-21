@@ -21,12 +21,12 @@ public class ReplayArray extends Command {
     public static String file_name = "data10.txt";
 
     //Init objects for reader
-    public static FileReader fr;
-    public static BufferedReader br;
+    public FileReader fr;
+    public BufferedReader br;
     public String line;
 
     public static double playback_speed = 1;
-    public static boolean end = false;
+    public boolean end = false;
 
     //public static ArrayList < Double > drive_data = new ArrayList < Double > (4);
 
@@ -54,7 +54,7 @@ public class ReplayArray extends Command {
             e.printStackTrace();
             System.out.println("Object creation failed");
         }
-        if (RecordMovement.writer == null) {
+      if (RecordMovement.writer == null) {
             System.out.println("Please Record Data Before Replay");
         } else {
             RecordMovement.writer.close();
@@ -66,7 +66,9 @@ public class ReplayArray extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         try {
-            line = ReplayArray.br.readLine();
+        	
+            line = br.readLine();
+            System.out.println(line);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -99,7 +101,10 @@ public class ReplayArray extends Command {
     }
 
     // Called once after isFinished returns true
-    protected void end() {}
+    protected void end() {
+    	System.out.println("ARRAY DONE");
+    	end = false;
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
