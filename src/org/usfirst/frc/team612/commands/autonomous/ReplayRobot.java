@@ -37,16 +37,11 @@ public class ReplayRobot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("REPLAY");
         replay_timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("REPLAY ExEC");
-    	System.out.println(OI.drive_data.size());
-    	System.out.println(index_counter);
-    	
     	if(index_counter+4 < OI.drive_data.size() ) {
     		System.out.println("REPLAY IN IF");
     		double seconds_replay = replay_timer.get();

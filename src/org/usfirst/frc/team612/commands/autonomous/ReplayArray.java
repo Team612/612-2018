@@ -68,7 +68,6 @@ public class ReplayArray extends Command {
         try {
         	
             line = br.readLine();
-            System.out.println(line);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -102,7 +101,6 @@ public class ReplayArray extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("ARRAY DONE");
     	end = false;
     }
 
