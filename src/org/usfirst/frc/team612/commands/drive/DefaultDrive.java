@@ -132,8 +132,8 @@ public class DefaultDrive extends Command {
     	double diff_x = Robot.navx.getWorldLinearAccelX()-delta_x;
     	double diff_y = Robot.navx.getWorldLinearAccelY()-delta_y;
     	if(Math.abs(diff_x) > RUMBLE_DEAD || Math.abs(diff_y) > RUMBLE_DEAD) {
-    		OI.driver.setRumble(RumbleType.kLeftRumble, 0.5);
-    		OI.driver.setRumble(RumbleType.kRightRumble, 0.5);
+    		//OI.driver.setRumble(RumbleType.kLeftRumble, 0.5);
+    		//OI.driver.setRumble(RumbleType.kRightRumble, 0.5);
     	}
     	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {

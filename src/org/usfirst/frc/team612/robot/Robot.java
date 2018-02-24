@@ -145,6 +145,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
 		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
 	}
 
