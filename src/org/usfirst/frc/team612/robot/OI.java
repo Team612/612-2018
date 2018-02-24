@@ -25,50 +25,69 @@ import org.usfirst.frc.team612.robot.RobotMap;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public static final boolean XBOX = true;	
-	public static final boolean OMNI = false;
-	public static final boolean DRIVER_PERSPECTIVE = false;
-	public static final boolean LIFT_PID = false;
-	public static final boolean FIX_DRIFT = false;
-	public static boolean GRABBER_POS = true;//true means closed
-	public static boolean DROPPER_POS = true;//true means off
+	public static final boolean XBOX 				= true;	
+	public static final boolean OMNI 				= false;
+	public static final boolean DRIVER_PERSPECTIVE  = false;
+	public static final boolean LIFT_PID 		    = false;
+	public static final boolean FIX_DRIFT 			= true;
+	public static final boolean BONGO_MODE  		= false;
+	public static boolean GRABBER_POS   			= true;//true means closed
+	public static boolean DROPPER_POS   			= true;//true means off
+	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
 	public static Joystick joy = new Joystick(1); // Flight controller
 
-	public static JoystickButton driver_button_A    = new JoystickButton(driver,1);
-	public static JoystickButton driver_button_B 	= new JoystickButton(driver,2);
-	public static JoystickButton driver_button_X    = new JoystickButton(driver,3);
-	public static JoystickButton driver_button_Y    = new JoystickButton(driver,4);
-	public static JoystickButton driver_button_LB   = new JoystickButton(driver,5);
-	public static JoystickButton driver_button_RB   = new JoystickButton(driver,6);
-	public static JoystickButton driver_button_BCK  = new JoystickButton(driver,7);
-	public static JoystickButton driver_button_STRT = new JoystickButton(driver,8);
-	public static JoystickButton driver_button_LJ   = new JoystickButton(driver,9);
-	public static JoystickButton driver_button_RJ   = new JoystickButton(driver,10);
+	public static JoystickButton driver_button_A    	= new JoystickButton(driver,1);
+	public static JoystickButton driver_button_B 		= new JoystickButton(driver,2);
+	public static JoystickButton driver_button_X    	= new JoystickButton(driver,3);
+	public static JoystickButton driver_button_Y    	= new JoystickButton(driver,4);
+	public static JoystickButton driver_button_LB   	= new JoystickButton(driver,5);
+	public static JoystickButton driver_button_RB   	= new JoystickButton(driver,6);
+	public static JoystickButton driver_button_BCK  	= new JoystickButton(driver,7);
+	public static JoystickButton driver_button_STRT 	= new JoystickButton(driver,8);
+	public static JoystickButton driver_button_LJ   	= new JoystickButton(driver,9);
+	public static JoystickButton driver_button_RJ   	= new JoystickButton(driver,10);
 	//end of driver
-    public static JoystickButton gunner_button_A    = new JoystickButton(gunner, 1);
-	public static JoystickButton gunner_button_B    = new JoystickButton(gunner, 2);
-    public static JoystickButton gunner_button_X    = new JoystickButton(gunner,3);
-	public static JoystickButton gunner_button_Y    = new JoystickButton(gunner,4);
-	public static JoystickButton gunner_button_LB   = new JoystickButton(gunner,5);
-	public static JoystickButton gunner_button_RB   = new JoystickButton(gunner,6);
-	public static JoystickButton gunner_button_BCK  = new JoystickButton(gunner,7);
-	public static JoystickButton gunner_button_STRT = new JoystickButton(gunner,8);
-	public static JoystickButton gunner_button_LJ   = new JoystickButton(gunner,9);
-	public static JoystickButton gunner_button_RJ   = new JoystickButton(gunner,10);
+    public static JoystickButton gunner_button_A    	= new JoystickButton(gunner, 1);
+	public static JoystickButton gunner_button_B    	= new JoystickButton(gunner, 2);
+    public static JoystickButton gunner_button_X    	= new JoystickButton(gunner,3);
+	public static JoystickButton gunner_button_Y    	= new JoystickButton(gunner,4);
+	public static JoystickButton gunner_button_LB   	= new JoystickButton(gunner,5);
+	public static JoystickButton gunner_button_RB   	= new JoystickButton(gunner,6);
+	public static JoystickButton gunner_button_BCK  	= new JoystickButton(gunner,7);
+	public static JoystickButton gunner_button_STRT 	= new JoystickButton(gunner,8);
+	public static JoystickButton gunner_button_LJ   	= new JoystickButton(gunner,9);
+	public static JoystickButton gunner_button_RJ   	= new JoystickButton(gunner,10);
 	
+	public static JoystickButton bongo_button_Left_F    = new JoystickButton(bongo, 1); 
+	public static JoystickButton bongo_button_Left_B    = new JoystickButton(bongo, 2);
+	public static JoystickButton bongo_button_Right_F   = new JoystickButton(bongo, 4);
+	public static JoystickButton bongo_button_Right_B   = new JoystickButton(bongo, 3);
+	public static JoystickButton bongo_button_middle    = new JoystickButton(bongo, 10);
+
+	
+
 	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
 	
 	public OI() throws IOException {
+		if(BONGO_MODE) {
+			bongo_button_middle.whenPressed(new DefaultDropper());
+			bongo_button_middle.whenReleased(new DisableDropper());
+			bongo_button_Right_F.whenPressed(new DefaultGrabber());
+			bongo_button_Right_F.whenReleased(new DisableGrabber());
+		}
+		else {
+			gunner_button_LB.whenPressed(new DefaultDropper());
+			gunner_button_LB.whenReleased(new DisableDropper());
+			gunner_button_RB.whenPressed(new DefaultGrabber());
+			gunner_button_RB.whenReleased(new DisableGrabber());
+		}
 		gunner_button_A.whileHeld(new ClimberMoveDown());
 		gunner_button_Y.whileHeld(new ClimberMoveUp());
 		driver_button_A.whenPressed(new ReplayGroup());
 		driver_button_B.whenPressed(new RecordMovement());
-		gunner_button_LB.whenPressed(new DefaultDropper());
-		gunner_button_LB.whenReleased(new DisableDropper());
-		gunner_button_RB.whenPressed(new DefaultGrabber());
-		gunner_button_RB.whenReleased(new DisableGrabber());
+		
 
 		
 	}

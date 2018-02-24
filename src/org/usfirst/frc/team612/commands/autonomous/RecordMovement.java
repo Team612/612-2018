@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.usfirst.frc.team612.commands.drive.DefaultDrive;
+import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -71,11 +72,11 @@ public class RecordMovement extends Command {
 	   	double talon_RR = Robot.drivetrain.getTalon(3).get();
 	   	double talon_RL = Robot.drivetrain.getTalon(4).get();
 	   	*/
-
+        System.out.println(Robot.lift.getTalon().getSelectedSensorPosition(0));
         String magnitude_string = Double.toString(magnitude);
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
-        String lift_string = Double.toString(Robot.lift.getTalon().get());
+        String lift_string = Double.toString(Robot.lift.getTalon().getSelectedSensorPosition(0));
         String grabber_string = "";
         Value grabber_val = Robot.grabber.getSolenoid().get();
         if(grabber_val == Value.kForward) {
@@ -100,6 +101,9 @@ public class RecordMovement extends Command {
         } else {
             writer.println(writable_data);
         }
+        if(OI.driver_button_X.get()) {
+        	end = true;
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -109,6 +113,7 @@ public class RecordMovement extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	writer.close();
     	end = false;
     }
 

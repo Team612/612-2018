@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team612.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
 		compressor.setClosedLoopControl(true);
 		try {
 			oi = new OI();
@@ -144,8 +146,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
 		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
+		SmartDashboard.putBoolean( "Lift Limit FWD SW", lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
+		SmartDashboard.putBoolean( "Lift Limit REV SW", lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
 		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Target", lift.target);
+		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
+
 		SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
 	}
 

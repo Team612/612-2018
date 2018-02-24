@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Lift extends Subsystem {
 	WPI_TalonSRX lift_talon = new WPI_TalonSRX(RobotMap.talon_lift);
-	public static int target = 0;
-	/**
+	public static int target = 0;	/**
 	 * Sets the default command for a subsystem to <code>DefaultLift()</code>.
 	 */
     public void initDefaultCommand() {
