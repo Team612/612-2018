@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -32,7 +34,7 @@ public class ReplayRobot extends Command {
 
     public ReplayRobot() {
     	requires(Robot.drivetrain);
-
+    	requires(Robot.lift);
     }
 
     // Called just before this Command runs the first time
@@ -54,13 +56,17 @@ public class ReplayRobot extends Command {
 	        } else if (OI.drive_data.get(index_counter+3) == -1) {
 	        	Robot.grabber.getSolenoid().set(Value.kReverse);
 	        }
-	        Robot.lift.getTalon().set(OI.drive_data.get(index_counter+4));
+	        System.out.println("Yo THIS IS THE NUM SET " + OI.drive_data.get(index_counter+4));
+	        Robot.lift.getTalon().set(ControlMode.Position,  OI.drive_data.get(index_counter+4));
 	        SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
 	        index_counter = index_counter + 6;
     	}
     	else {
     		end_R = true;
     	}
+        if(OI.driver_button_X.get()) {
+        	end_R = true;
+        }
         //}
 
     }

@@ -1,4 +1,6 @@
 package org.usfirst.frc.team612.commands.autonomous;
+import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
+import org.usfirst.frc.team612.commands.pneumatic.DisableDropper;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -8,8 +10,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ReplayGroup extends CommandGroup {
 
     public ReplayGroup() {
+    	addSequential(new DefaultDropper());
     	addParallel(new ReplayArray());
     	addParallel(new ReplayRobot());
+    	//addSequential(new DisableDropper());
+
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

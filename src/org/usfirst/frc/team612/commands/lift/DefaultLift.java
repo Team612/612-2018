@@ -1,5 +1,7 @@
 package org.usfirst.frc.team612.commands.lift;
 
+import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
+import org.usfirst.frc.team612.robot.OI;
 import org.usfirst.frc.team612.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DefaultLift extends Command {
+	public static int MAX = 500;
     private int DEADZONE = 100;
     //private int target = -10000;
 
@@ -48,21 +51,48 @@ public class DefaultLift extends Command {
     		move = Robot.oi.gunner.getY(Hand.kLeft) * .8;
     	}
     	Robot.lift.getTalon().set(move);*/
-    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1) {
-    		Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
-    	} else {
-    		Robot.lift.target = Robot.lift.target;
+    	/*if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed()) {
+    		 Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
+    		 Robot.lift.target =10;
+    		 
     	}
+    	else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
+    		MAX = Robot.lift.getTalon().getSelectedSensorPosition(0);
+    		//Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(MAX, 0);
+    		
+    	}*/
+
     	
-    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorPosition(0)-Robot.lift.target) > DEADZONE) {
-    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.target);
-    	} else {
-    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.getTalon().getSelectedSensorPosition(0));
-    	}
+	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1 ){
+			    		if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
+						    			if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) > 0) {
+						    	    		Robot.lift.target = Robot.lift.target;
+						    			}
+						    			else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) < 0) {
+						    	    		Robot.lift.target = Robot.lift.target;
+						    			}
+						    			else {
+							    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+						    			}
+			    		}
+			    		else {
+			    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+			    		}
+	    	} else {
+	    		Robot.lift.target = Robot.lift.target;
+	    	}
+	    	
+	    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorPosition(0)-Robot.lift.target) > DEADZONE) {
+	    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.target);
+	    	} else {
+	    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.getTalon().getSelectedSensorPosition(0));
+	    	
+	    }
+	    	
     }
     	
 
-    /**
+    /**s
      * Won't stop <code>execute()</code>
      */
     // Make this return true when this Command no longer needs to run execute()
@@ -87,3 +117,36 @@ public class DefaultLift extends Command {
     protected void interrupted() {
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*if(OI.BONGO_MODE) {
+if(OI.bongo_button_Right_F.get()) {
+	Robot.lift.target -= 10;
+	Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.target);
+}
+else if(OI.bongo_button_Right_B.get()) {
+	Robot.lift.target += 10;
+	Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.target);
+}
+else {
+	Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.getTalon().getSelectedSensorPosition(0));
+}
+}*/
