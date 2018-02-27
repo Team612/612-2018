@@ -3,10 +3,13 @@ package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import java.io.IOException;
+
+import org.usfirst.frc.team612.commands.autonomous.ChangeFileName;
+import org.usfirst.frc.team612.commands.autonomous.ReplayGroupAuto;
 import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Lift;
@@ -28,6 +34,7 @@ import org.usfirst.frc.team612.subsystems.Grabber;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	public static DriverStation driverstation = DriverStation.getInstance(); 
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);	
@@ -36,8 +43,8 @@ public class Robot extends IterativeRobot {
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
 	public static Compressor compressor = new Compressor(0);
-	
 	Command autonomousCommand;
+	String gameData;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
@@ -54,11 +61,15 @@ public class Robot extends IterativeRobot {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
+		autonomousCommand = new ReplayGroupAuto();
+		//Dchooser.addDefault("Default Auto", new ChangeFileName());
+		// sets auto command to replay group Auto 
+
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
-		//CameraServer.getInstance().startAutomaticCapture(0);
-		//CameraServer.getInstance().startAutomaticCapture(1);
+		CameraServer.getInstance().startAutomaticCapture(0);
+		CameraServer.getInstance().startAutomaticCapture(1);
 		
 		//Check if File has been created
 		//Create File Writer object with file path
@@ -91,18 +102,22 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
+		//autonomousCommand;
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-
 		// schedule the autonomous command (example)
-		//if (autonomousCommand != null)
-			//autonomousCommand.start();
+		gameData = driverstation.getGameSpecificMessage();
+		if(gameData.length() > 0) {
+			OI.ALLOW_RECORDING = false;
+		}
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
+			
+		}
 	}
 
 	/**
@@ -110,6 +125,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
 	}
 	
 	/**
@@ -117,6 +133,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
+		dropper.getSolenoid().set(Value.kOff);
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

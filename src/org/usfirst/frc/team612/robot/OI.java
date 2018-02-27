@@ -29,10 +29,14 @@ public class OI {
 	public static final boolean OMNI 				= false;
 	public static final boolean DRIVER_PERSPECTIVE  = false;
 	public static final boolean LIFT_PID 		    = false;
-	public static final boolean FIX_DRIFT 			= true;
+	public static final boolean FIX_DRIFT 			= false;
 	public static final boolean BONGO_MODE  		= false;
+	public static boolean ALLOW_RECORDING			= true;
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
+	public static String TEST_FILE_NAME 			="data55.txt";
+	public static String AUTO_FILE_NAME 			="data55.txt";
+	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
 	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
@@ -82,11 +86,15 @@ public class OI {
 			gunner_button_LB.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new DefaultGrabber());
 			gunner_button_RB.whenReleased(new DisableGrabber());
+			gunner_button_A.whileHeld(new ClimberMoveDown());
+			gunner_button_Y.whileHeld(new ClimberMoveUp());
 		}
-		gunner_button_A.whileHeld(new ClimberMoveDown());
-		gunner_button_Y.whileHeld(new ClimberMoveUp());
-		driver_button_A.whenPressed(new ReplayGroup());
-		driver_button_B.whenPressed(new RecordMovement());
+		
+		if(ALLOW_RECORDING) {
+			driver_button_A.whenPressed(new ReplayGroup());
+			driver_button_B.whenPressed(new RecordMovement());
+		}
+		
 		
 
 		

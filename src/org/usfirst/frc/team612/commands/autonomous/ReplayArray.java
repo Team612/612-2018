@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReplayArray extends Command {
 
     //String for file
-    public static String file_name = "data10.txt";
+    public static String file_name = OI.TEST_FILE_NAME;
 
     //Init objects for reader
     public FileReader fr;

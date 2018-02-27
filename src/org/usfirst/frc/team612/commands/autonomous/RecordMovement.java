@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RecordMovement extends Command {
 
     static String directory = "/home/lvuser/";
-    public static String file_name_create = "data10.txt";
+    public static String file_name_create = OI.TEST_FILE_NAME;
     public static String file_dir = directory + file_name_create;
     public File file_to_create = new File(file_dir);
     public static PrintWriter writer;
@@ -72,7 +72,7 @@ public class RecordMovement extends Command {
 	   	double talon_RR = Robot.drivetrain.getTalon(3).get();
 	   	double talon_RL = Robot.drivetrain.getTalon(4).get();
 	   	*/
-        System.out.println(Robot.lift.getTalon().getSelectedSensorPosition(0));
+        //System.out.println(Robot.lift.getTalon().getSelectedSensorPosition(0));
         String magnitude_string = Double.toString(magnitude);
         String angle_string = Double.toString(angle);
         String rotation_string = Double.toString(rotation);
