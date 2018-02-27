@@ -19,8 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RecordMovement extends Command {
 
     static String directory = "/home/lvuser/";
-    public static String file_name_create = "data10.txt";
-    public static String file_dir = directory + file_name_create;
+    public static String file_dir = directory + OI.TEST_FILE_NAME;
     public File file_to_create = new File(file_dir);
     public static PrintWriter writer;
     public static double magnitude;

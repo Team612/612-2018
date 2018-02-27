@@ -33,6 +33,9 @@ public class OI {
 	public static final boolean BONGO_MODE  		= false;
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
+	public static String TEST_FILE_NAME 			="data10.txt";
+	public static String AUTO_FILE_NAME 			= "simple.txt";
+	// simple.txt = drive 5 seconds, 
 	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);

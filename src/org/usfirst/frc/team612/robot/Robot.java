@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import java.io.IOException;
+
+import org.usfirst.frc.team612.commands.autonomous.ReplayGroupAuto;
 import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Lift;
@@ -36,7 +39,6 @@ public class Robot extends IterativeRobot {
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
 	public static Compressor compressor = new Compressor(0);
-	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -54,6 +56,9 @@ public class Robot extends IterativeRobot {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
+		chooser.addDefault("Default Auto", new ReplayGroupAuto());
+		// sets auto command to replay group Auto 
+
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
@@ -101,8 +106,9 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		//if (autonomousCommand != null)
-			//autonomousCommand.start();
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
+		}
 	}
 
 	/**
