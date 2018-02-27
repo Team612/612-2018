@@ -34,8 +34,8 @@ public class OI {
 	public static boolean ALLOW_RECORDING			= true;
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
-	public static String TEST_FILE_NAME 			="right_R_S.txt";
-	public static String AUTO_FILE_NAME 			="right_R_S.txt";
+	public static String TEST_FILE_NAME 			="data55.txt";
+	public static String AUTO_FILE_NAME 			="data55.txt";
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
 	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
