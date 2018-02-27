@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ChangeFileName extends Command {
+	boolean end = false;
 
     public ChangeFileName() {
         // Use requires() here to declare subsystem dependencies
@@ -16,16 +17,18 @@ public class ChangeFileName extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	OI.TEST_FILE_NAME = OI.AUTO_FILE_NAME;
+    	end = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return end;
     }
 
     // Called once after isFinished returns true

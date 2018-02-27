@@ -64,25 +64,25 @@ public class DefaultLift extends Command {
 
     	
 	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1 ){
-			    		if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
-						    			if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) > 0) {
-						    	    		Robot.lift.target = Robot.lift.target;
-						    			}
-						    			else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) < 0) {
-						    	    		Robot.lift.target = Robot.lift.target;
-						    			}
-						    			else {
-							    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
-						    			}
-			    		}
-			    		else {
-			    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
-			    		}
+			    if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
+	    			if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) > 0) {
+	    	    		Robot.lift.target = Robot.lift.target;
+	    			}
+	    			else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) < 0) {
+	    	    		Robot.lift.target = Robot.lift.target;
+	    			}
+	    			else {
+		    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+	    			}
+		    		}
+	    		else {
+	    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+	    		}
 	    	} else {
 	    		Robot.lift.target = Robot.lift.target;
 	    	}
 	    	
-	    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorPosition(0)-Robot.lift.target) > DEADZONE) {
+	    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorPosition(0) - Robot.lift.target) > DEADZONE) {
 	    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.target);
 	    	} else {
 	    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.getTalon().getSelectedSensorPosition(0));

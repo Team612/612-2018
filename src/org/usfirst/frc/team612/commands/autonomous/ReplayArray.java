@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReplayArray extends Command {
 
     //String for file
+    public static String file_name = OI.TEST_FILE_NAME;
 
     //Init objects for reader
     public FileReader fr;
@@ -42,7 +43,7 @@ public class ReplayArray extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         try {
-            fr = new FileReader("/home/lvuser/" + OI.TEST_FILE_NAME);
+            fr = new FileReader("/home/lvuser/" + file_name);
             br = new BufferedReader(fr);
             if (fr == null || br == null) {
                 System.out.println("Reader Objects are equal to Null");
