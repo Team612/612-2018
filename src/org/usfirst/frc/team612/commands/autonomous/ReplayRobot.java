@@ -56,8 +56,8 @@ public class ReplayRobot extends Command {
 	        } else if (OI.drive_data.get(index_counter+3) == -1) {
 	        	Robot.grabber.getSolenoid().set(Value.kReverse);
 	        }
-	        System.out.println("Yo THIS IS THE NUM SET " + OI.drive_data.get(index_counter+4));
 	        Robot.lift.getTalon().set(ControlMode.Position,  OI.drive_data.get(index_counter+4));
+	    	Robot.lift.target = OI.drive_data.get(index_counter+4);
 	        SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
 	        index_counter = index_counter + 6;
     	}
