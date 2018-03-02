@@ -74,6 +74,7 @@ public class Robot extends IterativeRobot {
 		start_pos.addDefault("Start in Center", "c");
 		start_pos.addObject("Start on Left", "l");
 		start_pos.addObject("Start on Right", "r");
+		SmartDashboard.putData("Starting Position", start_pos);
 		
 		//Check if File has been created
 		//Create File Writer object with file path
@@ -90,6 +91,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+		game_data = driverstation.getGameSpecificMessage();
 		Scheduler.getInstance().run();
 	}
 
@@ -121,18 +123,24 @@ public class Robot extends IterativeRobot {
 			if(game_data.charAt(0) == 'L') {
 				if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_L_S.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "left_L_S.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "simple.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
 				}
 			} else if(game_data.charAt(0) == 'R') {
 				if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_R_S"; // Yes that's right
+					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "simple.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "right_R_S.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
 				}
 			}
 		}
