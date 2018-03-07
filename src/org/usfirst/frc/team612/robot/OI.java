@@ -25,17 +25,17 @@ import org.usfirst.frc.team612.robot.RobotMap;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public static final boolean XBOX 				= true;	
+	public static final boolean XBOX 				= true;
 	public static final boolean OMNI 				= false;
 	public static final boolean DRIVER_PERSPECTIVE  = false;
-	public static final boolean LIFT_PID 		    = false;
+	public static final boolean LIFT_PID 		    = true;
 	public static final boolean FIX_DRIFT 			= false;
 	public static final boolean BONGO_MODE  		= false;
-	public static boolean ALLOW_RECORDING			= true;
+	public static boolean ALLOW_RECORDING			= false;
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
-	public static String TEST_FILE_NAME 			="data55.txt";
-	public static String AUTO_FILE_NAME 			="data55.txt";
+	public static String TEST_FILE_NAME 			="center_L_S.txt";
+	public static String AUTO_FILE_NAME 			="center_L_S.txt";
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
 	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
@@ -82,8 +82,8 @@ public class OI {
 			bongo_button_Right_F.whenReleased(new DisableGrabber());
 		}
 		else {
-			gunner_button_LB.whenPressed(new DefaultDropper());
-			gunner_button_LB.whenReleased(new DisableDropper());
+			gunner_button_BCK.whenPressed(new DefaultDropper());
+			gunner_button_BCK.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new DefaultGrabber());
 			gunner_button_RB.whenReleased(new DisableGrabber());
 			gunner_button_A.whileHeld(new ClimberMoveDown());
