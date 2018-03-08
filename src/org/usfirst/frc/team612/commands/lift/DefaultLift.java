@@ -62,6 +62,7 @@ public class DefaultLift extends Command {
     		
     	}*/
 
+    	if(OI.LIFT_PID) {
     	
 	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1 ){
 			    if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
@@ -72,11 +73,13 @@ public class DefaultLift extends Command {
 	    	    		Robot.lift.target = Robot.lift.target;
 	    			}
 	    			else {
-		    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) ;
+		    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    			}
 		    		}
 	    		else {
-	    			Robot.lift.target += Robot.oi.gunner.getY(Hand.kLeft)*200;
+	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) ;
+	    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    		}
 	    	} else {
 	    		Robot.lift.target = Robot.lift.target;
@@ -88,6 +91,9 @@ public class DefaultLift extends Command {
 	    		Robot.lift.getTalon().set(ControlMode.Position, Robot.lift.getTalon().getSelectedSensorPosition(0));
 	    	
 	    }
+    	}else {
+    		Robot.lift.getTalon().set(OI.gunner.getY(Hand.kLeft));
+    	}
 	    	
     }
     	

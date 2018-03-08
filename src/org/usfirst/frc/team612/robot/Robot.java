@@ -34,6 +34,7 @@ import org.usfirst.frc.team612.subsystems.Grabber;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	public static double encoder_multi = -2;
 	public static DriverStation driverstation = DriverStation.getInstance(); 
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
@@ -44,8 +45,9 @@ public class Robot extends IterativeRobot {
 	public static Dropper dropper = new Dropper();
 	public static Compressor compressor = new Compressor(0);
 	Command autonomousCommand;
-	String gameData;
+	String game_data, start_position;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	SendableChooser<String> start_pos = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,6 +55,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		//Robot.lift.getTalon().setSensorPhase(true);
+
 		Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
 		compressor.setClosedLoopControl(true);
 		try {
@@ -69,7 +73,13 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
 		CameraServer.getInstance().startAutomaticCapture(0);
-		CameraServer.getInstance().startAutomaticCapture(1);
+		//CameraServer.getInstance().startAutomaticCapture(1);
+		start_pos.addDefault("Start in Center", "c");
+		start_pos.addObject("Start on Left", "l");
+		start_pos.addObject("Start on Right", "r");
+		start_pos.addObject("simple", "s");
+
+		SmartDashboard.putData("Starting Position", start_pos);
 		
 		//Check if File has been created
 		//Create File Writer object with file path
@@ -86,6 +96,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void disabledPeriodic() {
+		game_data = driverstation.getGameSpecificMessage();
 		Scheduler.getInstance().run();
 	}
 
@@ -110,9 +121,41 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 		// schedule the autonomous command (example)
-		gameData = driverstation.getGameSpecificMessage();
-		if(gameData.length() > 0) {
-			OI.ALLOW_RECORDING = false;
+		game_data = driverstation.getGameSpecificMessage();
+		start_position = start_pos.getSelected();
+		if(game_data.length() > 0) {
+			System.out.println("Game Data: " + game_data);
+			System.out.println("Position: " + start_position);
+			//OI.ALLOW_RECORDING = false;
+			
+			if(start_position.charAt(0) == 's') {
+				OI.AUTO_FILE_NAME = "simple.txt";
+			}
+			else if(game_data.charAt(0) == 'L') {
+				if(start_position.charAt(0) == 'c') {
+					OI.AUTO_FILE_NAME = "center_L_S.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
+				} else if(start_position.charAt(0) == 'l') {
+					OI.AUTO_FILE_NAME = "left_L_S.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
+				} else if(start_position.charAt(0) == 'r') {
+					OI.AUTO_FILE_NAME = "simple.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
+				}
+				
+				
+			} else if(game_data.charAt(0) == 'R') {
+				if(start_position.charAt(0) == 'c') {
+					OI.AUTO_FILE_NAME = "center_R_S"; // Yes that's right
+					System.out.println(OI.AUTO_FILE_NAME);
+				} else if(start_position.charAt(0) == 'l') {
+					OI.AUTO_FILE_NAME = "simple.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
+				} else if(start_position.charAt(0) == 'r') {
+					OI.AUTO_FILE_NAME = "right_R_S.txt";
+					System.out.println(OI.AUTO_FILE_NAME);
+				}
+			}
 		}
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
@@ -173,6 +216,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
 
 		SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
+		//SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
 	}
 
 	/**

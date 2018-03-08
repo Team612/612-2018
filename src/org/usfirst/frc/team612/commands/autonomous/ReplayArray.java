@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReplayArray extends Command {
 
     //String for file
-    public static String file_name = OI.TEST_FILE_NAME;
+    public static String file_name; 
 
     //Init objects for reader
     public FileReader fr;
@@ -42,7 +42,9 @@ public class ReplayArray extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	file_name = OI.TEST_FILE_NAME;
         try {
+        	System.out.println(file_name);
             fr = new FileReader("/home/lvuser/" + file_name);
             br = new BufferedReader(fr);
             if (fr == null || br == null) {
