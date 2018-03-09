@@ -47,9 +47,9 @@ public class Robot extends IterativeRobot {
 	public static Compressor compressor = new Compressor(0);
 	
 	public AnalogInput analogpressure = new AnalogInput(0);
-	public boolean PressureGood;
-	public boolean PressureLow;
-	public boolean PressureCritical;
+	public boolean pressuregood;
+	public boolean pressurelow;
+	public boolean pressurecritical;
 	
 	Command autonomousCommand;
 	String game_data, start_position;
@@ -211,17 +211,17 @@ public class Robot extends IterativeRobot {
 		System.out.println(analogvoltage);
 		System.out.println(analogpressure);
 		if (analogpressure > 90) {
-			PressureGood = true;
+			pressuregood = true;
 		} else if (analogpressure > 60) {
-			PressureLow = true;
+			pressurelow = true;
 		} else {
-			PressureCritical = true;
+			pressurecritical = true;
 		}
 		
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("Analog Voltage", PressureGood);
-		SmartDashboard.putBoolean("Analog Voltage", PressureLow);
-		SmartDashboard.putBoolean("Analog Voltage", PressureCritical);
+		SmartDashboard.putBoolean("Pressure Good", pressuregood);
+		SmartDashboard.putBoolean("Pressure Low", pressurelow);
+		SmartDashboard.putBoolean("Pressure Critical", pressurecritical);
 		
 		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
