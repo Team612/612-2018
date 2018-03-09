@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
 import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
-import org.usfirst.frc.team612.commands.climber.ClimberMoveDown;
-import org.usfirst.frc.team612.commands.climber.ClimberMoveUp;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
 import org.usfirst.frc.team612.commands.pneumatic.DisableDropper;
@@ -86,8 +84,6 @@ public class OI {
 			gunner_button_BCK.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new DefaultGrabber());
 			gunner_button_RB.whenReleased(new DisableGrabber());
-			gunner_button_A.whileHeld(new ClimberMoveDown());
-			gunner_button_Y.whileHeld(new ClimberMoveUp());
 		}
 		
 		if(ALLOW_RECORDING) {

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team612.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -44,6 +45,12 @@ public class Robot extends IterativeRobot {
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
 	public static Compressor compressor = new Compressor(0);
+	
+	public AnalogInput analogpressure = new AnalogInput(0);
+	public boolean PressureGood;
+	public boolean PressureLow;
+	public boolean PressureCritical;
+	
 	Command autonomousCommand;
 	String game_data, start_position;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -196,7 +203,26 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		double analogvoltage = analogpressure.getVoltage();
+		int scalefactor = 125;
+		//int analogbits = analogpressure.getValue();
+		//double analogscalefactor = analogvoltage / analogbits;
+		double analogpressure = (scalefactor*analogvoltage) + (-scalefactor);
+		System.out.println(analogvoltage);
+		System.out.println(analogpressure);
+		if (analogpressure > 90) {
+			PressureGood = true;
+		} else if (analogpressure > 60) {
+			PressureLow = true;
+		} else {
+			PressureCritical = true;
+		}
+		
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Analog Voltage", PressureGood);
+		SmartDashboard.putBoolean("Analog Voltage", PressureLow);
+		SmartDashboard.putBoolean("Analog Voltage", PressureCritical);
+		
 		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
 		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
