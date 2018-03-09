@@ -39,7 +39,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);	
-	public static Climber climber=new Climber();
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
@@ -74,10 +73,10 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("Auto mode", chooser);
 		CameraServer.getInstance().startAutomaticCapture(0);
 		//CameraServer.getInstance().startAutomaticCapture(1);
-		start_pos.addDefault("Start in Center", "c");
+		start_pos.addDefault("Simple Auto", "s");
 		start_pos.addObject("Start on Left", "l");
 		start_pos.addObject("Start on Right", "r");
-		start_pos.addObject("simple", "s");
+		start_pos.addObject("Start in Center", "c");
 
 		SmartDashboard.putData("Starting Position", start_pos);
 		
@@ -134,28 +133,23 @@ public class Robot extends IterativeRobot {
 			else if(game_data.charAt(0) == 'L') {
 				if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_L_S.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "left_L_S.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "simple.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				}
 				
 				
 			} else if(game_data.charAt(0) == 'R') {
 				if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_R_S"; // Yes that's right
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "simple.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "right_R_S.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				}
 			}
+			System.out.println(OI.AUTO_FILE_NAME);
 		}
 		if (autonomousCommand != null) {
 			autonomousCommand.start();

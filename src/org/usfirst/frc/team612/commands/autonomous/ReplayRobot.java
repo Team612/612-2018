@@ -47,7 +47,6 @@ public class ReplayRobot extends Command {
     	if(index_counter+4 < OI.drive_data.size() ) {
     		System.out.println("REPLAY IN IF");
     		double seconds_replay = replay_timer.get();
-	        //if (seconds_replay >= seconds*playback_speed) {
 	        Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
 	        if(OI.drive_data.get(index_counter+3) == 0) {
 	        	Robot.grabber.getSolenoid().set(Value.kOff);

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DefaultLift extends Command {
 	public static int MAX = 500;
     private int DEADZONE = 100;
+    private double MANUAL_DEADZONE = 0.1;
     //private int target = -10000;
 
 	
@@ -44,27 +45,10 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*if(deadzone < Robot.oi.gunner.getY(Hand.kLeft) && -deadzone  > Robot.oi.gunner.getY(Hand.kLeft)) {
-    		move = 0;
-    	}
-    	else {
-    		move = Robot.oi.gunner.getY(Hand.kLeft) * .8;
-    	}
-    	Robot.lift.getTalon().set(move);*/
-    	/*if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed()) {
-    		 Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
-    		 Robot.lift.target =10;
-    		 
-    	}
-    	else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
-    		MAX = Robot.lift.getTalon().getSelectedSensorPosition(0);
-    		//Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(MAX, 0);
-    		
-    	}*/
 
     	if(OI.LIFT_PID) {
     	
-	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1 ){
+	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > MANUAL_DEADZONE){
 			    if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
 	    			if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) > 0) {
 	    	    		Robot.lift.target = Robot.lift.target;

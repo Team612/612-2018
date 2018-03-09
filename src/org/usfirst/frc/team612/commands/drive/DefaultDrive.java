@@ -26,11 +26,8 @@ public class DefaultDrive extends Command {
 	double direction_y;
 	double yaw;
 	boolean single_wheel = false;
-	int id = 1;
 	double prev_x = 0;
 	double prev_y = 0;
-	//double ROTATION_SCALE = 40;
-	//double PROPORTION_VALUE = 3;
 	
 	/**
 	 * Makes sure that that subsystem <code>drivetrain</code> is required.
@@ -91,22 +88,9 @@ public class DefaultDrive extends Command {
      * Gets information from Xbox controller.
      */
     
-    protected void singleWheel() {
-    	Robot.drivetrain.getTalon((id%4)+1).set(OI.driver.getX(Hand.kLeft));
-    	if(OI.driver_button_X.get()) {
-    		id++;
-    	}
-    }
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.driver_button_BCK.get()) { // Toggle control mode
-    		single_wheel = !single_wheel;
-    	}
-    	if(single_wheel) {
-    		singleWheel();
-    		return; // Don't execute the rest of this function
-    	}
     	getInput();
     	
     	doDeadzone();
