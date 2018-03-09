@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
 import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
-import org.usfirst.frc.team612.commands.climber.ClimberMoveDown;
-import org.usfirst.frc.team612.commands.climber.ClimberMoveUp;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
 import org.usfirst.frc.team612.commands.pneumatic.DisableDropper;

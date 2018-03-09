@@ -16,12 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import java.io.IOException;
 
-import org.usfirst.frc.team612.commands.autonomous.ChangeFileName;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroupAuto;
-import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Lift;
 import org.usfirst.frc.team612.subsystems.Dropper;
