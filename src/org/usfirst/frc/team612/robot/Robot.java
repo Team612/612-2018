@@ -203,19 +203,26 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		double analogvoltage = analogpressure.getVoltage();
-		int scalefactor = 125;
+		double analogvoltage = analogpressure.getAverageVoltage();
+		double scalefactor = 125.0;
+		double bias = 0.0;
 		//int analogbits = analogpressure.getValue();
 		//double analogscalefactor = analogvoltage / analogbits;
-		double analogpressure = (scalefactor*analogvoltage) + (-scalefactor);
+		double analogpressure = (scalefactor*analogvoltage - bias);
 		System.out.println(analogvoltage);
 		System.out.println(analogpressure);
 		if (analogpressure > 90) {
 			pressuregood = true;
+			pressurelow = false;
+			pressurecritical = false;
 		} else if (analogpressure > 60) {
 			pressurelow = true;
+			pressuregood = false;
+			pressurecritical = false;
 		} else {
 			pressurecritical = true;
+			pressurelow = false;
+			pressuregood = false;
 		}
 		
 		Scheduler.getInstance().run();
