@@ -2,14 +2,14 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,11 +40,17 @@ public class Robot extends IterativeRobot {
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
 	public static Compressor compressor = new Compressor(0);
+	
+	public AnalogInput analogpressure = new AnalogInput(0);
+	public boolean pressuregood;
+	public boolean pressurelow;
+	public boolean pressurecritical;
+	
 	Command autonomousCommand;
 	String game_data, start_position;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	SendableChooser<String> start_pos = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -126,9 +132,30 @@ public class Robot extends IterativeRobot {
 			
 			if(start_position.charAt(0) == 's') {
 				OI.AUTO_FILE_NAME = "simple.txt";
+			}else if(start_position.charAt(0) == 'c') {
+				if(game_data.charAt(0) == 'L') {	
+					OI.AUTO_FILE_NAME = "center_L_S.txt";
+				} else if(game_data.charAt(0) == 'R') {	
+					OI.AUTO_FILE_NAME = "center_R_S"; // sorry
+				}
+			}	
+			} else if(start_position.charAt(0) == 'l') {
+				if(game_data.charAt(0) == 'L') {	
+					OI.AUTO_FILE_NAME = "left_L_S.txt";
+				} else if(game_data.charAt(0) == 'R') {	
+					OI.AUTO_FILE_NAME = "simple.txt";
+				}
+			} else if(start_position.charAt(0) == 'r') {
+						if(game_data.charAt(0) == 'L') {	
+							OI.AUTO_FILE_NAME = "simple.txt";
+						} else if(game_data.charAt(0) == 'R') {	
+							OI.AUTO_FILE_NAME = "right_R_S.txt";
+						}
+			} else {
+				OI.AUTO_FILE_NAME = "simple.txt";
 			}
-			else if(game_data.charAt(0) == 'L') {
-				if(start_position.charAt(0) == 'c') {
+			//else if(game_data.charAt(0) == 'L') {	
+				/*if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_L_S.txt";
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "left_L_S.txt";
@@ -138,16 +165,17 @@ public class Robot extends IterativeRobot {
 				
 				
 			} else if(game_data.charAt(0) == 'R') {
+				
 				if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_R_S"; // Yes that's right
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "simple.txt";
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "right_R_S.txt";
-				}
-			}
+				}*/
+
 			System.out.println(OI.AUTO_FILE_NAME);
-		}
+		
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 			
@@ -187,7 +215,35 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
+		double analogvoltage = analogpressure.getAverageVoltage();
+		double scalefactor = 125.0;
+		double bias = 0.0;
+		//int analogbits = analogpressure.getValue();
+		//double analogscalefactor = analogvoltage / analogbits;
+		double analogpressure = (scalefactor*analogvoltage - bias);
+		System.out.println(analogvoltage);
+		System.out.println(analogpressure);
+		if (analogpressure > 90) {
+			pressuregood = true;
+			pressurelow = false;
+			pressurecritical = false;
+		} else if (analogpressure > 60) {
+			pressurelow = true;
+			pressuregood = false;
+			pressurecritical = false;
+		} else {
+			pressurecritical = true;
+			pressurelow = false;
+			pressuregood = false;
+		}
+		
 		Scheduler.getInstance().run();
+		
+		SmartDashboard.putBoolean("Pressure Good", pressuregood);
+		SmartDashboard.putBoolean("Pressure Low", pressurelow);
+		SmartDashboard.putBoolean("Pressure Critical", pressurecritical);
+		
 		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
 		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());

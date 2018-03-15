@@ -12,10 +12,12 @@ import java.util.ArrayList;
 import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
 import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
+import org.usfirst.frc.team612.commands.pneumatic.CloseGrabber;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
 import org.usfirst.frc.team612.commands.pneumatic.DisableDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DisableGrabber;
+import org.usfirst.frc.team612.commands.pneumatic.OpenGrabber;
 import org.usfirst.frc.team612.robot.RobotMap;
 
 /**
@@ -32,6 +34,9 @@ public class OI {
 	public static final boolean ALLOW_RECORDING		= false;
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
+	public static final boolean PREVENT_TIPPING 	= true;
+	public static final boolean NEW_GUNNER_CONTROL  = true;
+	public static final double TIP_ANGLE            = 30;
 	public static String TEST_FILE_NAME 			= "data55.txt";
 	public static String AUTO_FILE_NAME 			= "data55.txt";
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
@@ -73,7 +78,20 @@ public class OI {
 	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
 	
 	public OI() throws IOException {
-		if(BONGO_MODE) {
+		if(NEW_GUNNER_CONTROL) {
+			gunner_button_BCK.whenPressed(new DefaultDropper());
+			gunner_button_BCK.whenReleased(new DisableDropper());
+			gunner_button_RB.whenPressed(new OpenGrabber());
+			gunner_button_RB.whenReleased(new DisableGrabber());
+			gunner_button_LB.whenPressed(new CloseGrabber());
+			gunner_button_RB.whenReleased(new DisableGrabber());
+		} else {
+			gunner_button_BCK.whenPressed(new DefaultDropper());
+			gunner_button_BCK.whenReleased(new DisableDropper());
+			gunner_button_RB.whenPressed(new DefaultGrabber());
+			gunner_button_RB.whenReleased(new DisableGrabber());
+		}
+		/*if(BONGO_MODE) {
 			bongo_button_middle.whenPressed(new DefaultDropper());
 			bongo_button_middle.whenReleased(new DisableDropper());
 			bongo_button_Right_F.whenPressed(new DefaultGrabber());
@@ -84,7 +102,7 @@ public class OI {
 			gunner_button_BCK.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new DefaultGrabber());
 			gunner_button_RB.whenReleased(new DisableGrabber());
-		}
+		}*/
 		
 		if(ALLOW_RECORDING) {
 			driver_button_A.whenPressed(new ReplayGroup());
