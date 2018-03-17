@@ -34,11 +34,11 @@ public class OI {
 	public static final boolean ALLOW_RECORDING		= false;
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
-	public static final boolean PREVENT_TIPPING 	= true;
+	public static final boolean PREVENT_TIPPING 	= false;
 	public static final boolean NEW_GUNNER_CONTROL  = true;
 	public static final double TIP_ANGLE            = 30;
-	public static String TEST_FILE_NAME 			= "data55.txt";
-	public static String AUTO_FILE_NAME 			= "data55.txt";
+	public static String TEST_FILE_NAME 			= "simple.txt";
+	public static String AUTO_FILE_NAME 			= "simple.txt";
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
 	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
@@ -84,7 +84,7 @@ public class OI {
 			gunner_button_RB.whenPressed(new OpenGrabber());
 			gunner_button_RB.whenReleased(new DisableGrabber());
 			gunner_button_LB.whenPressed(new CloseGrabber());
-			gunner_button_RB.whenReleased(new DisableGrabber());
+			gunner_button_LB.whenReleased(new DisableGrabber());
 		} else {
 			gunner_button_BCK.whenPressed(new DefaultDropper());
 			gunner_button_BCK.whenReleased(new DisableDropper());

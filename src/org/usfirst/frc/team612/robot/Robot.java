@@ -80,6 +80,9 @@ public class Robot extends IterativeRobot {
 		start_pos.addObject("Start on Left", "l");
 		start_pos.addObject("Start on Right", "r");
 		start_pos.addObject("Start in Center", "c");
+		start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
+		start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
+
 
 		SmartDashboard.putData("Starting Position", start_pos);
 		
@@ -139,7 +142,7 @@ public class Robot extends IterativeRobot {
 					OI.AUTO_FILE_NAME = "center_R_S"; // sorry
 				}
 			}	
-			} else if(start_position.charAt(0) == 'l') {
+			 else if(start_position.charAt(0) == 'l') {
 				if(game_data.charAt(0) == 'L') {	
 					OI.AUTO_FILE_NAME = "left_L_S.txt";
 				} else if(game_data.charAt(0) == 'R') {	
@@ -151,9 +154,22 @@ public class Robot extends IterativeRobot {
 						} else if(game_data.charAt(0) == 'R') {	
 							OI.AUTO_FILE_NAME = "right_R_S.txt";
 						}
-			} else {
+			} else if(start_position.charAt(0) == 'A') {
+				if(game_data.charAt(1) == 'L') {	
+					OI.AUTO_FILE_NAME = "left_L_C.txt";
+				} else if(game_data.charAt(1) == 'R') {	
+					OI.AUTO_FILE_NAME = "simple.txt";
+				}
+				} else if(start_position.charAt(0) == 'B') {
+					if(game_data.charAt(1) == 'R') {	
+						OI.AUTO_FILE_NAME = "right_R_C.txt";
+					} else if(game_data.charAt(1) == 'L') {	
+						OI.AUTO_FILE_NAME = "simple.txt";
+					}
+					}else {
 				OI.AUTO_FILE_NAME = "simple.txt";
 			}
+		}
 			//else if(game_data.charAt(0) == 'L') {	
 				/*if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_L_S.txt";
@@ -222,8 +238,8 @@ public class Robot extends IterativeRobot {
 		//int analogbits = analogpressure.getValue();
 		//double analogscalefactor = analogvoltage / analogbits;
 		double analogpressure = (scalefactor*analogvoltage - bias);
-		System.out.println(analogvoltage);
-		System.out.println(analogpressure);
+		//System.out.println(analogvoltage);
+		//System.out.println(analogpressure);
 		if (analogpressure > 90) {
 			pressuregood = true;
 			pressurelow = false;
@@ -256,8 +272,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
 		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
-		SmartDashboard.putBoolean( "Lift Limit FWD SW", lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
-		SmartDashboard.putBoolean( "Lift Limit REV SW", lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
+		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
+		SmartDashboard.putBoolean( "Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
 		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
