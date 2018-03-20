@@ -45,18 +45,25 @@ public class Robot extends IterativeRobot {
 	public boolean pressuregood;
 	public boolean pressurelow;
 	public boolean pressurecritical;
-	
 	Command autonomousCommand;
 	String game_data, start_position;
-	SendableChooser<Command> chooser = new SendableChooser<>();
-	SendableChooser<String> start_pos = new SendableChooser<>();
-	
+	SendableChooser<Command> chooser;
+	SendableChooser<String> start_pos;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+		chooser = new SendableChooser<>();
+		start_pos = new SendableChooser<>();
+		start_pos.addDefault("Simple Auto", "s");
+		start_pos.addObject("Start on Left", "l");
+		start_pos.addObject("Start on Right", "r");
+		start_pos.addObject("Start in Center", "c");
+		start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
+		start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
+		start_pos.addObject("Start on Right -- Switch/Scale/Simple", "D");
 		//Robot.lift.getTalon().setSensorPhase(true);
 
 		Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
@@ -76,12 +83,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("Auto mode", chooser);
 		CameraServer.getInstance().startAutomaticCapture(0);
 		//CameraServer.getInstance().startAutomaticCapture(1);
-		start_pos.addDefault("Simple Auto", "s");
-		start_pos.addObject("Start on Left", "l");
-		start_pos.addObject("Start on Right", "r");
-		start_pos.addObject("Start in Center", "c");
-		start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
-		start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
+
 
 
 		SmartDashboard.putData("Starting Position", start_pos);
@@ -166,7 +168,16 @@ public class Robot extends IterativeRobot {
 					} else if(game_data.charAt(1) == 'L') {	
 						OI.AUTO_FILE_NAME = "simple.txt";
 					}
-					}else {
+					}else if(start_position.charAt(0) == 'D') {
+						if(game_data.charAt(1) == 'R') {
+							OI.AUTO_FILE_NAME = "right_R_C.txt";
+						} else if(game_data.charAt(0) == 'R') {
+							OI.AUTO_FILE_NAME = "right_R_S.txt";
+						}else{
+							OI.AUTO_FILE_NAME =  "simple.txt";
+						}
+						
+						}else {
 				OI.AUTO_FILE_NAME = "simple.txt";
 			}
 		}
@@ -265,11 +276,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
 		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
 		//SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
-		SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
+		/*SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
 		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
 		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
 		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
-		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
+		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());*/
 		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
 		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
@@ -278,7 +289,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
 
-		SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
+		//SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
 		//SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
 	}
 

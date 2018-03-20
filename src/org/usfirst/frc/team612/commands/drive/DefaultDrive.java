@@ -91,6 +91,13 @@ public class DefaultDrive extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(OI.TANKDRIVE) {
+    	Robot.drivetrain.getTalon(1).set(Robot.oi.driver.getY(Hand.kLeft));
+		Robot.drivetrain.getTalon(4).set(Robot.oi.driver.getY(Hand.kLeft));
+		Robot.drivetrain.getTalon(2).set(Robot.oi.driver.getY(Hand.kRight));
+		Robot.drivetrain.getTalon(3).set(Robot.oi.driver.getY(Hand.kRight));
+    	}
+    	else  {
     	getInput();
     	
     	doDeadzone();
@@ -118,6 +125,7 @@ public class DefaultDrive extends Command {
     	if(Math.abs(diff_x) > RUMBLE_DEAD || Math.abs(diff_y) > RUMBLE_DEAD) {
     		//OI.driver.setRumble(RumbleType.kLeftRumble, 0.5);
     		//OI.driver.setRumble(RumbleType.kRightRumble, 0.5);
+    	}
     	}
     	/*if(magnitude > prev_magnitude) {
     		if(prev_magnitude+rate>magnitude) {
