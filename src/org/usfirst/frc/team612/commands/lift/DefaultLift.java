@@ -77,9 +77,9 @@ public class DefaultLift extends Command {
     		Robot.lift.getTalon().set(OI.gunner.getY(Hand.kLeft));
     	}
     	// Check if motor is stalled
-    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorVelocity(0)) > VEL_DEADZONE) {
+    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorVelocity(0)) < VEL_DEADZONE) {
     		// If the lift isn't moving
-    		if(Math.abs(Robot.lift.getTalon().get()) < MOTOR_DEADZONE) {
+    		if(Math.abs(Robot.lift.getTalon().get()) > MOTOR_DEADZONE) {
     			OI.IS_MOTOR_STALLED = true;
     		}
     		
