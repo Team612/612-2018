@@ -288,6 +288,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
+		SmartDashboard.putBoolean("Is Lift Motor Stalling", OI.IS_MOTOR_STALLED);
 
 		//SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
 		//SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
