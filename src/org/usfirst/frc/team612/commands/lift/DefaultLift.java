@@ -33,7 +33,7 @@ public class DefaultLift extends Command {
     
     /**
      * Called just before DefaultLift runs for the first time.
-     *  <code>initialize()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
+     *  <code>initialize()</code> does <b++>absolutely nothing</b> in DefaultGrabber.java.
      */
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -67,18 +67,20 @@ public class DefaultLift extends Command {
 	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1 ){
 			    if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
 	    			if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) > 0) {
-	    	    		Robot.lift.target = Robot.lift.target;
+	    	    		Robot.lift.target = 0;
+	    	    		Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
 	    			}
 	    			else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) < 0) {
-	    	    		Robot.lift.target = Robot.lift.target;
+	    	    		
+	    				Robot.lift.target = Robot.lift.target;
 	    			}
 	    			else {
-		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) ;
+		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*300) ;
 		    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    			}
 		    		}
 	    		else {
-	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) ;
+	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*300);
 	    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    		}
 	    	} else {

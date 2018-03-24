@@ -25,10 +25,8 @@ public class ReplayArray extends Command {
     public BufferedReader br;
     public String line;
 
-    public static double playback_speed = 1;
     public boolean end = false;
 
-    //public static ArrayList < Double > drive_data = new ArrayList < Double > (4);
 
     public static double magnitude;
     public static double angle;

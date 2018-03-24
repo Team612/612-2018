@@ -1,18 +1,19 @@
-package org.usfirst.frc.team612.commands.climber;
+package org.usfirst.frc.team612.commands.pneumatic;
 
+import org.usfirst.frc.team612.robot.Robot;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
-import org.usfirst.frc.team612.robot.OI;
-import org.usfirst.frc.team612.robot.Robot;
 /**
  *
  */
-public class ClimberMove extends Command {
+public class OpenGrabber extends Command {
 
-    public ClimberMove() {
-    	requires(Robot.climber);
+    public OpenGrabber() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.grabber);
     }
 
     // Called just before this Command runs the first time
@@ -21,11 +22,7 @@ public class ClimberMove extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.gunner.getPOV() ==0) {
-    		Robot.climber.getClimber(1).set(0.5);
-    	}else if(OI.gunner.getPOV()==180) {
-    		Robot.climber.getClimber(1).set(-0.5);
-    	}
+    	Robot.grabber.getSolenoid().set(Value.kReverse);
     }
 
     // Make this return true when this Command no longer needs to run execute()

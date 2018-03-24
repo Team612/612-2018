@@ -13,7 +13,6 @@ public class DisableGrabber extends Command {
     public DisableGrabber() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	setTimeout(1);
     	
     	requires(Robot.grabber);
     }

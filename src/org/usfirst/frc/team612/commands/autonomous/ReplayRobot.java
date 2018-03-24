@@ -44,10 +44,16 @@ public class ReplayRobot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	 if(OI.PREVENT_TIPPING) {
+    		 if(Math.abs(Robot.navx.getPitch()) > OI.TIP_ANGLE) {
+    			 	end_R = true;
+    		 } else if (Math.abs(Robot.navx.getRoll()) > OI.TIP_ANGLE) {
+    			 	end_R = true;
+    		 }
+   	     }
     	if(index_counter+4 < OI.drive_data.size() ) {
-    		System.out.println("REPLAY IN IF");
-    		double seconds_replay = replay_timer.get();
-	        //if (seconds_replay >= seconds*playback_speed) {
+    		//System.out.println("REPLAY IN IF");
+    		//double seconds_replay = replay_timer.get();
 	        Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
 	        if(OI.drive_data.get(index_counter+3) == 0) {
 	        	Robot.grabber.getSolenoid().set(Value.kOff);
@@ -61,6 +67,7 @@ public class ReplayRobot extends Command {
 	        SmartDashboard.putNumber("magnitude", magnitude); // actually magnitude
 	        index_counter = index_counter + 6;
     	}
+    	
     	else {
     		end_R = true;
     	}

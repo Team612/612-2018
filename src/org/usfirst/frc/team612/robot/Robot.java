@@ -2,26 +2,23 @@
 package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import java.io.IOException;
 
-import org.usfirst.frc.team612.commands.autonomous.ChangeFileName;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroupAuto;
-import org.usfirst.frc.team612.subsystems.Climber;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Lift;
 import org.usfirst.frc.team612.subsystems.Dropper;
@@ -39,22 +36,34 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static AHRS navx = new AHRS(I2C.Port.kMXP);	
-	public static Climber climber=new Climber();
 	public static Grabber grabber = new Grabber();
 	public static Lift lift = new Lift();
 	public static Dropper dropper = new Dropper();
 	public static Compressor compressor = new Compressor(0);
+	
+	public AnalogInput analogpressure = new AnalogInput(0);
+	public boolean pressuregood;
+	public boolean pressurelow;
+	public boolean pressurecritical;
 	Command autonomousCommand;
 	String game_data, start_position;
-	SendableChooser<Command> chooser = new SendableChooser<>();
-	SendableChooser<String> start_pos = new SendableChooser<>();
-
+	SendableChooser<Command> chooser;
+	SendableChooser<String> start_pos;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+		chooser = new SendableChooser<>();
+		start_pos = new SendableChooser<>();
+		start_pos.addDefault("Simple Auto", "s");
+		start_pos.addObject("Start on Left", "l");
+		start_pos.addObject("Start on Right", "r");
+		start_pos.addObject("Start in Center", "c");
+		start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
+		start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
+		start_pos.addObject("Start on Right -- Switch/Scale/Simple", "D");
 		//Robot.lift.getTalon().setSensorPhase(true);
 
 		Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
@@ -74,10 +83,8 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("Auto mode", chooser);
 		CameraServer.getInstance().startAutomaticCapture(0);
 		//CameraServer.getInstance().startAutomaticCapture(1);
-		start_pos.addDefault("Start in Center", "c");
-		start_pos.addObject("Start on Left", "l");
-		start_pos.addObject("Start on Right", "r");
-		start_pos.addObject("simple", "s");
+
+
 
 		SmartDashboard.putData("Starting Position", start_pos);
 		
@@ -130,33 +137,72 @@ public class Robot extends IterativeRobot {
 			
 			if(start_position.charAt(0) == 's') {
 				OI.AUTO_FILE_NAME = "simple.txt";
-			}
-			else if(game_data.charAt(0) == 'L') {
-				if(start_position.charAt(0) == 'c') {
+			}else if(start_position.charAt(0) == 'c') {
+				if(game_data.charAt(0) == 'L') {	
 					OI.AUTO_FILE_NAME = "center_L_S.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
+				} else if(game_data.charAt(0) == 'R') {	
+					OI.AUTO_FILE_NAME = "center_R_S"; // sorry
+				}
+			}	
+			 else if(start_position.charAt(0) == 'l') {
+				if(game_data.charAt(0) == 'L') {	
+					OI.AUTO_FILE_NAME = "left_L_S.txt";
+				} else if(game_data.charAt(0) == 'R') {	
+					OI.AUTO_FILE_NAME = "simple.txt";
+				}
+			} else if(start_position.charAt(0) == 'r') {
+						if(game_data.charAt(0) == 'L') {	
+							OI.AUTO_FILE_NAME = "simple.txt";
+						} else if(game_data.charAt(0) == 'R') {	
+							OI.AUTO_FILE_NAME = "right_R_S.txt";
+						}
+			} else if(start_position.charAt(0) == 'A') {
+				if(game_data.charAt(1) == 'L') {	
+					OI.AUTO_FILE_NAME = "left_L_C.txt";
+				} else if(game_data.charAt(1) == 'R') {	
+					OI.AUTO_FILE_NAME = "simple.txt";
+				}
+				} else if(start_position.charAt(0) == 'B') {
+					if(game_data.charAt(1) == 'R') {	
+						OI.AUTO_FILE_NAME = "right_R_C.txt";
+					} else if(game_data.charAt(1) == 'L') {	
+						OI.AUTO_FILE_NAME = "simple.txt";
+					}
+					}else if(start_position.charAt(0) == 'D') {
+						if(game_data.charAt(1) == 'R') {
+							OI.AUTO_FILE_NAME = "right_R_C.txt";
+						} else if(game_data.charAt(0) == 'R') {
+							OI.AUTO_FILE_NAME = "right_R_S.txt";
+						}else{
+							OI.AUTO_FILE_NAME =  "simple.txt";
+						}
+						
+						}else {
+				OI.AUTO_FILE_NAME = "simple.txt";
+			}
+		}
+			//else if(game_data.charAt(0) == 'L') {	
+				/*if(start_position.charAt(0) == 'c') {
+					OI.AUTO_FILE_NAME = "center_L_S.txt";
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "left_L_S.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "simple.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				}
 				
 				
 			} else if(game_data.charAt(0) == 'R') {
+				
 				if(start_position.charAt(0) == 'c') {
 					OI.AUTO_FILE_NAME = "center_R_S"; // Yes that's right
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'l') {
 					OI.AUTO_FILE_NAME = "simple.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
 				} else if(start_position.charAt(0) == 'r') {
 					OI.AUTO_FILE_NAME = "right_R_S.txt";
-					System.out.println(OI.AUTO_FILE_NAME);
-				}
-			}
-		}
+				}*/
+
+			System.out.println(OI.AUTO_FILE_NAME);
+		
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 			
@@ -196,26 +242,54 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
+		double analogvoltage = analogpressure.getAverageVoltage();
+		double scalefactor = 125.0;
+		double bias = 0.0;
+		//int analogbits = analogpressure.getValue();
+		//double analogscalefactor = analogvoltage / analogbits;
+		double analogpressure = (scalefactor*analogvoltage - bias);
+		//System.out.println(analogvoltage);
+		//System.out.println(analogpressure);
+		if (analogpressure > 90) {
+			pressuregood = true;
+			pressurelow = false;
+			pressurecritical = false;
+		} else if (analogpressure > 60) {
+			pressurelow = true;
+			pressuregood = false;
+			pressurecritical = false;
+		} else {
+			pressurecritical = true;
+			pressurelow = false;
+			pressuregood = false;
+		}
+		
 		Scheduler.getInstance().run();
+		
+		SmartDashboard.putBoolean("Pressure Good", pressuregood);
+		SmartDashboard.putBoolean("Pressure Low", pressurelow);
+		SmartDashboard.putBoolean("Pressure Critical", pressurecritical);
+		
 		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
 		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
 		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
 		//SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
-		SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
+		/*SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
 		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
 		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
 		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
-		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());
+		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());*/
 		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
-		SmartDashboard.putBoolean( "Lift Limit FWD SW", lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
-		SmartDashboard.putBoolean( "Lift Limit REV SW", lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
+		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
+		SmartDashboard.putBoolean( "Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
 		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
 
-		SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
+		//SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
 		//SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
 	}
 

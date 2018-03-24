@@ -22,7 +22,7 @@ public class Lift extends Subsystem {
     	lift_talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 300);
     	lift_talon.selectProfileSlot(0, 0);
     	lift_talon.config_kF(0, 0.2, 100); //The 100 is the time out 
-    	lift_talon.config_kP(0, 0.7, 100);//for setting  the configuration.(in milliseconds).
+    	lift_talon.config_kP(0, 1, 100);//for setting  the configuration.(in milliseconds).
     	lift_talon.config_kI(0, 0, 100);
     	lift_talon.config_kD(0, 0,100);
     }
