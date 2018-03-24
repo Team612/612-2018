@@ -83,6 +83,8 @@ public class DefaultLift extends Command {
     			OI.IS_MOTOR_STALLED = true;
     		}
     		
+    	} else {
+    		OI.IS_MOTOR_STALLED = false;
     	}
 	    	
     }
