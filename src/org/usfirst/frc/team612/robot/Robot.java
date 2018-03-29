@@ -169,10 +169,10 @@ public class Robot extends IterativeRobot {
 						OI.AUTO_FILE_NAME = "simple.txt";
 					}
 					}else if(start_position.charAt(0) == 'D') {
-						if(game_data.charAt(1) == 'R') {
-							OI.AUTO_FILE_NAME = "right_R_C.txt";
-						} else if(game_data.charAt(0) == 'R') {
+						if(game_data.charAt(0) == 'R') {
 							OI.AUTO_FILE_NAME = "right_R_S.txt";
+						} else if(game_data.charAt(1) == 'R') {
+							OI.AUTO_FILE_NAME = "right_R_C.txt";
 						}else{
 							OI.AUTO_FILE_NAME =  "simple.txt";
 						}
