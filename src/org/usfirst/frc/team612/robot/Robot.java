@@ -293,24 +293,58 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("Pressure Good", pressuregood);
         SmartDashboard.putBoolean("Pressure Low", pressurelow);
         SmartDashboard.putBoolean("Pressure Critical", pressurecritical);
-
-        SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
-        SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
-        SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
-        SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
-        //SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
-        /*SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
-        SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
-        SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
-        SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
-        SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());*/
-        //SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
-        //SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
-        SmartDashboard.putBoolean("Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
-        SmartDashboard.putBoolean("Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
-        SmartDashboard.putNumber("Lift Encoder Position", lift.getTalon().getSelectedSensorPosition(0));
-        SmartDashboard.putNumber("Lift Target", lift.target);
-        SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
+	/**
+	 * This function is called periodically during operator control
+	 */
+	@Override
+	public void teleopPeriodic() {
+		
+		double analogvoltage = analogpressure.getAverageVoltage();
+		double scalefactor = 125.0;
+		double bias = 0.0;
+		//int analogbits = analogpressure.getValue();
+		//double analogscalefactor = analogvoltage / analogbits;
+		double analogpressure = (scalefactor*analogvoltage - bias);
+		//System.out.println(analogvoltage);
+		//System.out.println(analogpressure);
+		if (analogpressure > 90) {
+			pressuregood = true;
+			pressurelow = false;
+			pressurecritical = false;
+		} else if (analogpressure > 60) {
+			pressurelow = true;
+			pressuregood = false;
+			pressurecritical = false;
+		} else {
+			pressurecritical = true;
+			pressurelow = false;
+			pressuregood = false;
+		}
+		
+		Scheduler.getInstance().run();
+		
+		SmartDashboard.putBoolean("Pressure Good", pressuregood);
+		SmartDashboard.putBoolean("Pressure Low", pressurelow);
+		SmartDashboard.putBoolean("Pressure Critical", pressurecritical);
+		
+		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
+		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
+		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
+		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
+		//SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
+		/*SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
+		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
+		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
+		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
+		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());*/
+		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
+		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
+		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
+		SmartDashboard.putBoolean( "Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
+		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Target", lift.target);
+		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
+		SmartDashboard.putBoolean("Is Lift Motor Stalling", OI.IS_MOTOR_STALLED);
 
         //SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
         //SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
