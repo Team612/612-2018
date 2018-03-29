@@ -14,6 +14,7 @@ import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
 import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
 import org.usfirst.frc.team612.commands.lift.SetOffPID;
 import org.usfirst.frc.team612.commands.lift.SetOnPID;
+import org.usfirst.frc.team612.commands.lift.TogglePID;
 import org.usfirst.frc.team612.commands.pneumatic.CloseGrabber;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultGrabber;
@@ -38,6 +39,7 @@ public class OI {
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
 	public static final boolean PREVENT_TIPPING 	= false;
+	public static final boolean REFLECT_AUTO		= false;
 	public static final boolean NEW_GUNNER_CONTROL  = true;
 	public static final double TIP_ANGLE            = 30;
 	public static boolean IS_MOTOR_STALLED			= false;
@@ -89,7 +91,7 @@ public class OI {
 			gunner_button_RB.whenReleased(new DisableGrabber());
 			gunner_button_LB.whenPressed(new CloseGrabber());
 			gunner_button_LB.whenReleased(new DisableGrabber());
-			gunner_button_Y.whileHeld(new SetOffPID());	
+			gunner_button_Y.whileHeld(new TogglePID());	
 			//1gunner_button_Y.whenReleased(new SetOnPID());			
 
 		} else {
