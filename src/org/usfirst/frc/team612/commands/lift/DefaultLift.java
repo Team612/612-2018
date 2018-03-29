@@ -17,7 +17,7 @@ public class DefaultLift extends Command {
 	public static int MAX = 500;
     private int DEADZONE = 100;
     private int VEL_DEADZONE = 10;
-    private int MOTOR_DEADZONE = 0.1;	
+    private double  MOTOR_DEADZONE = 0.1;	
 
     /**
      * Requires <code>lift</code>

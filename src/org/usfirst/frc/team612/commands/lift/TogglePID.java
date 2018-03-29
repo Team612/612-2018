@@ -1,6 +1,7 @@
 package org.usfirst.frc.team612.commands.lift;
 
 import org.usfirst.frc.team612.robot.OI;
+import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,6 +22,7 @@ public class TogglePID extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	OI.LIFT_PID = !OI.LIFT_PID;
+    	//OI.LIFT_PID = OI.LIFT_PID ? false : true;
     	System.out.println("PID Toggled");
     }
 
@@ -31,6 +33,7 @@ public class TogglePID extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.lift.target = Robot.lift.getTalon().getSelectedSensorPosition(0);
     }
 
     // Called when another command which requires one or more of the same

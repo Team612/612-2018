@@ -4,16 +4,10 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroup;
-import org.usfirst.frc.team612.commands.autonomous.ReplayRobot;
-import org.usfirst.frc.team612.commands.lift.SetOffPID;
-import org.usfirst.frc.team612.commands.lift.SetOnPID;
 import org.usfirst.frc.team612.commands.lift.TogglePID;
 import org.usfirst.frc.team612.commands.pneumatic.CloseGrabber;
 import org.usfirst.frc.team612.commands.pneumatic.DefaultDropper;
@@ -43,6 +37,7 @@ public class OI {
 	public static final boolean NEW_GUNNER_CONTROL  = true;
 	public static final double TIP_ANGLE            = 30;
 	public static boolean IS_MOTOR_STALLED			= false;
+	public static final boolean SWITCH_PRIORITY		= true;
 	public static String TEST_FILE_NAME 			= "data55.txt";
 	public static String AUTO_FILE_NAME 			= "data55.txt";
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
@@ -91,7 +86,7 @@ public class OI {
 			gunner_button_RB.whenReleased(new DisableGrabber());
 			gunner_button_LB.whenPressed(new CloseGrabber());
 			gunner_button_LB.whenReleased(new DisableGrabber());
-			gunner_button_Y.whileHeld(new TogglePID());	
+			gunner_button_Y.whenPressed(new TogglePID());	
 			//1gunner_button_Y.whenReleased(new SetOnPID());			
 
 		} else {
