@@ -54,8 +54,17 @@ public class ReplayRobot extends Command {
     	if(index_counter+4 < OI.drive_data.size() ) {
     		//System.out.println("REPLAY IN IF");
     		//double seconds_replay = replay_timer.get();
-	        Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
-	        if(OI.drive_data.get(index_counter+3) == 0) {
+    		if(!OI.REFLECT_AUTO) {
+    			Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
+    		} else {
+    			double angle = OI.drive_data.get(index_counter+1);
+    			if(angle < 0) {
+    				Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), -180-angle, -OI.drive_data.get(index_counter + 2));
+    			} else {
+    				Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), 180-angle, -OI.drive_data.get(index_counter + 2));
+    			}
+    		}
+    		if(OI.drive_data.get(index_counter+3) == 0) {
 	        	Robot.grabber.getSolenoid().set(Value.kOff);
 	        } else if (OI.drive_data.get(index_counter+3) == 1) {
 	        	Robot.grabber.getSolenoid().set(Value.kForward);

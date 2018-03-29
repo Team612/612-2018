@@ -39,6 +39,7 @@ public class OI {
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
 	public static final boolean PREVENT_TIPPING 	= false;
+	public static final boolean REFLECT_AUTO		= false;
 	public static final boolean NEW_GUNNER_CONTROL  = true;
 	public static final double TIP_ANGLE            = 30;
 	public static String TEST_FILE_NAME 			= "data55.txt";
