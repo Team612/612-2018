@@ -16,9 +16,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DefaultLift extends Command {
 	public static int MAX = 500;
     private int DEADZONE = 100;
-    //private int target = -10000;
-
-	
+    private int VEL_DEADZONE = 10;
+    private double  MOTOR_DEADZONE = 0.1;	
 
     /**
      * Requires <code>lift</code>
@@ -44,26 +43,7 @@ public class DefaultLift extends Command {
      */
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*if(deadzone < Robot.oi.gunner.getY(Hand.kLeft) && -deadzone  > Robot.oi.gunner.getY(Hand.kLeft)) {
-    		move = 0;
-    	}
-    	else {
-    		move = Robot.oi.gunner.getY(Hand.kLeft) * .8;
-    	}
-    	Robot.lift.getTalon().set(move);*/
-    	/*if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed()) {
-    		 Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
-    		 Robot.lift.target =10;
-    		 
-    	}
-    	else if(Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
-    		MAX = Robot.lift.getTalon().getSelectedSensorPosition(0);
-    		//Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(MAX, 0);
-    		
-    	}*/
-
     	if(OI.LIFT_PID) {
-    	
 	    	if(Math.abs(Robot.oi.gunner.getY(Hand.kLeft)) > 0.1 ){
 			    if (Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() || Robot.lift.getTalon().getSensorCollection().isRevLimitSwitchClosed()) {
 	    			if(Robot.lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed() && Robot.oi.gunner.getY(Hand.kLeft) > 0) {
@@ -75,12 +55,12 @@ public class DefaultLift extends Command {
 	    				Robot.lift.target = Robot.lift.target;
 	    			}
 	    			else {
-		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*300) ;
+		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*320) ;
 		    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    			}
 		    		}
 	    		else {
-	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*300);
+	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*320);
 	    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    		}
 	    	} else {
@@ -94,7 +74,17 @@ public class DefaultLift extends Command {
 	    	
 	    }
     	}else {
-    		Robot.lift.getTalon().set(OI.gunner.getY(Hand.kLeft));
+    		Robot.lift.getTalon().set(ControlMode.PercentOutput, OI.gunner.getY( Hand.kLeft));
+    	}
+    	// Check if motor is stalled
+    	if(Math.abs(Robot.lift.getTalon().getSelectedSensorVelocity(0)) < VEL_DEADZONE) {
+    		// If the lift isn't moving
+    		if(Math.abs(Robot.lift.getTalon().get()) > MOTOR_DEADZONE) {
+    			OI.IS_MOTOR_STALLED = true;
+    		}
+    		
+    	} else {
+    		OI.IS_MOTOR_STALLED = false;
     	}
 	    	
     }

@@ -92,10 +92,10 @@ public class DefaultDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(OI.TANKDRIVE) {
-    	Robot.drivetrain.getTalon(1).set(Robot.oi.driver.getY(Hand.kLeft));
-		Robot.drivetrain.getTalon(4).set(Robot.oi.driver.getY(Hand.kLeft));
-		Robot.drivetrain.getTalon(2).set(Robot.oi.driver.getY(Hand.kRight));
-		Robot.drivetrain.getTalon(3).set(Robot.oi.driver.getY(Hand.kRight));
+	    	Robot.drivetrain.getTalon(1).set(Robot.oi.driver.getY(Hand.kLeft));
+			Robot.drivetrain.getTalon(4).set(Robot.oi.driver.getY(Hand.kLeft));
+			Robot.drivetrain.getTalon(2).set(Robot.oi.driver.getY(Hand.kRight));
+			Robot.drivetrain.getTalon(3).set(Robot.oi.driver.getY(Hand.kRight));
     	}
     	else  {
     	getInput();

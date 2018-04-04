@@ -22,10 +22,8 @@ public class ChangeFileName extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("Changing " + OI.TEST_FILE_NAME + " to: " + OI.AUTO_FILE_NAME);
     	OI.TEST_FILE_NAME = OI.AUTO_FILE_NAME;
-    	//OI.TEST_FILE_NAME = "simple.txt";
-    	System.out.println("OI.TEST_FILE_NAME is now " + OI.TEST_FILE_NAME);
+    	//OI.TEST_FILE_NAME = "yeet2.txt";
     	end = true;
     }
 
