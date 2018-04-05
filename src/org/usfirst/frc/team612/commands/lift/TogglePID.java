@@ -21,9 +21,9 @@ public class TogglePID extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	OI.LIFT_PID = !OI.LIFT_PID;
+    	OI.LIFT_PID = false;
     	//OI.LIFT_PID = OI.LIFT_PID ? false : true;
-    	System.out.println("PID Toggled");
+    		System.out.println("PID Disabled");
     }
 
     // Make this return true when this Command no longer needs to run execute()

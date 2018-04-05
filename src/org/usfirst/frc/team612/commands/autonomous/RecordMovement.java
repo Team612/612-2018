@@ -38,7 +38,7 @@ public class RecordMovement extends Command {
     protected void initialize() {
         try {
             if (file_to_create.createNewFile()) {
-                System.out.println("File created...");
+                System.out.println(file_name_create + ", File created...");
             } else {
                 if (file_to_create.delete()) {
                     System.out.println("File deleted");

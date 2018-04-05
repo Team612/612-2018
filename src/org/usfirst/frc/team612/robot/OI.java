@@ -22,7 +22,7 @@ import org.usfirst.frc.team612.robot.RobotMap;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public static final boolean TANKDRIVE 			=false;
+	public static final boolean TANKDRIVE 			= false;
 	public static final boolean XBOX 				= true;
 	public static final boolean OMNI 				= false;
 	public static final boolean DRIVER_PERSPECTIVE  = false;
@@ -33,11 +33,10 @@ public class OI {
 	public static boolean GRABBER_POS   			= true;//true means closed
 	public static boolean DROPPER_POS   			= true;//true means off
 	public static final boolean PREVENT_TIPPING 	= false;
-	public static final boolean REFLECT_AUTO		= false;
+	public static boolean REFLECT_AUTO				= false;
 	public static final boolean NEW_GUNNER_CONTROL  = true;
 	public static final double TIP_ANGLE            = 30;
 	public static boolean IS_MOTOR_STALLED			= false;
-	public static final boolean SWITCH_PRIORITY		= true;
 	public static String TEST_FILE_NAME 			= "data55.txt";
 	public static String AUTO_FILE_NAME 			= "data55.txt";
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
@@ -74,8 +73,6 @@ public class OI {
 	public static JoystickButton bongo_button_Right_B   = new JoystickButton(bongo, 3);
 	public static JoystickButton bongo_button_middle    = new JoystickButton(bongo, 10);
 
-	
-
 	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
 	
 	public OI() throws IOException {
@@ -102,6 +99,7 @@ public class OI {
 			bongo_button_Right_F.whenReleased(new DisableGrabber());
 		}
 		else {
+		
 			gunner_button_BCK.whenPressed(new DefaultDropper());
 			gunner_button_BCK.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new DefaultGrabber());

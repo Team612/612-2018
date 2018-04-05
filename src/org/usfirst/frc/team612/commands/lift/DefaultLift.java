@@ -55,12 +55,12 @@ public class DefaultLift extends Command {
 	    				Robot.lift.target = Robot.lift.target;
 	    			}
 	    			else {
-		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*300) ;
+		    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*320) ;
 		    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    			}
 		    		}
 	    		else {
-	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*300);
+	    			Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*320);
 	    			//Robot.lift.target += (Robot.oi.gunner.getY(Hand.kLeft)*200) * Robot.encoder_multi;
 	    		}
 	    	} else {
@@ -74,7 +74,7 @@ public class DefaultLift extends Command {
 	    	
 	    }
     	}else {
-    		Robot.lift.getTalon().set(OI.gunner.getY(Hand.kLeft));
+    		Robot.lift.getTalon().set(ControlMode.PercentOutput, OI.gunner.getY( Hand.kLeft));
     	}
     	// Check if motor is stalled
     	if(Math.abs(Robot.lift.getTalon().getSelectedSensorVelocity(0)) < VEL_DEADZONE) {

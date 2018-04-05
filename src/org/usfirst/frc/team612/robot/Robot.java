@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import java.io.IOException;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroupAuto;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
@@ -48,6 +50,7 @@ public class Robot extends IterativeRobot {
     String game_data, start_position;
     SendableChooser < String > start_pos;
     SendableChooser < String > priority;
+    SendableChooser < String > score_amount;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -56,16 +59,24 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	start_pos = new SendableChooser < > ();
         start_pos.addDefault("Simple Auto", "s");
-        start_pos.addObject("Start on Left", "l");
-        start_pos.addObject("Start on Right", "r");
         start_pos.addObject("Start in Center", "c");
-        start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
-        start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
-        start_pos.addObject("Start on Right -- Switch/Scale/Simple", "D");
+        start_pos.addObject("Start on Right", "D");
+        start_pos.addObject("Start on Left", "F");
+        
+        //start_pos.addObject("Start on Left", "l");
+        //start_pos.addObject("Start on Right", "r");
+        
+        //start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
+        //start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
+        
         //Robot.lift.getTalon().setSensorPhase(true);
         priority = new SendableChooser < > ();
         priority.addDefault("Switch", "s");
         priority.addObject("Scale", "c");
+        
+        score_amount = new SendableChooser < > ();
+        score_amount.addDefault("1 block", "q");
+        score_amount.addObject("2 blocks", "z");
 
         Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
         compressor.setClosedLoopControl(true);
@@ -89,6 +100,7 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putData("Starting Position", start_pos);
         SmartDashboard.putData("Score Priority", priority);
+        SmartDashboard.putData("Score Amount", score_amount);
 
         //Check if File has been created
         //Create File Writer object with file path
@@ -136,63 +148,72 @@ public class Robot extends IterativeRobot {
             System.out.println("Game Data: " + game_data);
             System.out.println("Position: " + start_position);
             //OI.ALLOW_RECORDING = false;
+            // THIS IS THE ARRAY WAY TO DO IT
+            
+            /*
+            String[] all_data = {"yeet.txt", "right_R_C.txt", "simple.txt", "yeet.txt", "right_R_S.txt", "right_R_S.txt", };
+            
+            if(start_position.charAt(0) == 's') {
+            	OI.AUTO_FILE_NAME = "simple.txt";
+            }
+            if(start_position.charAt(0) == 'c') {
+            	if(game_data.charAt(0) == 'L') {
+            		OI.AUTO_FILE_NAME = "center_L_S.txt";
+            	} else {
+            		OI.AUTO_FILE_NAME = "center_R_S"; // whoops
+            	}
+            }
             
             
-            	//Score on Scale - Center (left or right)
+            Dictionary<String, String> d = new Hashtable<String, String>();
+            
+            d.put("D", "center_L_S.txt")
+            
+            String score_num = score_amount.getSelected(); // 1 is 1, 2 is 0
+            char pos_num = start_position.charAt(0); // 1 is left, 0 is right
+            String priority_num = priority.getSelected(); // 1 is switch, 0 is scale
+            char scale_num = game_data.charAt(1); // 1 is left, 0 is right
+            char switch_num = game_data.charAt(0); // 1 is left, 0 is right
+            
+            //position, priority, 
+            String key = pos_num + priority_num + switch_num + scale_num + score_num;
+            
+            */
+            
+            //int total = score_num + 2*pos_num + 4*priority_num + 8*scale_num + 16*switch_num;
+            
+            //Drive forward
             if (start_position.charAt(0) == 's') {
                 OI.AUTO_FILE_NAME = "simple.txt";
+                //Score on Scale - Center (left or right)
             } else if (start_position.charAt(0) == 'c') {
                 if (game_data.charAt(0) == 'L') {
                     OI.AUTO_FILE_NAME = "center_L_S.txt";
                 } else if (game_data.charAt(0) == 'R') {
                     OI.AUTO_FILE_NAME = "center_R_S"; // sorry
                 }
-                
-                //Score on Switch - Left Side
-            } else if (start_position.charAt(0) == 'l') {
-                if (game_data.charAt(0) == 'L') {
-                    OI.AUTO_FILE_NAME = "left_L_S.txt";
-                } else if (game_data.charAt(0) == 'R') {
-                    OI.AUTO_FILE_NAME = "simple.txt";
-                }
-                
-                //Score on Switch - Right Side
-            } else if (start_position.charAt(0) == 'r') {
-                if (game_data.charAt(0) == 'L') {
-                    OI.AUTO_FILE_NAME = "simple.txt";
-                } else if (game_data.charAt(0) == 'R') {
-                    OI.AUTO_FILE_NAME = "right_R_S.txt";
-                }
-                
-                //Score on Scale - Left Side
-            } else if (start_position.charAt(0) == 'A') {
-                if (game_data.charAt(1) == 'L') {
-                    OI.AUTO_FILE_NAME = "left_L_C.txt";
-                } else if (game_data.charAt(1) == 'R') {
-                    OI.AUTO_FILE_NAME = "simple.txt";
-                }
-                
-                //Score on Scale - Right Side
-            } else if (start_position.charAt(0) == 'B') {
-                if (game_data.charAt(1) == 'R') {
-                    OI.AUTO_FILE_NAME = "right_R_C.txt";
-                } else if (game_data.charAt(1) == 'L') {
-                    OI.AUTO_FILE_NAME = "simple.txt";
-                }
-                
-                //Either Scale or Switch - Right Side (Priority Switch)
+                // Start on right
             } else if (start_position.charAt(0) == 'D') {
-            	if(OI.SWITCH_PRIORITY) {
-	                if (game_data.charAt(0) == 'R') {
-	                    OI.AUTO_FILE_NAME = "right_R_S.txt";
-	                } else if (game_data.charAt(1) == 'R') {
-	                    OI.AUTO_FILE_NAME = "right_R_C.txt";
+            	if(priority.getSelected() == "s") { // Switch
+	                if (game_data.charAt(0) == 'R') { // Our switch on right
+	                    OI.AUTO_FILE_NAME = "right_R_S.txt"; // Get that switch
+	                } else if (game_data.charAt(1) == 'R') { // else if scale is on our side
+	                	if (score_amount.getSelected() == "q") { // And we want to get one block
+            				OI.AUTO_FILE_NAME = "right_R_C_FIX.txt"; // Put that one block bb
+            			} else { // OR do two
+            				OI.AUTO_FILE_NAME = "yeet.txt"; // TODO: Have correct one
+            			}
 	                } else {
 	                    OI.AUTO_FILE_NAME = "simple.txt";
 	                }
-            	} else {
-            		if (game_data.charAt(1) == 'R') {
-            			OI.AUTO_FILE_NAME = "right_R_C.txt";
+            	} else { // scale prority
+            		if (game_data.charAt(1) == 'R') { // Scale is on our side
+            			if (score_amount.getSelected() == "q") { // And one block
+            				OI.AUTO_FILE_NAME = "right_R_C_FIX.txt";
+            			} else  { // Or two blocks
+            				OI.AUTO_FILE_NAME = "yeet.txt"; // TODO: Have correct one
+            			}
+            			
             		} else if (game_data.charAt(0) == 'R') {
 	                    OI.AUTO_FILE_NAME = "right_R_S.txt";
 	                } else {
@@ -200,12 +221,36 @@ public class Robot extends IterativeRobot {
 	                }
             	}
 
-            } else {
+            }
+          //Either Scale or Switch - Left Side 
+            else if (start_position.charAt(0) == 'F') {
+            	OI.REFLECT_AUTO = true;
+            	if(priority.getSelected() == "s") {
+	                if (game_data.charAt(0) == 'L') {
+	                    OI.AUTO_FILE_NAME = "right_R_S.txt";
+	                } else if (game_data.charAt(1) == 'L') {
+	                    OI.AUTO_FILE_NAME = "right_R_C_FIX.txt";
+	                } else {
+	                    OI.AUTO_FILE_NAME = "simple.txt";
+	                }
+            	} else {
+            		if (game_data.charAt(1) == 'L') {
+            			OI.AUTO_FILE_NAME = "right_R_C_FIX.txt";
+            		} else if (game_data.charAt(0) == 'L') {
+	                    OI.AUTO_FILE_NAME = "right_R_S.txt";
+	                } else {
+	                    OI.AUTO_FILE_NAME = "simple.txt";
+	                }
+            	}
+
+            }
+            else {
             	//If all these fail drive forward
                 OI.AUTO_FILE_NAME = "simple.txt";
             }
         }
-        System.out.println(OI.AUTO_FILE_NAME);
+        
+        System.out.println("Replaying file" + OI.AUTO_FILE_NAME + ", reflection is " + OI.REFLECT_AUTO);
 
         if (autonomousCommand != null) {
             autonomousCommand.start();
@@ -289,10 +334,12 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
 		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean( "Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
-		SmartDashboard.putNumber("Lift Encoder Position",lift.getTalon().getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Lift Encoder Position", -1 * (lift.getTalon().getSelectedSensorPosition(0)));
 		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
 		SmartDashboard.putBoolean("Is Lift Motor Stalling", OI.IS_MOTOR_STALLED);
+		//
+		SmartDashboard.putNumber("Lift Motor Temp (C)", lift.getTalon().getTemperature());
 
         //SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
         //SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());

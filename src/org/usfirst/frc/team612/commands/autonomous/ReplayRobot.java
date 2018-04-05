@@ -55,7 +55,13 @@ public class ReplayRobot extends Command {
     		//System.out.println("REPLAY IN IF");
     		//double seconds_replay = replay_timer.get();
     		if(!OI.REFLECT_AUTO) {
-    			Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
+    			if(OI.AUTO_FILE_NAME == "right_R_C_FIX.txt") {
+    				System.out.println("98");
+        			Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter)*0.98, OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
+    			}
+    			else {
+    				Robot.drivetrain.getDriveTrain().drivePolar(OI.drive_data.get(index_counter), OI.drive_data.get(index_counter + 1), OI.drive_data.get(index_counter + 2));
+    			}
     		} else {
     			double angle = OI.drive_data.get(index_counter+1);
     			if(angle < 0) {
@@ -97,6 +103,7 @@ public class ReplayRobot extends Command {
     protected void end() {
     	OI.drive_data = new ArrayList<Double>(4);
     	index_counter = 0;
+    	OI.REFLECT_AUTO = false;
     	end_R = false;
     }
 
