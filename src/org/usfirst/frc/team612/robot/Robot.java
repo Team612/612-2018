@@ -2,7 +2,6 @@ package org.usfirst.frc.team612.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,21 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import java.io.IOException;
-import java.util.Dictionary;
-import java.util.Hashtable;
 
 import org.usfirst.frc.team612.commands.autonomous.ReplayGroupAuto;
 import org.usfirst.frc.team612.subsystems.Drivetrain;
 import org.usfirst.frc.team612.subsystems.Lift;
 import org.usfirst.frc.team612.subsystems.Dropper;
 import org.usfirst.frc.team612.subsystems.Grabber;
-/**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- */
+
 public class Robot extends IterativeRobot {
     public static double encoder_multi = -2;
     public static DriverStation driverstation = DriverStation.getInstance();
@@ -62,14 +53,6 @@ public class Robot extends IterativeRobot {
         start_pos.addObject("Start in Center", "c");
         start_pos.addObject("Start on Right", "D");
         start_pos.addObject("Start on Left", "F");
-        
-        //start_pos.addObject("Start on Left", "l");
-        //start_pos.addObject("Start on Right", "r");
-        
-        //start_pos.addObject("Start on Left --SCALE", "A"); // A for scale
-        //start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
-        
-        //Robot.lift.getTalon().setSensorPhase(true);
         priority = new SendableChooser < > ();
         priority.addDefault("Switch", "s");
         priority.addObject("Scale", "c");
@@ -83,21 +66,10 @@ public class Robot extends IterativeRobot {
         try {
             oi = new OI();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             //e.printStackTrace();
         }
         autonomousCommand = new ReplayGroupAuto();
-        //Dchooser.addDefault("Default Auto", new ChangeFileName());
-        // sets auto command to replay group Auto 
-
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-        // chooser.addObject("My Auto", new MyAutoCommand());
-        //SmartDashboard.putData("Auto mode", chooser);
         CameraServer.getInstance().startAutomaticCapture(0);
-        //CameraServer.getInstance().startAutomaticCapture(1);
-
-
-
         SmartDashboard.putData("Starting Position", start_pos);
         SmartDashboard.putData("Score Priority", priority);
         SmartDashboard.putData("Score Amount", score_amount);
@@ -135,13 +107,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         //autonomousCommand;
-        /*
-         * String autoSelected = SmartDashboard.getString("Auto Selector",
-         * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-         * = new MyAutoCommand(); break; case "Default Auto": default:
-         * autonomousCommand = new ExampleCommand(); break; }
-         */
-        // schedule the autonomous command (example)
         game_data = driverstation.getGameSpecificMessage();
         start_position = start_pos.getSelected();
         if (game_data.length() > 0) {
@@ -292,57 +257,17 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-
-        /*double analogvoltage = analogpressure.getAverageVoltage();
-        double scalefactor = 125.0;
-        double bias = 0.0;
-        //int analogbits = analogpressure.getValue();
-        //double analogscalefactor = analogvoltage / analogbits;
-        double analogpressure = (scalefactor * analogvoltage - bias);
-        //System.out.println(analogvoltage);
-        //System.out.println(analogpressure);
-        if (analogpressure > 90) {
-            pressuregood = true;
-            pressurelow = false;
-            pressurecritical = false;
-        } else if (analogpressure > 60) {
-            pressurelow = true;
-            pressuregood = false;
-            pressurecritical = false;
-        } else {
-            pressurecritical = true;
-            pressurelow = false;
-            pressuregood = false;
-        }
-
-
-        SmartDashboard.putBoolean("Pressure Good", pressuregood);
-        SmartDashboard.putBoolean("Pressure Low", pressurelow);
-        SmartDashboard.putBoolean("Pressure Critical", pressurecritical);*/
-		
 		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
 		SmartDashboard.putNumber("Wheel RR", drivetrain.getTalon(3).get());
 		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
-		//SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
-		/*SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
-		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
-		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
-		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
-		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());*/
-		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
-		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
 		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean( "Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
 		SmartDashboard.putNumber("Lift Encoder Position", -1 * (lift.getTalon().getSelectedSensorPosition(0)));
 		SmartDashboard.putNumber("Lift Target", lift.target);
 		SmartDashboard.putNumber("Lift %V", lift.getTalon().getMotorOutputPercent());
 		SmartDashboard.putBoolean("Is Lift Motor Stalling", OI.IS_MOTOR_STALLED);
-		//
 		SmartDashboard.putNumber("Lift Motor Temp (C)", lift.getTalon().getTemperature());
-
-        //SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
-        //SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
     }
 
     /**

@@ -1,11 +1,4 @@
 package org.usfirst.frc.team612.commands.autonomous;
-
-import java.io.BufferedReader;
-
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team612.robot.OI;
@@ -16,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -89,7 +81,7 @@ public class ReplayRobot extends Command {
         if(OI.driver_button_X.get()) {
         	end_R = true;
         }
-        //}
+        
 
     }
     //System.out.println("Replay Finished");
