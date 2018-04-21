@@ -22,12 +22,12 @@ public class DisableDropper extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dropper.getSolenoid().set(Value.kOff);
+    	Robot.dropper.getSolenoid().set(Value.kOff); // Set dropper to kOff so it doesn't waste air pressure
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return true; // Disabling the dropper happens immediately, so return true
     }
 
     // Called once after isFinished returns true

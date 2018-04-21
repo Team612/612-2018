@@ -32,36 +32,41 @@ import org.usfirst.frc.team612.subsystems.Grabber;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    public static double encoder_multi = -2;
-    public static DriverStation driverstation = DriverStation.getInstance();
-    public static OI oi;
-    public static Drivetrain drivetrain = new Drivetrain();
-    public static AHRS navx = new AHRS(I2C.Port.kMXP);
-    public static Grabber grabber = new Grabber();
-    public static Lift lift = new Lift();
-    public static Dropper dropper = new Dropper();
-    public static Compressor compressor = new Compressor(0);
+    public static double encoder_multi = -2; // Multiplier used to change the rate at which encoder target
+    										 // changes for Lift PID
+    public static DriverStation driverstation = DriverStation.getInstance(); // Instance of the Driver Station (never used)
+    public static OI oi; // Instance of the OI class for autonomous (everything else is accessed statically)
+    public static Drivetrain drivetrain = new Drivetrain(); // Drivetrain object
+    public static AHRS navx = new AHRS(I2C.Port.kMXP); // Navx (accelerometer) object, currently not on robot
+    public static Grabber grabber = new Grabber(); // Grabber object
+    public static Lift lift = new Lift(); // Lift object
+    public static Dropper dropper = new Dropper(); // Dropper object
+    public static Compressor compressor = new Compressor(0); // Compressor object. Only used in robotInit
 
     //public AnalogInput analogpressure = new AnalogInput(0);
-    public boolean pressuregood;
+    public boolean pressuregood; // Used to contain the status of air pressure on robot for pneumatics
     public boolean pressurelow;
     public boolean pressurecritical;
-    Command autonomousCommand;
+    Command autonomousCommand; // Eventually holds the command that the robot executes in robotics
     String game_data, start_position;
-    SendableChooser < String > start_pos;
-    SendableChooser < String > priority;
-    SendableChooser < String > score_amount;
+    /* game_data is of the form 'RRR', where each character represents the side of the
+     * scale or switch that is for OUR alliance; first character is out switch, etc.
+     * Start_poisition is R, L, or C; where the robot starts the match
+     */
+    SendableChooser < String > start_pos; // This lets us get the start_position string from smartdashboard
+    SendableChooser < String > priority; // This lets us get the priority (scale or switch) from smartdashboard
+    SendableChooser < String > score_amount; // And this will let us (hopefully) pick 1 or 2 cube auto
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     @Override
     public void robotInit() {
-    	start_pos = new SendableChooser < > ();
-        start_pos.addDefault("Simple Auto", "s");
-        start_pos.addObject("Start in Center", "c");
-        start_pos.addObject("Start on Right", "D");
-        start_pos.addObject("Start on Left", "F");
+    	start_pos = new SendableChooser < > (); // Create the chooser for our starting position
+        start_pos.addDefault("Simple Auto", "s"); // If something messes up, it should just run simple auto
+        start_pos.addObject("Start in Center", "c"); // Otherwise, pick starting in the center,
+        start_pos.addObject("Start on Right", "D"); // or on the right
+        start_pos.addObject("Start on Left", "F"); // or on the left
         
         //start_pos.addObject("Start on Left", "l");
         //start_pos.addObject("Start on Right", "r");
@@ -70,40 +75,34 @@ public class Robot extends IterativeRobot {
         //start_pos.addObject("Start on Right --SCALE", "B"); // B for scale
         
         //Robot.lift.getTalon().setSensorPhase(true);
-        priority = new SendableChooser < > ();
-        priority.addDefault("Switch", "s");
-        priority.addObject("Scale", "c");
         
-        score_amount = new SendableChooser < > ();
-        score_amount.addDefault("1 block", "q");
-        score_amount.addObject("2 blocks", "z");
+        priority = new SendableChooser < > (); // Another SendableChooser for our priority
+        priority.addDefault("Switch", "s"); // Either switch (low/close)
+        priority.addObject("Scale", "c"); // Or scale (high/far)
+        
+        score_amount = new SendableChooser < > (); // Third SendableChooser for number of points
+        score_amount.addDefault("1 block", "q"); // 1 cube
+        score_amount.addObject("2 blocks", "z"); // or 2
 
-        Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
-        compressor.setClosedLoopControl(true);
+        Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0); // Reset lift encoder so it's calibrated to 0
+        compressor.setClosedLoopControl(true); // And this makes the compressor automatically start gaining pressure
         try {
-            oi = new OI();
+            oi = new OI(); // This has to be inside try/catch block because it does file stuff for autonomous
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             //e.printStackTrace();
         }
-        autonomousCommand = new ReplayGroupAuto();
-        //Dchooser.addDefault("Default Auto", new ChangeFileName());
-        // sets auto command to replay group Auto 
+        autonomousCommand = new ReplayGroupAuto(); // The autonomous command is always ReplayGroupAuto; below selects which auto to replay
 
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-        // chooser.addObject("My Auto", new MyAutoCommand());
-        //SmartDashboard.putData("Auto mode", chooser);
-        CameraServer.getInstance().startAutomaticCapture(0);
-        //CameraServer.getInstance().startAutomaticCapture(1);
+        CameraServer.getInstance().startAutomaticCapture(0); // Start capturing frames from the webcam so drive team can see
 
 
-
+        /* The three lines below actually put the three SendableChoosers created above on SmartDashboard.
+         * Without these lines, it creates the objects in code but the drivers can't select any options
+         */
         SmartDashboard.putData("Starting Position", start_pos);
         SmartDashboard.putData("Score Priority", priority);
         SmartDashboard.putData("Score Amount", score_amount);
 
-        //Check if File has been created
-        //Create File Writer object with file path
     }
 
     /**
@@ -113,10 +112,15 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit() {
-
+    	// We don't do anything in disabledInit
     }
 
     public void disabledPeriodic() {
+    	/* The only thing our robot does in disabledPeriodic is repeatedly query for the game data.
+    	 * There is some delay/buffer between sending the data and us getting it; this helps reduce
+    	 * the delay. It might not actually affect the matches, but it seemed to help with debugging
+    	 * so I'm leaving it in.
+    	 */
         game_data = driverstation.getGameSpecificMessage();
         Scheduler.getInstance().run();
     }
@@ -134,37 +138,15 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void autonomousInit() {
-        //autonomousCommand;
-        /*
-         * String autoSelected = SmartDashboard.getString("Auto Selector",
-         * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-         * = new MyAutoCommand(); break; case "Default Auto": default:
-         * autonomousCommand = new ExampleCommand(); break; }
-         */
-        // schedule the autonomous command (example)
-        game_data = driverstation.getGameSpecificMessage();
-        start_position = start_pos.getSelected();
-        if (game_data.length() > 0) {
-            System.out.println("Game Data: " + game_data);
-            System.out.println("Position: " + start_position);
+
+        game_data = driverstation.getGameSpecificMessage(); // This is what actually gets the game message during a match
+        start_position = start_pos.getSelected(); // And this gets the starting position (L, R, C) from the SendableChooser
+        if (game_data.length() > 0) { // If we did get game data
+            System.out.println("Game Data: " + game_data); // Print out the game data
+            System.out.println("Position: " + start_position); // And print out the position
             //OI.ALLOW_RECORDING = false;
-            // THIS IS THE ARRAY WAY TO DO IT
             
             /*
-            String[] all_data = {"yeet.txt", "right_R_C.txt", "simple.txt", "yeet.txt", "right_R_S.txt", "right_R_S.txt", };
-            
-            if(start_position.charAt(0) == 's') {
-            	OI.AUTO_FILE_NAME = "simple.txt";
-            }
-            if(start_position.charAt(0) == 'c') {
-            	if(game_data.charAt(0) == 'L') {
-            		OI.AUTO_FILE_NAME = "center_L_S.txt";
-            	} else {
-            		OI.AUTO_FILE_NAME = "center_R_S"; // whoops
-            	}
-            }
-            
-            
             Dictionary<String, String> d = new Hashtable<String, String>();
             
             d.put("D", "center_L_S.txt")
@@ -183,16 +165,16 @@ public class Robot extends IterativeRobot {
             //int total = score_num + 2*pos_num + 4*priority_num + 8*scale_num + 16*switch_num;
             
             //Drive forward
-            if (start_position.charAt(0) == 's') {
+            if (start_position.charAt(0) == 's') { // Start position is default (simple auto)
                 OI.AUTO_FILE_NAME = "simple.txt";
-                //Score on Scale - Center (left or right)
+                //Score on Switch - Center (left or right)
             } else if (start_position.charAt(0) == 'c') {
                 if (game_data.charAt(0) == 'L') {
                     OI.AUTO_FILE_NAME = "center_L_S.txt";
                 } else if (game_data.charAt(0) == 'R') {
                     OI.AUTO_FILE_NAME = "center_R_S"; // sorry
                 }
-                // Start on right
+             // Start on right
             } else if (start_position.charAt(0) == 'D') {
             	if(priority.getSelected() == "s") { // Switch
 	                if (game_data.charAt(0) == 'R') { // Our switch on right
@@ -251,9 +233,10 @@ public class Robot extends IterativeRobot {
         }
         
         System.out.println("Replaying file" + OI.AUTO_FILE_NAME + ", reflection is " + OI.REFLECT_AUTO);
+        // Print out the file selection and whether the file is being reflected for post-match debugging
 
         if (autonomousCommand != null) {
-            autonomousCommand.start();
+            autonomousCommand.start(); // Then actually start the autonomous playback
 
         }
     }
@@ -264,6 +247,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        // Nothing special
     }
 
     /**
@@ -272,17 +256,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
         if (autonomousCommand != null) {
-            autonomousCommand.cancel();
+            autonomousCommand.cancel(); // if autonomous still exists, stop running autonomous
         }
-        dropper.getSolenoid().set(Value.kOff);
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
+        dropper.getSolenoid().set(Value.kOff); // Turn off dropper so it doesn't leak airpressure
         //navx.reset();
         //navx.zeroYaw();
-        //if (autonomousCommand != null)
-        //	autonomousCommand.cancel();
 
     }
 
@@ -292,6 +270,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
+        /* Block below figures out how our pressure is and sends it to the drivers.
+         * Currently not used because we don't have enough weight on the robot, but
+         * we're not deleting it in case we put it back on.
+         */
 
         /*double analogvoltage = analogpressure.getAverageVoltage();
         double scalefactor = 125.0;
@@ -314,11 +297,11 @@ public class Robot extends IterativeRobot {
             pressurelow = false;
             pressuregood = false;
         }
-
-
         SmartDashboard.putBoolean("Pressure Good", pressuregood);
         SmartDashboard.putBoolean("Pressure Low", pressurelow);
         SmartDashboard.putBoolean("Pressure Critical", pressurecritical);*/
+        
+        // Rest of the debugging statements
 		
 		SmartDashboard.putNumber("Wheel FL", drivetrain.getTalon(1).get());
 		SmartDashboard.putNumber("Wheel FR", drivetrain.getTalon(2).get());
@@ -326,12 +309,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Wheel RL", drivetrain.getTalon(4).get());
 		//SmartDashboard.putBoolean("Grabber Solenoid", grabber.getSolenoid().get());
 		/*SmartDashboard.putNumber("Lift Talon", lift.getTalon().get());
-		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());
-		SmartDashboard.putNumber("NAVX: Accel X", navx.getWorldLinearAccelX());
-		SmartDashboard.putNumber("NAVX: Accel Y", navx.getWorldLinearAccelY());
-		SmartDashboard.putNumber("NAVX: Accel Z", navx.getWorldLinearAccelZ());*/
-		//SmartDashboard.putNumber("Climber Talon 1", climber.getClimber(1).get());
-		//SmartDashboard.putNumber("Climber Talon 2", climber.getClimber(2).get());
+		SmartDashboard.putNumber("NAVX: Yaw", navx.getYaw());*/
 		SmartDashboard.putBoolean( "Lift Limit FWD SW", !lift.getTalon().getSensorCollection().isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean( "Lift Limit REV SW", !lift.getTalon().getSensorCollection().isRevLimitSwitchClosed());
 		SmartDashboard.putNumber("Lift Encoder Position", -1 * (lift.getTalon().getSelectedSensorPosition(0)));
@@ -341,7 +319,6 @@ public class Robot extends IterativeRobot {
 		//
 		SmartDashboard.putNumber("Lift Motor Temp (C)", lift.getTalon().getTemperature());
 
-        //SmartDashboard.putBoolean("NAVX Connection", navx.isConnected());
         //SmartDashboard.putBoolean("Is compressor low pressure?", compressor.getPressureSwitchValue());
     }
 
@@ -350,6 +327,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void testPeriodic() {
-        //LiveWindow.run();
+    	// We don't do anything in test
     }
 }

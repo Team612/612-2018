@@ -13,7 +13,7 @@ public class DefaultDropper extends Command {
     public DefaultDropper() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.dropper);
+    	requires(Robot.dropper); // Prevents two commands from sending two different instructions to same part at the same time
     }
 
     // Called just before this Command runs the first time
@@ -23,17 +23,17 @@ public class DefaultDropper extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.DROPPER_POS) {
+    	if(OI.DROPPER_POS) { // Figure out what position the dropper is in, and toggle it
     		Robot.dropper.getSolenoid().set(Value.kReverse);
     	} else {
     		Robot.dropper.getSolenoid().set(Value.kForward);	
     	}
-    	OI.DROPPER_POS = !OI.DROPPER_POS;
+    	OI.DROPPER_POS = !OI.DROPPER_POS; // Then update the variable
      }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return true; // Only has to be run once, so immediately returns true
     }
 
     // Called once after isFinished returns true

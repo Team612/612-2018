@@ -4,7 +4,6 @@ package org.usfirst.frc.team612.commands.drive;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,19 +14,18 @@ import org.usfirst.frc.team612.robot.OI;
  */
 public class DefaultDrive extends Command {
 	
-	final double DEADZONE = 0.07;
+	final double DEADZONE = 0.07; // For joystick
 	double prev_magnitude = 0;
-	double rate = 0.05;
-	public static double magnitude;
-	public static double angle;
-	public static double rotation;
-	final double RUMBLE_DEAD = 0.2;
-	double direction_x;
-	double direction_y;
-	double yaw;
-	boolean single_wheel = false;
-	double prev_x = 0;
-	double prev_y = 0;
+	double rate = 0.05; // Used for ramp-up/ramp-down; currently not used
+	public static double magnitude; // later contains final mangitude (0 to 1) of motion
+	public static double angle; // Later contains final angle (0 is right, 180 is left) of motion
+	public static double rotation; // Later contains final rate of ratation (angular velocity)
+	double direction_x; // Speed in x direction
+	double direction_y; // Speed in y direction; these two used to calculate angle/magnitude
+	double yaw; // Yaw is angle of the robot from the navx, not used
+	boolean single_wheel = false; // Had debug-mode to control single wheel; not used
+	double prev_x = 0; // Used for ramp-up/rampdown; currently not used
+	double prev_y = 0; // Used for ramp-up/rampdown; currently not used
 	
 	/**
 	 * Makes sure that that subsystem <code>drivetrain</code> is required.
@@ -47,12 +45,12 @@ public class DefaultDrive extends Command {
     	
     }
     
-    protected void getInput() {
+    protected void getInput() { // Sets variables with numbers from joystick
     	if(OI.XBOX) {
-       	 	direction_x = OI.driver.getX(Hand.kLeft);
-       	 	direction_y = OI.driver.getY(Hand.kLeft);
-       	 	rotation    = OI.driver.getX(Hand.kRight); // This has to be inverted
-       	}else {
+       	 	direction_x = OI.driver.getX(Hand.kLeft); // Left joysick, x direction
+       	 	direction_y = OI.driver.getY(Hand.kLeft); // Left joystick, y direction
+       	 	rotation    = OI.driver.getX(Hand.kRight); // Right joystick, x direction
+       	}else { // If we use the flightstick
            	 direction_x = OI.joy.getX();
            	 direction_y = OI.joy.getY();
            	 rotation = OI.joy.getTwist();
@@ -60,28 +58,32 @@ public class DefaultDrive extends Command {
     }
     
     protected void doDeadzone() {
-    	if(direction_x<DEADZONE&&direction_x>-DEADZONE) {
+    	/* If any variable is between -DEADZONE and DEADZONE (i.e. close to 0)
+    	 * assume that we don't want to move and set it to 0
+    	 */
+    	if(direction_x < DEADZONE && direction_x > -DEADZONE) {
     		direction_x = 0;
     	}
-    	if(direction_y<DEADZONE&&direction_y>-DEADZONE) {
+    	if(direction_y < DEADZONE && direction_y > -DEADZONE) {
     		direction_y = 0;
     	}
-    	if(rotation<DEADZONE&&rotation>-DEADZONE) {
+    	if(rotation < DEADZONE && rotation > -DEADZONE) {
     		rotation = 0;
     	}
     	
     }
     
     protected void toPolar() {
-    	magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y);
-    	if(magnitude > 1.0) {
+    	magnitude = Math.sqrt(direction_x*direction_x+direction_y*direction_y); // Magnitude is pythagorean theorem
+    	if(magnitude > 1.0) { // And make sure it doesn't get too big
     		magnitude = 1.0;
     	}
+    	// Angle is calculated direction_y, direction_x as legs of a triangle, angle is the one they form
     	angle = Math.atan2(direction_y, direction_x)*180/Math.PI;
-    	yaw = Robot.navx.getYaw();
+    	/* yaw = Robot.navx.getYaw();
     	if(OI.DRIVER_PERSPECTIVE) {
     		angle = angle-yaw;
-    	}
+    	} */
     }
     /**
      * Called 60 times per second when this Command is scheduled to run.
@@ -91,53 +93,32 @@ public class DefaultDrive extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.TANKDRIVE) {
+    	if(OI.TANKDRIVE) { // Usually won't run; if so, we set talons directly
 	    	Robot.drivetrain.getTalon(1).set(Robot.oi.driver.getY(Hand.kLeft));
 			Robot.drivetrain.getTalon(4).set(Robot.oi.driver.getY(Hand.kLeft));
 			Robot.drivetrain.getTalon(2).set(Robot.oi.driver.getY(Hand.kRight));
 			Robot.drivetrain.getTalon(3).set(Robot.oi.driver.getY(Hand.kRight));
     	}
     	else  {
-    	getInput();
-    	
-    	doDeadzone();
-    	
-    	toPolar();
-    	
-    	if(OI.FIX_DRIFT) {
-    		double yaw_velocity = Robot.navx.getRate();
-    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation-yaw_velocity));
+	    	getInput(); // Broke these up into
+	    	
+	    	doDeadzone(); // Multiple functions
+	    	
+	    	toPolar(); // To make readable
+	    	
+	    	/* if(OI.FIX_DRIFT) {
+	    		double yaw_velocity = Robot.navx.getRate();
+	    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation+(rotation-yaw_velocity));
+	    	}
+	    	else{
+	    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
+	    	} */
+	    	RecordMovement.magnitude = magnitude; // These are for recording; even though we don't always
+	    	RecordMovement.angle = angle; 		  // Record, we always set them just so that 
+	    	RecordMovement.rotation = rotation;   // We have to change less if we are recording
+	    	
+	    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation); // Actually move the drivetrain
     	}
-    	else{
-    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}
-    	RecordMovement.magnitude = magnitude;
-    	RecordMovement.angle = angle;
-    	RecordMovement.rotation = rotation;
-    	
-    	Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	prev_x = direction_x;
-    	prev_y = direction_y;
-    	double delta_x = (prev_x-direction_x)/(1/60.0);
-    	double delta_y = (prev_y-direction_y)/(1/60.0);
-    	double diff_x = Robot.navx.getWorldLinearAccelX()-delta_x;
-    	double diff_y = Robot.navx.getWorldLinearAccelY()-delta_y;
-    	if(Math.abs(diff_x) > RUMBLE_DEAD || Math.abs(diff_y) > RUMBLE_DEAD) {
-    		//OI.driver.setRumble(RumbleType.kLeftRumble, 0.5);
-    		//OI.driver.setRumble(RumbleType.kRightRumble, 0.5);
-    	}
-    	}
-    	/*if(magnitude > prev_magnitude) {
-    		if(prev_magnitude+rate>magnitude) {
-    			Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    			prev_magnitude = magnitude;
-    		}
-    		prev_magnitude += rate;
-    		Robot.drivetrain.getDriveTrain().drivePolar(prev_magnitude+rate, angle, rotation);
-    	} else {
-    		prev_magnitude = magnitude;
-    		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
-    	}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -154,6 +135,7 @@ public class DefaultDrive extends Command {
      */
     // Called once after isFinished returns true
     protected void end() {
+    	// This shouldn't run, but it if does, just stop robot
     	Robot.drivetrain.getDriveTrain().driveCartesian(0,  0,  0);
     }
     /**
@@ -163,6 +145,7 @@ public class DefaultDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	// This shouldn't run, but if it does, just stop robot
     	Robot.drivetrain.getDriveTrain().driveCartesian(0,  0,  0);
     }
 }

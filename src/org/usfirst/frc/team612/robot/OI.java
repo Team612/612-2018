@@ -22,28 +22,34 @@ import org.usfirst.frc.team612.robot.RobotMap;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public static final boolean TANKDRIVE 			= false;
-	public static final boolean XBOX 				= true;
-	public static final boolean OMNI 				= false;
-	public static final boolean DRIVER_PERSPECTIVE  = false;
-	public static  boolean LIFT_PID 				= true; 
-	public static final boolean FIX_DRIFT 			= false;
-	public static final boolean BONGO_MODE  		= false;
-	public static final boolean ALLOW_RECORDING		= false;
-	public static boolean GRABBER_POS   			= true;//true means closed
-	public static boolean DROPPER_POS   			= true;//true means off
-	public static final boolean PREVENT_TIPPING 	= false;
-	public static boolean REFLECT_AUTO				= false;
-	public static final boolean NEW_GUNNER_CONTROL  = true;
-	public static final double TIP_ANGLE            = 30;
-	public static boolean IS_MOTOR_STALLED			= false;
-	public static String TEST_FILE_NAME 			= "data55.txt";
-	public static String AUTO_FILE_NAME 			= "data55.txt";
+	public static final boolean TANKDRIVE 			= false; // Variable for tankdrive vs. mecanum. Should be false
+	public static final boolean XBOX 				= true;  // Variable for using xbox vs. flightstick. Should be true
+	public static final boolean OMNI 				= false; // Variable for omnidrive (early in season). Should be false 
+	public static final boolean DRIVER_PERSPECTIVE  = false; /* Variable for driver perspective driving (forward always drives
+															    in the same direction regardless of rotation. Should be false */
+	public static  boolean LIFT_PID 				= true;  /* Variable for manual vs. PID lift. Should be true, PID can be
+															    be disabled manually in other ways, see below */
+	public static final boolean FIX_DRIFT 			= false; // Attempted to manually fix driving; should DEFINITELY be false
+	public static final boolean BONGO_MODE  		= false; // We using bongos? Should VERY DEFINITELY be false for competitions
+	public static final boolean ALLOW_RECORDING		= false; // Whether we can record motion for playback later; should be false
+	public static boolean GRABBER_POS   			= true;  // true means closed; stored here so that they can be accessed elsewhere
+	public static boolean DROPPER_POS   			= true;  // true means off; stored here so that they can be accessed elsewhere
+	public static final boolean PREVENT_TIPPING 	= false; // attempted to disable playback if robot tips too much, should be false
+	public static boolean REFLECT_AUTO				= false; // Whether we try to reflect auto; should be false, Robot.java decides it
+	public static final boolean NEW_GUNNER_CONTROL  = true;  // We changed gunner control partway through the season; should be true
+	public static final double TIP_ANGLE            = 30;    // Tip angle that makes autonomous playback stop (in degrees).
+	public static boolean IS_MOTOR_STALLED			= false; // Attempts to debug if motor is stalled (power but no movement); should be false
+	public static String TEST_FILE_NAME 			= "data55.txt"; // random file name so we don't override something important
+	public static String AUTO_FILE_NAME 			= "data55.txt"; // random file name so we don't override something important
 	// simple.txt = drive 5 seconds, center_R_S, center_L_S.txt, left_L_S.txt, right_R_S.txt -redo
 	public static XboxController bongo  = new XboxController(RobotMap.bongo_port);
 	public static XboxController driver = new XboxController(RobotMap.driver_port);
 	public static XboxController gunner = new XboxController(RobotMap.gunner_port);
-	public static Joystick joy = new Joystick(1); // Flight controller
+	public static Joystick joy = new Joystick(1); // Flight controller, not used in competitions currently
+	
+	/* Code below creates objects for all the buttons on all the joysticks. These can then
+	 * be attached to commands later on
+	 */
 
 	public static JoystickButton driver_button_A    	= new JoystickButton(driver,1);
 	public static JoystickButton driver_button_B 		= new JoystickButton(driver,2);
@@ -76,7 +82,12 @@ public class OI {
 	public static ArrayList < Double > drive_data = new ArrayList < Double >(4);
 	
 	public OI() throws IOException {
-		if(NEW_GUNNER_CONTROL) {
+		if(NEW_GUNNER_CONTROL) { // This is usually true
+			/* One bumper closes the grabber while held, and turns it off when released. The other
+			 * bumper opens the grabber while held, and turns off when released. The back button
+			 * (hard to accidentally press) toggles the dropper just in case, and Y button turns
+			 * of lift PID if stuff breaks.
+			 */
 			gunner_button_BCK.whenPressed(new DefaultDropper());
 			gunner_button_BCK.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new OpenGrabber());
@@ -84,9 +95,8 @@ public class OI {
 			gunner_button_LB.whenPressed(new CloseGrabber());
 			gunner_button_LB.whenReleased(new DisableGrabber());
 			gunner_button_Y.whenPressed(new TogglePID());	
-			//1gunner_button_Y.whenReleased(new SetOnPID());			
-
 		} else {
+			// Old, bad control so I won't explain
 			gunner_button_BCK.whenPressed(new DefaultDropper());
 			gunner_button_BCK.whenReleased(new DisableDropper());
 			gunner_button_RB.whenPressed(new DefaultGrabber());
@@ -106,7 +116,7 @@ public class OI {
 			gunner_button_RB.whenReleased(new DisableGrabber());
 		}*/
 		
-		if(ALLOW_RECORDING) {
+		if(ALLOW_RECORDING) { // If we can record, press B to record and A to playback
 			driver_button_A.whenPressed(new ReplayGroup());
 			driver_button_B.whenPressed(new RecordMovement());
 		}
@@ -117,15 +127,6 @@ public class OI {
 	}
 	
 }
-	/*	//create new file
-		//file stored on robo-rio
-		//start second timer
-		data_timer.start();
-		//store values of opening file to objects
-		file_to_open = new File(directory + "/" + file_name_open);
-		fr = new FileReader(file_to_open);
-		bf = new BufferedReader(fr);*/
-		//start second timer
 
  /* BUTTON MAPPING (this should go in RobotMap)
   * 1: A

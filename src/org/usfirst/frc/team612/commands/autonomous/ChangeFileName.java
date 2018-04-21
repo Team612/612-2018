@@ -22,7 +22,7 @@ public class ChangeFileName extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	OI.TEST_FILE_NAME = OI.AUTO_FILE_NAME;
+    	OI.TEST_FILE_NAME = OI.AUTO_FILE_NAME; // TEST_FILE_NAME is what we actually playback
     	//OI.TEST_FILE_NAME = "yeet2.txt";
     	end = true;
     }

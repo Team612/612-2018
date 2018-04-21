@@ -24,12 +24,12 @@ public class DisableGrabber extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.grabber.getSolenoid().set(Value.kOff);
+    	Robot.grabber.getSolenoid().set(Value.kOff); // Sets the grabber to kOff so that it doesn't waste air pressure
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return true; // Turning off solenoid is immediate, so it can return true
     }
 
     // Called once after isFinished returns true

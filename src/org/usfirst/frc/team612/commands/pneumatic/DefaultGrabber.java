@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DefaultGrabber extends Command {
-	private static boolean toggle = false;
+	
+	/* This class is not used in the new control scheme so I won't
+	 * add any documentation to it.
+	 */
+	
 	/**
 	 * Requires a <code>grabber</code>
 	 */
@@ -21,7 +25,7 @@ public class DefaultGrabber extends Command {
     }
     /**
      * Called just before DefaultGrabber runs the first time.
-     * @deprecated <code>initialize()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
+     * <code>initialize()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
      */
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -51,7 +55,7 @@ public class DefaultGrabber extends Command {
     
     /**
      * Called once after <code>isFinished()</code> returns <code>true</code>.
-     * @deprecated <code>end()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
+     * <code>end()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
      */
     // Called once after isFinished returns true
     protected void end() {
@@ -59,7 +63,7 @@ public class DefaultGrabber extends Command {
     
     /**
      * Called when another command which requires one or more of the same subsystems is scheduled to run.
-     * @deprecated <code>interrupted()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
+     * <code>interrupted()</code> does <b>absolutely nothing</b> in DefaultGrabber.java.
      */
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
