@@ -23,6 +23,7 @@ import org.usfirst.frc.team612.subsystems.Dropper;
 import org.usfirst.frc.team612.subsystems.Grabber;
 
 public class Robot extends IterativeRobot {
+	
     public static double encoder_multi = -2;
     public static DriverStation driverstation = DriverStation.getInstance();
     public static OI oi;
@@ -38,10 +39,12 @@ public class Robot extends IterativeRobot {
     public boolean pressurelow;
     public boolean pressurecritical;
     Command autonomousCommand;
-    String game_data, start_position;
+    String game_data;
+	public static String start_position;
     SendableChooser < String > start_pos;
     SendableChooser < String > priority;
     SendableChooser < String > score_amount;
+    SendableChooser < Integer > auto_delay_time;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -56,11 +59,14 @@ public class Robot extends IterativeRobot {
         priority = new SendableChooser < > ();
         priority.addDefault("Switch", "s");
         priority.addObject("Scale", "c");
-        
         score_amount = new SendableChooser < > ();
         score_amount.addDefault("1 block", "q");
         score_amount.addObject("2 blocks", "z");
-
+        auto_delay_time = new SendableChooser < > ();
+        auto_delay_time.addDefault("0 second delay", 0);
+        auto_delay_time.addObject("1 second delay", 1);
+        auto_delay_time.addObject("3 second delay", 3);
+        auto_delay_time.addObject("5 second delay", 5);
         Robot.lift.getTalon().getSensorCollection().setQuadraturePosition(0, 0);
         compressor.setClosedLoopControl(true);
         try {
