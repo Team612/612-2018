@@ -4,9 +4,7 @@ package org.usfirst.frc.team612.commands.drive;
 import org.usfirst.frc.team612.robot.Robot;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team612.commands.autonomous.RecordMovement;
 import org.usfirst.frc.team612.robot.OI;
@@ -29,20 +27,9 @@ public class DefaultDrive extends Command {
 	double prev_x = 0;
 	double prev_y = 0;
 	
-	/**
-	 * Makes sure that that subsystem <code>drivetrain</code> is required.
-	 */
     public DefaultDrive() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.drivetrain);
     }
-    
-    /**
-     * Called just before this Command runs the first time.
-     * @deprecated This Command does <b>absolutely nothing</b>.
-     */
-    // Called just before this Command runs the first time
     protected void initialize() {
     	
     }
@@ -87,9 +74,6 @@ public class DefaultDrive extends Command {
      * Called 60 times per second when this Command is scheduled to run.
      * Gets information from Xbox controller.
      */
-    
-    
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(OI.TANKDRIVE) {
 	    	Robot.drivetrain.getTalon(1).set(Robot.oi.driver.getY(Hand.kLeft));
@@ -139,29 +123,12 @@ public class DefaultDrive extends Command {
     		Robot.drivetrain.getDriveTrain().drivePolar(magnitude, angle, rotation);
     	}*/
     }
-
-    // Make this return true when this Command no longer needs to run execute()
-    /**
-     * Makes sure <code>execute()</code> runs as long as this command returns <code>false</code>.
-     * @return A <code>false</code> value, indicating that this command is running <code>execute()</code>.
-     */
     protected boolean isFinished() {
         return false;
     }
-    
-    /**
-     * Does Cartesian Drive when <code>isFinished()</code> returns <code>true</code>.
-     */
-    // Called once after isFinished returns true
     protected void end() {
     	Robot.drivetrain.getDriveTrain().driveCartesian(0,  0,  0);
     }
-    /**
-     * Called when another command which requires one or more of the same subsystems is scheduled to run.
-     * Does Cartesian Drive.
-     */
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.drivetrain.getDriveTrain().driveCartesian(0,  0,  0);
     }
